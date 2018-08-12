@@ -79,3 +79,70 @@ function toHHMMSS(id) {
 	var time = hourstext + minutestext + secondstext;
 	return time;
 }
+
+
+// Save and load functions
+var canSave = 1;
+
+var save = function () {
+	var date = new Date();
+	if (canSave) {
+		localStorage.setItem("SpaceL1", JSON.stringify(Game));
+	}
+	var tmp = new Date().getTime();
+};
+
+var load = function () {
+	var savegame = JSON.parse(localStorage.getItem("SpaceL1"));
+
+	for (var property in savegame) {
+		if (typeof savegame[property] !== 'undefined') Game[property] = savegame[property];
+	}
+
+	var date = new Date();
+	UpdateUI();
+};
+
+var exportSave = function () {
+	var saveData = btoa(JSON.stringify(Game));
+	window.getSelection().removeAllRanges();
+	alert("Save copied in your clipboard.");
+	$("#exportBody").html("<textarea id='saveCode'>" + saveData + "</textarea>");
+	var textField = document.getElementById("saveCode");
+	textField.select();
+	document.execCommand("copy");
+	window.getSelection().removeAllRanges();
+	$("#exportBody").html("");
+};
+
+var importSave = function () {
+	var save = prompt("Paste the code previously obtained here");
+	if (save) {
+		restoreSave(save);
+	}
+};
+
+var restoreSave = function (save) {
+	try {
+		var decoded = atob(save);
+		JSON.parse(decoded);
+		if (decoded) {
+			localStorage.setItem("SpaceL1", decoded);
+			canSave = 0;
+			location.reload();
+		} else {
+			$("#debugtext").html("ERROR: Invalid Save Data");
+		}
+	} catch (err) {
+		$("#debugtext").html("ERROR: Invalid Save Data");
+	}
+};
+
+var confirmReset = function () {
+	var r = confirm("Do you really want to reset all your stats ?");
+	if (r == true) {
+		canSave = 0;
+		localStorage.clear();
+		location.reload();
+	}
+};

@@ -40,17 +40,16 @@
     text-align: center;
     padding-left: 4rem;
     padding-right: 0rem;
-    width: 0%;
-    position: fixed;
-    z-index: 999;
+    width: 20%;
+    left: 0%;
 }
 
 #colonne-d {
     text-align: center;
     padding-left: 1rem;
     padding-right: 0rem;
-    width: 95%;
-    left: 2%;
+    width: 78%;
+    right: 0%;
 }
 
 .surc {
@@ -119,7 +118,7 @@
 }
 
 .violet {
-    color: rgb(93, 65, 202);
+    color: rgb219, 40, 40
 }
 
 .jaune {
@@ -238,11 +237,11 @@
     color: rgba(255, 255, 255, 1);
 }
 .ui.dropdown .menu>.item:hover {
-    color: rgb(93, 65, 202);
+    color: rgb(219, 40, 40);
 }
 
 .ui.dropdown .menu>.item.active {
-    color: rgb(93, 65, 202);
+    color: rgb(219, 40, 40);
 }
 
 .ui.dropdown .menu>.item {
@@ -255,11 +254,11 @@
 }
 
 body ::-webkit-scrollbar-thumb {
-    background: rgb(93, 65, 202);
+    background: rgb(219, 40, 40);
 }
 
 body ::-webkit-scrollbar-thumb:hover {
-    background: rgb(120, 100, 250);
+    background: rgb(200, 50, 50);
 }
 
 body ::-webkit-scrollbar-track {
