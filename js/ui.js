@@ -1,6 +1,6 @@
 ﻿var UpdateUI = function () {
 	for (var inv = 0; inv < 18; inv++) { $("#inv" + inv).html(" (" + Game.inventory[inv] + ")"); }
-	$("#money").html(" ($" + fix(Game.cash, 2) + ")");
+	$("#money").html(" (<font class='vert'>$" + fix(Game.cash, 2) + "</font>)");
 	$("#rank").html("You are actually at the rank " + Game.rank + "");
 	GenMissions();
 	GenStation();
@@ -52,8 +52,9 @@ function GenStation() {
 		var canSell = Game.inventory[i] < 1 ? ' disabled' : '';
 		var canSell10 = Game.inventory[i] < 10 ? ' disabled' : '';
 		var canSell100 = Game.inventory[i] < 100 ? ' disabled' : '';
+		var pricecolor = SystemMult[Game.system][i] < 1 ? 'rouge' : 'vert';
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
-		cost = "<font class='vert bold'>$" + offer.value * SystemMult[Game.system][i] + "</font>";
+		cost = "<font class='" + pricecolor + " bold'>$" + offer.value * SystemMult[Game.system][i] + "</font>";
 		description = offer.desc;
 		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">'+ Game.inventory[i] + '</font>' : '<font class="vert">'+ Game.inventory[i] + '</font>';
 
