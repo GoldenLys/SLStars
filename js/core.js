@@ -23,6 +23,7 @@ $(document).ready(function () {
     ClickEvents();
     $(".pusher").css("background-image", "url(images/bg.jpg)");
     $('.ui.sidebar').sidebar('hide');
+    $("#system-select").val(texts.systemname[Game.system]);
 });
 
 function UpdateGame() {

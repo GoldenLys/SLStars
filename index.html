@@ -22,152 +22,165 @@
 <script src="js/core.js?v=1.1"></script>
 <script src="js/ui.js?v=1.1"></script>
 
-<body id="body" class="noselect" oncontextmenu="return false;">
-    <!--SIDE BAR-->
-    <div id="sidebar" class="ui left demo vertical visible inverted sidebar labeled icon menu">
-        <a class="item" id="menu1" data-id="3">
-            <i class="clipboard list icon"></i>Missions</a>
-        <a class="item" id="menu2" data-id="4">
-            <i class="dollar icon"></i>Space Station</a>
-        <a class="item" id="menu3" data-id="2">
-            <i class="info icon"></i>How to play ?</a>
-        <a class="item" id="menu4" data-id="5">
-            <i class="clipboard icon"></i>Contact</a>
-        <a class="item" target="_blank" href="https://www.paypal.me/Aizen45/1">
-            <i class="paypal icon"></i>Give a coffee ♥</a>
-    </div>
-    <div class="pusher">
-        <!--TOP MENU-->
-        <div id="top-menu" class="ui red secondary inverted menu">
-            <div class="item">
-                <div class="ui logo shape">
-                    <div class="sides">
-                        <div class="active ui side">
-                            <img class="ui mini rounded image" src="images/logo.jpg">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ui inverted secondary menu" id="game-menu" style="width:100%;">
-                <button id="sidebar" class="ui button item type2">
-                    <i class="sidebar icon"></i>Menu</button>
-                <div class="right menu">
-                    <div class="item">
-                        <marquee class="type1" direction="left" behavior="scroll" scrollamount="6" style="font-size:22pt;color:#ffffff; " id="announces">.</marquee>
+<body id="body"></body>
+<!-- <body id="body" class="noselect" oncontextmenu="return false;"> -->
+<!--SIDE BAR-->
+<div id="sidebar" class="ui left demo vertical visible inverted sidebar labeled icon menu">
+    <a class="item" id="menu1" data-id="3">
+        <i class="clipboard list icon"></i>Exploration</a>
+    <a class="item" id="menu2" data-id="4">
+        <i class="dollar icon"></i>Space Station</a>
+    <a class="item" id="menu3" data-id="2">
+        <i class="info icon"></i>How to play ?</a>
+    <a class="item" id="menu4" data-id="5">
+        <i class="clipboard icon"></i>Contact</a>
+    <a class="item" target="_blank" href="https://www.paypal.me/Aizen45/1">
+        <i class="paypal icon"></i>Give a coffee ♥</a>
+</div>
+<div class="pusher">
+    <!--TOP MENU-->
+    <div id="top-menu" class="ui red secondary inverted menu">
+        <div class="item">
+            <div class="ui logo shape">
+                <div class="sides">
+                    <div class="active ui side">
+                        <img class="ui mini rounded image" src="images/logo.jpg">
                     </div>
                 </div>
             </div>
         </div>
-        <!--COLUMNS-->
-        <div class="ui two column very relaxed grid" style="height: 94%; position: relative; z-index: 99;">
-            <!--STATS COLUMN-->
-            <div class="column" id="colonne-m">
-                <div id="travel" class="ui black message">
-                    <p class="type2 title text" id="Title">Travel</p>
-                    <select class="fluid ui selection dropdown" id="system-select"></select>
+        <div class="ui inverted secondary menu" id="game-menu" style="width:100%;">
+            <button id="sidebar" class="ui button item type2">
+                <i class="sidebar icon"></i>Menu</button>
+            <div class="right menu">
+                <div class="item">
+                    <marquee class="type1" direction="left" behavior="scroll" scrollamount="6" style="font-size:22pt;color:#ffffff; " id="announces">.</marquee>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!--COLUMNS-->
+    <div class="ui two column very relaxed grid" style="height: 94%; position: relative; z-index: 99;">
+        <!--STATS COLUMN-->
+        <div class="column" id="colonne-m">
+            <div id="travel" class="ui black message">
+                <p class="type2 title text" id="Title">Travel</p>
+                <select class="fluid ui selection dropdown" id="system-select"></select>
+            </div>
+            <div id="how" class="ui black message">
+                <p class="type2 title text" id="Title">Inventory</p>
+                <span class="Palladium">Money
+                    <font class="bold" id="money"></font>
+                </span><br>
+                <div style="height: 30%;overflow: auto; text-align: left;">
+                    <img class="ui avatar image" src="images/items/0.png">
+                    <span class="Palladium">Copper
+                        <font class="bold" id="inv0"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/1.png">
+                    <span class="Palladium">Zinc
+                        <font class="bold" id="inv1"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/2.png">
+                    <span class="Palladium">Nickel
+                        <font class="bold" id="inv2"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/3.png">
+                    <span class="Palladium">Thamium9
+                        <font class="bold" id="inv3"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/4.png">
+                    <span class="Palladium">Iron
+                        <font class="bold" id="inv4"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/5.png">
+                    <span class="Palladium">Gold
+                        <font class="bold" id="inv5"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/6.png">
+                    <span class="Palladium">Aluminium
+                        <font class="bold" id="inv6"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/7.png">
+                    <span class="Palladium">Platinum
+                        <font class="bold" id="inv7"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/8.png">
+                    <span class="Palladium">Iridium
+                        <font class="bold" id="inv8"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/9.png">
+                    <span class="Palladium">Carbon
+                        <font class="bold" id="inv9"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/10.png">
+                    <span class="Palladium">Plutonium
+                        <font class="bold" id="inv10"></font>
+                    </span><br>
+                    <img class="ui avatar image" src="images/items/11.png">
+                    <span class="Palladium">Antimatter
+                        <font class="bold" id="inv11"></font>
+                    </span><br>
+                </div>
+            </div>
+            <div id="quickstats" class="ui black message">
+                <p class="type2 title text" id="Title">Stats</p>
+                <p class="text" id="rank"></p>
+            </div>
+        </div>
+        <!--GAME COLUMN-->
+        <div class="column" id="colonne-d">
+
+            <!--HOW DOES IT WORK-->
+            <div id="tab2" style="display: none; width: 100%;">
                 <div id="how" class="ui black message">
-                    <p class="type2 title text" id="Title">Inventory</p>
-                    <p class="text vert">Money
-                        <font id="money"></font>
-                    </p>
-                    <div style="height: 30%;overflow: auto;">
-                        <p class="text">Water
-                            <font id="inv0"></font>
-                        </p>
-                        <p class="text">Wood
-                            <font id="inv1"></font>
-                        </p>
-                        <p class="text">Food
-                            <font id="inv2"></font>
-                        </p>
-                        <p class="text">Stone
-                            <font id="inv3"></font>
-                        </p>
-                        <p class="text">Metal
-                            <font id="inv4"></font>
-                        </p>
-                        <p class="text">Crystal
-                            <font id="inv5"></font>
-                        </p>
-                        <p class="text">Sulfur
-                            <font id="inv6"></font>
-                        </p>
-                        <p class="text">Platinum
-                            <font id="inv7"></font>
-                        </p>
-                        <p class="text">Iridium
-                            <font id="inv8"></font>
-                        </p>
-                        <p class="text">Carbon
-                            <font id="inv9"></font>
-                        </p>
-                        <p class="text">Plutonium
-                            <font id="inv10"></font>
-                        </p>
-                        <p class="text">Antimatter
-                            <font id="inv11"></font>
-                        </p>
-                    </div>
-                </div>
-                <div id="quickstats" class="ui black message">
-                    <p class="type2 title text" id="Title">Stats</p>
-                    <p class="text" id="rank"></p>
+                    <p class="type2 title text" id="Title">HOW DOES IT WORK</p>
+                    <p class="text">tutorial test</p>
                 </div>
             </div>
-            <!--GAME COLUMN-->
-            <div class="column" id="colonne-d">
 
-                <!--HOW DOES IT WORK-->
-                <div id="tab2" style="display: none; width: 100%;">
-                    <div id="how" class="ui black message">
-                        <p class="type2 title text" id="Title">HOW DOES IT WORK</p>
-                        <p class="text">tutorial test</p>
-                    </div>
+            <!--SYSTEMS-->
+            <div id="tab3" style="display: block; width: 100%;">
+                <div class="ui black message">
+                    <p class="type2 title text" id="Title">Exploration</p>
+                    <table id="system0" class="ui inverted table"></table>
+                    <table id="system1" class="ui inverted table" style="display: none;"></table>
+                    <table id="system2" class="ui inverted table" style="display: none;"></table>
+                    <table id="system3" class="ui inverted table" style="display: none;"></table>
+                    <table id="system4" class="ui inverted table" style="display: none;"></table>
+                    <table id="system5" class="ui inverted table" style="display: none;"></table>
+                    <table id="system6" class="ui inverted table" style="display: none;"></table>
                 </div>
+            </div>
 
-                <!--SYSTEMS-->
-                <div id="tab3" style="display: block; width: 100%;">
-                    <div class="ui black message">
-                        <p class="type2 title text" id="Title">Missions</p>
-                        <table id="system0" class="ui inverted table"></table>
-                        <table id="system1" class="ui inverted table" style="display: none;"></table>
-                        <table id="system2" class="ui inverted table" style="display: none;"></table>
-                        <table id="system3" class="ui inverted table" style="display: none;"></table>
-                        <table id="system4" class="ui inverted table" style="display: none;"></table>
-                        <table id="system5" class="ui inverted table" style="display: none;"></table>
-                        <table id="system6" class="ui inverted table" style="display: none;"></table>
-                    </div>
+            <!--SPACE STATION-->
+            <div id="tab4" style="display: none; width: 100%;">
+                <div class="ui black message">
+                    <p class="type2 title text" id="Title">Space Station</p>
+                    <table id="system1ss" class="ui inverted table"></table>
                 </div>
+            </div>
 
-                <!--SPACE STATION-->
-                <div id="tab4" style="display: none; width: 100%;">
-                    <div class="ui black message">
-                        <p class="type2 title text" id="Title">Space Station</p>
-                        <table id="system1ss" class="ui inverted table"></table>
-                    </div>
-                </div>
+            <!--CONTACT-->
+            <div id="tab5" style="display: none; width: 100%;">
+                <div class="ui black message">
+                    <p class="type2 title text" id="Title">Contact</p>
 
-                <!--CONTACT-->
-                <div id="tab5" style="display: none; width: 100%;">
-                    <div class="ui black message">
-                        <p class="type2 title text" id="Title">Contact</p>
-
-                        <div class="ui black icon message">
-                            <img class="ui tiny rounded image" src="images/lys.jpg">
-                            <div class="content">
-                                <div class="header">
-                                    TF| Lys - SpaceL developer
-                                </div>
-                                <p>
-                                    <font class='type2 rouge'>Discord : </font> TF| Lys#2903</p>
+                    <div class="ui black icon message">
+                        <img class="ui tiny rounded image" src="images/lys.jpg">
+                        <div class="content">
+                            <div class="header">
+                                TF| Lys - SpaceL developer
                             </div>
+                            <p>
+                                <font class='type2 rouge'>Discord : </font> TF| Lys#2903</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 </body>
 

@@ -45,23 +45,24 @@ function GenMissions() {
 //GENERATE Station TAB
 
 function GenStation() {
-	for (var id = 0; id < 9; id++) { $('#system' + id + "ss").html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Sell item</th></tr></thead>"); }
+	for (var id = 0; id < 9; id++) { $('#system' + id + "ss").html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell item</th></tr></thead>"); }
 
 	for (var i in Station) {
 		var offer = Station[i];
 		var canSell = Game.inventory[i] < 1 ? ' disabled' : '';
 		var canSell10 = Game.inventory[i] < 10 ? ' disabled' : '';
 		var canSell100 = Game.inventory[i] < 100 ? ' disabled' : '';
-		name = "<font class='text type2'>" + texts.items[i] + "</font>";
+		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
 		cost = "<font class='vert bold'>$" + offer.value * SystemMult[Game.system][i] + "</font>";
 		description = offer.desc;
+		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">'+ Game.inventory[i] + '</font>' : '<font class="vert">'+ Game.inventory[i] + '</font>';
 
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
 			"<td class='center aligned ui'>" + name + "</td>" +
 			"<td class='center aligned'>" + description + "</td>" +
 			"<td class='center aligned'> " + cost + "</td>" +
-
+			"<td class='center aligned'> " + inventory + "</td>" +
 			"<td class='center aligned'><div class='ui buttons'><button class='ui " + canSell + " red button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " red button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " red button' onClick='sellitem(" + i + ",100);'>100</button></div></td>" +
 			"</tr>"
 		);
