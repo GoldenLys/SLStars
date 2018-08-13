@@ -1,5 +1,5 @@
 ﻿var UpdateUI = function () {
-	for (var inv = 0; inv < 12; inv++) { $("#inv" + inv).html(" (" + Game.inventory[inv] + ")"); }
+	for (var inv = 0; inv < 18; inv++) { $("#inv" + inv).html(" (" + Game.inventory[inv] + ")"); }
 	$("#money").html(" ($" + fix(Game.cash, 2) + ")");
 	$("#rank").html("You are actually at the rank " + Game.rank + "");
 	GenMissions();
