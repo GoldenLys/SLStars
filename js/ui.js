@@ -22,6 +22,7 @@ function SetColor(value) {
 	if (value > 10) { if (value < 50) { color = 'violet'; } }
 	if (value > 49) { if (value < 100) { color = 'rose'; } }
 	if (value > 99) { if (value < 1000) { color = 'rouge'; } }
+	if (value > 999) { color = 'vert'; }
 	return color;
 }
 
