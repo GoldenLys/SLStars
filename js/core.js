@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.5";
+var version = "v1.51";
 var sitename = "SpaceL";
 var announces = "Welcome to SpaceL " + version;
 var Game = {
@@ -28,7 +28,7 @@ $(document).ready(function () {
 });
 
 function UpdateGame() {
-    Game.cash+=Game.cashps;
+    Game.cash += Game.cashps;
     for (var inv in texts.items) { if (Game.inventory[inv] == null) { Game.inventory[inv] = 0; } }
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     UpdateUI();
@@ -67,10 +67,12 @@ function sellitem(id, qty) {
 
 function buyupgrade(id, buyable, req1, nbr1, req2, nbr2) {
     if (buyable > 0) {
-        Game.inventory[req1] -= nbr1;
-        Game.inventory[req2] -= nbr2;
-        if (Technologies[id].type == 0) { Game.cashps+=Technologies[id].gain; }
-        Game.technologies[id] = 1;
+        if (Game.technologies[id] != 1) {
+            Game.inventory[req1] -= nbr1;
+            Game.inventory[req2] -= nbr2;
+            if (Technologies[id].type == 0) { Game.cashps += Technologies[id].gain; }
+            Game.technologies[id] = 1;
+        }
     }
 
 }

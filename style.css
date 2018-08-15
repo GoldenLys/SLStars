@@ -11,11 +11,6 @@
     background-image: url(images/bg.jpg);
     background-attachment: fixed;
     background-size: contain;
-    cursor: url("http://aizen.hol.es/IdleFive/images/normal.cur"), pointer;
-}
-
-.button:hover {
-    cursor: url("http://aizen.hol.es/IdleFive/images/hand.cur"), pointer;
 }
 
 #top-menu {
@@ -165,7 +160,6 @@
 .ui.selection.dropdown {
     background: rgba(0, 0, 0, 0.3);
     color: rgba(255, 255, 255, 1);
-    cursor: url("http://aizen.hol.es/IdleFive/images/hand.cur"), pointer;
 }
 
 .ui.selection.active.dropdown .menu {
