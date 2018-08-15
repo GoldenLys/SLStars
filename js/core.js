@@ -47,7 +47,7 @@ function explore(id) {
             Game.cash -= Missions[id].price;
             Game.cash += Missions[id].money;
             Game.inventory[Missions[id].type] += Missions[id].nbr;
-            Game.rank++;
+            Game.rank=Game.rank+1*Game.system;
         }
     } else {
         console.log("Not enough cash");
