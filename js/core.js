@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.4";
+var version = "v1.5";
 var sitename = "SpaceL";
 var announces = "Welcome to SpaceL " + version;
 var Game = {
@@ -12,6 +12,7 @@ var Game = {
     cash: 100,
     cashps: 0,
     shipname: "Unusable spaceship",
+    technologies: [],
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -27,6 +28,7 @@ $(document).ready(function () {
 });
 
 function UpdateGame() {
+    Game.cash+=Game.cashps;
     for (var inv in texts.items) { if (Game.inventory[inv] == null) { Game.inventory[inv] = 0; } }
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     UpdateUI();
@@ -56,9 +58,19 @@ function explore(id) {
 
 function sellitem(id, qty) {
     if (Game.inventory[id] >= qty) {
-        Game.cash += Station[id].value * SystemMult[Game.system][id] * qty;
-        Game.inventory[id]-= qty;
+        Game.cash += Market[id].value * SystemMult[Game.system][id] * qty;
+        Game.inventory[id] -= qty;
     }
     UpdateUI();
     save();
+}
+
+function buyupgrade(id, buyable, req1, nbr1, req2, nbr2) {
+    if (buyable > 0) {
+        Game.inventory[req1] -= nbr1;
+        Game.inventory[req2] -= nbr2;
+        if (Technologies[id].type == 0) { Game.cashps+=Technologies[id].gain; }
+        Game.technologies[id] = 1;
+    }
+
 }

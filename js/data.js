@@ -1,14 +1,14 @@
 var Missions = {
-    0: { name: '1', desc: 'Planet', price: 50, money: 5, type: 2, nbr: 1, system: 0 }, 
+    0: { name: '1', desc: 'Planet', price: 50, money: 5, type: 2, nbr: 1, system: 0 },
     1: { name: '2', desc: 'Moon', price: 10, money: 1, type: 0, nbr: 1, system: 0 },
     2: { name: '3', desc: 'Asteroid', price: 25, money: 2.5, type: 3, nbr: 1, system: 0 }, //SYSTEM 1
 
-    3: { name: '1', desc: 'Planet', price: 100, money: 10, type: 1, nbr: 10, system: 1 }, 
+    3: { name: '1', desc: 'Planet', price: 100, money: 10, type: 1, nbr: 10, system: 1 },
     4: { name: '2', desc: 'Moon', price: 100, money: 10, type: 4, nbr: 5, system: 1 },
     5: { name: '3', desc: 'Moon', price: 450, money: 45, type: 5, nbr: 1, system: 1 },
     6: { name: '4', desc: 'Sun', price: 2000, money: 200, type: 6, nbr: 4, system: 1 }, //SYSTEM 2
 
-    7: { name: '1', desc: 'Planet', price: 4500, money: 450, type: 10, nbr: 1, system: 2 }, 
+    7: { name: '1', desc: 'Planet', price: 4500, money: 450, type: 10, nbr: 1, system: 2 },
     8: { name: '2', desc: 'Planet', price: 1500, money: 150, type: 7, nbr: 1, system: 2 },
     9: { name: '3', desc: 'Planet', price: 950, money: 95, type: 8, nbr: 2, system: 2 },
     10: { name: '4', desc: 'Moon', price: 1250, money: 125, type: 9, nbr: 1, system: 2 },
@@ -25,8 +25,8 @@ var Missions = {
     19: { name: '4', desc: 'Sun', price: 1000000, money: 100000, type: 16, nbr: 10, system: 4 },
     20: { name: '5', desc: 'Asteroid', price: 1250, money: 125, type: 3, nbr: 50, system: 4 },
     21: { name: '6', desc: 'Asteroid', price: 1000, money: 100, type: 0, nbr: 100, system: 4 }, //SYSTEM 5
-   
-    22: { name: '1', desc: 'Planet', price: 95000, money: 9500, type: 9, nbr: 100, system: 5 }, 
+
+    22: { name: '1', desc: 'Planet', price: 95000, money: 9500, type: 9, nbr: 100, system: 5 },
     23: { name: '2', desc: 'Moon', price: 200000, money: 20000, type: 14, nbr: 2, system: 5 },
     24: { name: '3', desc: 'Moon', price: 100000, money: 10000, type: 13, nbr: 10, system: 5 },
     25: { name: '4', desc: 'Moon', price: 25000, money: 2500, type: 5, nbr: 50, system: 5 },
@@ -47,14 +47,14 @@ var Missions = {
     38: { name: '6', desc: 'Asteroid', price: 500000, money: 50000, type: 13, nbr: 50, system: 7 }, //SYSTEM 7
 };
 
-var Station = {
+var Market = {
     0: { desc: "uncommon neutral element", value: 12.5 }, //COPPER
     1: { desc: "uncommon oxide element", value: 10 }, //ZINC 
     2: { desc: "common neutral element", value: 50 }, //NICKEL
     3: { desc: "uncommon isotope element", value: 30 }, //THAMIUM9
     4: { desc: "common oxide element", value: 20 }, //IRON
     5: { desc: "rare neutral element", value: 500 }, //GOLD
-    6: { desc: "rare neutral element", value: 500 }, //ALUMINIUM
+    6: { desc: "rare neutral element", value: 150 }, //ALUMINIUM
     7: { desc: "uncommon silicate element", value: 1500 }, //PLATINUM
     8: { desc: "uncommon neutral element", value: 500 }, //IRIDIUM
     9: { desc: "commom isotope element", value: 1000 }, //CARBON
@@ -65,6 +65,14 @@ var Station = {
     14: { desc: "very rare exotic element", value: 100000 }, //RADNOX
     15: { desc: "rare neutral element", value: 15000 }, //EMERIL
     16: { desc: "very rare exotic element", value: 125000 }, //OMEGON
+};
+
+var Technologies = {
+    0: { name: "Rusty mining drone", desc: "A mining drone", gain: 0.25, type: 0, req1: 3, nbr1: 1, req2: 0, nbr2: 10, },
+    1: { name: "Basic mining drone", desc: "A mining drone", gain: 0.75, type: 0, req1: 3, nbr1: 10, req2: 4, nbr2: 10, },
+    2: { name: "Advanced mining drone", desc: "A mining drone", gain: 4, type: 0, req1: 3, nbr1: 25, req2: 6, nbr2: 50, },
+    3: { name: "Alien mining drone", desc: "A mining drone", gain: 5, type: 0, req1: 3, nbr1: 50, req2: 7, nbr2: 50, },
+    4: { name: "Advanced alien mining drone", desc: "A mining drone", gain: 40, type: 0, req1: 3, nbr1: 100, req2: 12, nbr2: 50, },
 };
 
 var SystemMult = {

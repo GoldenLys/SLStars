@@ -1,9 +1,10 @@
 ﻿var UpdateUI = function () {
 	for (var inv = 0; inv < 18; inv++) { $("#inv" + inv).html(" <font class='" + SetColor(Game.inventory[inv]) + "'>" + Game.inventory[inv] + "</font>"); }
-	$("#money").html("" + fix(Game.cash, 1) + "");
+	$("#money").html("" + fix(Game.cash, 1) + " + <font class='bold vert'>" + fix(Game.cashps, 1) + "</font>/s");
 	$("#rank").html("" + fix(Game.rank, 1) + "");
 	$('#system-select').val(texts.systemname[Game.system]);
 	GenMissions();
+	GenMarket();
 	GenStation();
 	AddTravelPoints();
 };
@@ -18,8 +19,8 @@ function SetColor(value) {
 	if (value < 1) { color = 'noir'; }
 	if (value == 1) { color = 'jaune'; }
 	if (value > 1) { if (value < 11) { color = 'bleu'; } }
-	if (value > 10) { if (value < 51) { color = 'violet'; } }
-	if (value > 50) { if (value < 100) { color = 'rose'; } }
+	if (value > 10) { if (value < 50) { color = 'violet'; } }
+	if (value > 49) { if (value < 100) { color = 'rose'; } }
 	if (value > 99) { if (value < 1000) { color = 'rouge'; } }
 	return color;
 }
@@ -53,13 +54,13 @@ function GenMissions() {
 	}
 }
 
-//GENERATE STATION
+//GENERATE MARKET
 
-function GenStation() {
+function GenMarket() {
 	$('#system0sm').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell item</th></tr></thead>");
 
-	for (var i in Station) {
-		var offer = Station[i];
+	for (var i in Market) {
+		var offer = Market[i];
 		var canSell = Game.inventory[i] < 1 ? ' disabled' : '';
 		var canSell10 = Game.inventory[i] < 10 ? ' disabled' : '';
 		var canSell100 = Game.inventory[i] < 100 ? ' disabled' : '';
@@ -86,12 +87,68 @@ function GenStation() {
 	}
 }
 
+//GENERATE STATION
+
+function GenStation() {
+	$('#system0ss').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Technology</th><th class='ui center aligned'>Require</th><th class='ui center aligned'>Sell item</th></tr></thead>");
+
+	for (var i in Technologies) {
+		var offer = Technologies[i];
+		if (offer.req1 > -1) {
+			requiretext1 = "<font class='" + SetColor(offer.nbr1) + "'>" + offer.nbr1 + "</font> " + texts.items[offer.req1];
+			var buy1 = 0;
+			if (offer.nbr1 <= Game.inventory[offer.req1]) {
+				buy1 = 1;
+			} else { buy1 = 0; }
+			if (offer.req2 > -1) {
+				requiretext2 = "<font class='" + SetColor(offer.nbr2) + "'>" + offer.nbr2 + "</font> " + texts.items[offer.req2];
+				var buy2 = 0;
+				if (offer.nbr2 <= Game.inventory[offer.req2]) {
+					buy2 = 1;
+				} else { buy2 = 0; }
+			} else { buy2 = 1; }
+		}
+
+		if (buy1 > 0) {
+			if (buy2 > 0) {
+				buyable = "";
+				buyVar = 1;
+			} else { buyable = "disabled"; buyVar = 0;}
+		} else { buyable = "disabled"; buyVar = 0;}
+
+		var require = requiretext1 + "<img class='ui avatar image' src='images/items/" + offer.req1 + ".png'><br>" + requiretext2 + "<img class='ui avatar image' src='images/items/" + offer.req2 + ".png'>";
+
+		name = "<span class='Palladium'><font class='type2'>" + offer.name + "</font></span>";
+		if (offer.type == 0) {
+			type = "Auto-mining upgrade";
+		}
+		description = offer.desc;
+
+		var SYSTEMDIV = $(
+			"<tr class=''>" +
+			"<td class='center aligned ui'>" + name + "</td>" +
+			"<td class='center aligned'>" + description + "</td>" +
+			"<td class='center aligned type3'> " + type + "</td>" +
+			"<td class='center aligned'> " + require + "</td>" +
+			"<td class='center aligned'></button><button class='ui " + buyable + " red button' onClick='buyupgrade(" + i +  ", " + buyVar + ", " + offer.req1 + ", " + offer.nbr1 + ", " + offer.req2 + ", " + offer.nbr2 +");'>Purchase</button></td>" +
+			"</tr>"
+		);
+		$('#system0ss').append(SYSTEMDIV);
+	}
+}
+
 //UI FUNCTIONS
 
 function hidesystems() { for (var id = 0; id < 17; id++) { $("#system" + id).hide(); } }
 function hideTabs() { for (var id = 1; id < 6; id++) { $("#tab" + id).hide(); } }
+function hideMenuTabs() { for (var id = 1; id < 5; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("inverted basic"); } }
 
 function ClickEvents() {
+	$("#game-menu").on("click", "button", function () {
+		var id = $(this).data('id'); hideMenuTabs();
+		$("#tab" + id).show();
+		$("#t" + id).addClass("inverted basic");
+	});
 	$("#sidebar").on("click", "a", function () {
 		var id = $(this).data('id'); hideTabs();
 		$("#tab" + id).show();
