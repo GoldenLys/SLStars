@@ -1,54 +1,50 @@
 ﻿var UpdateUI = function () {
-	for (var inv = 0; inv < 18; inv++) { 
-		var invtext = "";
-		if (Game.inventory[inv] == 1) { invtext = 'jaune'; }
-		if (Game.inventory[inv] > 1) { if (Game.inventory[inv] < 11) { invtext = 'bleu'; } }
-		if (Game.inventory[inv] > 10) { if (Game.inventory[inv] < 51) { invtext = 'violet'; } }
-		if (Game.inventory[inv] > 50) { if (Game.inventory[inv] < 100) { invtext = 'rose'; } }
-		if (Game.inventory[inv] > 100) { if (Game.inventory[inv] < 1000) { invtext = 'rouge'; } }
-		$("#inv" + inv).html(" (<font class='" + invtext + "'>" + Game.inventory[inv] + "</font>)");
-	 }
-	$("#money").html(" (<font class='vert'>$" + fix(Game.cash, 2) + "</font>)");
-	$("#rank").html("You are actually at the rank " + Game.rank + "");
+	for (var inv = 0; inv < 18; inv++) { $("#inv" + inv).html(" <font class='" + SetColor(Game.inventory[inv]) + "'>" + Game.inventory[inv] + "</font>"); }
+	$("#money").html("" + fix(Game.cash, 1) + "");
+	$("#rank").html("" + fix(Game.rank, 1) + "");
+	$('#system-select').val(texts.systemname[Game.system]);
 	GenMissions();
 	GenStation();
 	AddTravelPoints();
-	$("#system-select").val(texts.systemname[Game.system]);
 };
 
 function UpdateTexts() {
 	$("#announces").html(announces);
 	document.title = sitename + " " + version;
-
 }
 
-//GENERATE Missions TAB
+function SetColor(value) {
+	var color = "";
+	if (value < 1) { color = 'noir'; }
+	if (value == 1) { color = 'jaune'; }
+	if (value > 1) { if (value < 11) { color = 'bleu'; } }
+	if (value > 10) { if (value < 51) { color = 'violet'; } }
+	if (value > 50) { if (value < 100) { color = 'rose'; } }
+	if (value > 99) { if (value < 1000) { color = 'rouge'; } }
+	return color;
+}
+
+//GENERATE MISSIONS
 
 function GenMissions() {
-	for (var id = 0; id < 9; id++) { $('#system' + id).html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Mission cost            </th><th class='ui center aligned'>Action</th></tr></thead>"); }
+	for (var id = 0; id < 10; id++) { $('#system' + id).html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Mission cost            </th><th class='ui center aligned'>Action</th></tr></thead>"); }
 
 	for (var i in Missions) {
 		var offer = Missions[i];
 		var canbuy = Game.cash < offer.price ? ' disabled' : '';
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
-
-		if (rewards == 1) { rewardstext = 'jaune'; }
-		if (rewards > 1) { if (rewards < 10) { rewardstext = 'bleu'; } }
-		if (rewards > 9) { if (rewards < 50) { rewardstext = 'violet'; } }
-		if (rewards > 49) { if (rewards < 100) { rewardstext = 'rose'; } }
-		if (rewards > 100) { if (rewards < 1000) { rewardstext = 'rouge'; } }
-
-		var pricetext = Game.explored[i] < 1 ? fix(offer.price / 2, 3) : fix(offer.price, 3);
-		reward = texts.items[offer.type] + " x";
-		name = "<font class='text type2'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
+		var rewardstext = SetColor(rewards);
+		var pricetext = Game.explored[i] < 1 ? fix(offer.price / 2, 1) : fix(offer.price, 1);
+		reward = texts.items[offer.type];
+		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
 		cost = "<font class='vert bold type3'>$" + pricetext + "</font>";
 		description = offer.desc;
 
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
 			"<td class='center aligned ui'>" + name + "</td>" +
-			"<td class='center aligned'>" + description + " (" + reward + "  <font class='" + rewardstext + "'>" + rewards + "</font>)</td>" +
+			"<td class='center aligned'>" + description + ", <font class='type3'><font class=' " + rewardstext + "'>" + rewards + "</font> " + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></font></td>" +
 			"<td class='center aligned'> " + cost + "</td>" +
 			"<td class='center aligned'><a class='fluid ui " + canbuy + " red button' onClick='explore(" + i + ");'>" + exploretext + "</a></td>" +
 			"</tr>"
@@ -57,7 +53,7 @@ function GenMissions() {
 	}
 }
 
-//GENERATE Station TAB
+//GENERATE STATION
 
 function GenStation() {
 	$('#system0sm').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell item</th></tr></thead>");
@@ -67,14 +63,15 @@ function GenStation() {
 		var canSell = Game.inventory[i] < 1 ? ' disabled' : '';
 		var canSell10 = Game.inventory[i] < 10 ? ' disabled' : '';
 		var canSell100 = Game.inventory[i] < 100 ? ' disabled' : '';
+		var canSell1000 = Game.inventory[i] < 1000 ? ' disabled' : '';
 		if (SystemMult[Game.system][i] == 1) { pricecolor = ''; }
 		if (SystemMult[Game.system][i] < 1) { pricecolor = 'rouge'; }
 		if (SystemMult[Game.system][i] > 1) { pricecolor = 'vert'; }
 
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
-		cost = "<font class='" + pricecolor + " bold'>$" + fix(offer.value * SystemMult[Game.system][i], 3) + "</font>";
+		cost = "<font class='" + pricecolor + " bold'>$" + fix(offer.value * SystemMult[Game.system][i], 1) + "</font>";
 		description = offer.desc;
-		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">' + fix(Game.inventory[i], 3) + '</font>' : '<font class="vert">' + fix(Game.inventory[i], 3) + '</font>';
+		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">' + fix(Game.inventory[i], 1) + '</font>' : '<font class="vert">' + fix(Game.inventory[i], 1) + '</font>';
 
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
@@ -82,7 +79,7 @@ function GenStation() {
 			"<td class='center aligned'>" + description + "</td>" +
 			"<td class='center aligned type3'> " + cost + "</td>" +
 			"<td class='center aligned'> " + inventory + "</td>" +
-			"<td class='center aligned'><div class='ui buttons'><button class='ui " + canSell + " red button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " red button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " red button' onClick='sellitem(" + i + ",100);'>100</button></div></td>" +
+			"<td class='center aligned'><div class='ui buttons'><button class='ui " + canSell + " red button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " red button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " red button' onClick='sellitem(" + i + ",100);'>100</button><button class='ui " + canSell1000 + " red button' onClick='sellitem(" + i + ",1000);'>1000</button></div></td>" +
 			"</tr>"
 		);
 		$('#system0sm').append(SYSTEMDIV);
@@ -133,4 +130,5 @@ function AddTravelPoints() {
 	if (Game.rank >= 2500) { $("#system-select").append("<option id='V6' value='6'>" + texts.systemname[6] + "</option>"); }
 	if (Game.rank >= 5000) { $("#system-select").append("<option id='V7' value='7'>" + texts.systemname[7] + "</option>"); }
 	if (Game.rank >= 10000) { $("#system-select").append("<option id='V8' value='8'>" + texts.systemname[8] + "</option>"); }
+	$('#system-select').val(texts.systemname[Game.system]);
 }
