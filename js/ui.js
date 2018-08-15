@@ -143,8 +143,8 @@ function GenStation() {
 //UI FUNCTIONS
 
 function hidesystems() { for (var id = 0; id < 17; id++) { $("#system" + id).hide(); } }
-function hideTabs() { for (var id = 1; id < 6; id++) { $("#tab" + id).hide(); } }
-function hideMenuTabs() { for (var id = 1; id < 5; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("inverted basic"); } }
+function hideTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); } }
+function hideMenuTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("inverted basic"); } }
 
 function ClickEvents() {
 	$("#game-menu").on("click", "button", function () {
