@@ -68,15 +68,15 @@ var Market = {
 };
 
 var Technologies = {
-    0: { name: "Rusty mining drone", desc: "A mining drone", gain: 1, type: 0, req1: 3, nbr1: 1, req2: 0, nbr2: 5, },
-    1: { name: "Basic mining drone", desc: "A mining drone", gain: 9, type: 0, req1: 3, nbr1: 10, req2: 4, nbr2: 10, },
-    2: { name: "Basic mining drone MK2", desc: "A mining drone", gain: 40, type: 0, req1: 3, nbr1: 15, req2: 4, nbr2: 20, },
-    3: { name: "Advanced mining drone", desc: "A mining drone", gain: 450, type: 0, req1: 3, nbr1: 25, req2: 6, nbr2: 25, },
-    4: { name: "Alien mining drone", desc: "A mining drone", gain: 4500, type: 0, req1: 3, nbr1: 50, req2: 7, nbr2: 50, },
-    5: { name: "Advanced alien mining drone", desc: "A mining drone", gain: 45000, type: 0, req1: 3, nbr1: 100, req2: 12, nbr2: 100, },
-    6: { name: "Advanced alien mining drone MK2", desc: "A mining drone", gain: 950000, type: 0, req1: 3, nbr1: 150, req2: 12, nbr2: 100, },
-    7: { name: "Dimensional mining drone", desc: "A mining drone", gain: 99000000, type: 0, req1: 3, nbr1: 200, req2: 16, nbr2: 500, },
-    8: { name: "Time-travelling mining drone", desc: "A mining drone", gain: 901000000, type: 0, req1: 3, nbr1: 200, req2: 16, nbr2: 1000, },
+    0: { name: "Rusty mining drone", desc: "A mining drone", cost: 100, gain: 1, type: 0, req1: 3, nbr1: 5, req2: 0, nbr2: 5, },
+    1: { name: "Basic mining drone", desc: "A mining drone", cost: 1000, gain: 9, type: 0, req1: 3, nbr1: 10, req2: 4, nbr2: 10, },
+    2: { name: "Basic mining drone MK2", desc: "A mining drone", cost: 5000, gain: 40, type: 0, req1: 3, nbr1: 20, req2: 4, nbr2: 20, },
+    3: { name: "Advanced mining drone", desc: "A mining drone", cost: 50000, gain: 450, type: 0, req1: 3, nbr1: 30, req2: 6, nbr2: 30, },
+    4: { name: "Alien mining drone", desc: "A mining drone", cost: 500000, gain: 4500, type: 0, req1: 3, nbr1: 50, req2: 7, nbr2: 50, },
+    5: { name: "Advanced alien mining drone", desc: "A mining drone", cost: 5000000, gain: 45000, type: 0, req1: 3, nbr1: 100, req2: 12, nbr2: 100, },
+    6: { name: "Advanced alien mining drone MK2", desc: "A mining drone", cost: 100000000, gain: 950000, type: 0, req1: 3, nbr1: 200, req2: 12, nbr2: 200, },
+    7: { name: "Dimensional mining drone", desc: "A mining drone", cost: 10000000000, gain: 99000000, type: 0, req1: 3, nbr1: 500, req2: 16, nbr2: 500, },
+    8: { name: "Time mining drone", desc: "A mining drone", cost: 100000000000, gain: 901000000, type: 0, req1: 3, nbr1: 1000, req2: 16, nbr2: 1000, },
 };
 
 var SystemMult = {

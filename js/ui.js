@@ -91,7 +91,7 @@ function GenMarket() {
 //GENERATE STATION
 
 function GenStation() {
-	$('#system0ss').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Technology</th><th class='ui center aligned'>Require</th><th class='ui center aligned'>Action</th></tr></thead>");
+	$('#system0ss').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Technology</th><th class='ui center aligned'>Require</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>");
 
 	for (var i in Technologies) {
 		var offer = Technologies[i];
@@ -116,9 +116,10 @@ function GenStation() {
 			if (buy2 > 0) {
 				buyable = "";
 				buyVar = 1;
-			} else { buyable = "disabled"; buyVar = 0; }
-		} else { buyable = "disabled"; buyVar = 0; }
-		if (Game.technologies[i] == 1) { buyable = "disabled"; buyVar = 0; buytext = "Activated"; } else { buytext = "Create"; }
+				pricecolor = "vert";
+			} else { buyable = "disabled"; buyVar = 0; pricecolor = "rouge"; }
+		} else { buyable = "disabled"; buyVar = 0; pricecolor = "rouge"; }
+		if (Game.technologies[i] == 1) { buyable = "disabled"; buyVar = 0; buytext = "Activated"; pricecolor = "noir"; } else { buytext = "Create"; }
 
 		var require = requiretext1 + "<img class='ui avatar image' src='images/items/" + offer.req1 + ".png'><br>" + requiretext2 + "<img class='ui avatar image' src='images/items/" + offer.req2 + ".png'>";
 
@@ -134,6 +135,7 @@ function GenStation() {
 			"<td class='center aligned'>" + description + "</td>" +
 			"<td class='center aligned type3'> " + type + "</td>" +
 			"<td class='center aligned'> " + require + "</td>" +
+			"<td class='center aligned'><i class='green dollar sign icon'></i><font class='" + pricecolor + "'>" + fix(offer.cost, 1) + "</font></td>" +
 			"<td class='center aligned'></button><button class='ui " + buyable + " red button' onClick='buyupgrade(" + i + ", " + buyVar + ", " + offer.req1 + ", " + offer.nbr1 + ", " + offer.req2 + ", " + offer.nbr2 + ");'>" + buytext + "</button></td>" +
 			"</tr>"
 		);
@@ -143,11 +145,17 @@ function GenStation() {
 
 //UI FUNCTIONS
 
+function hideModals() { for (var id = 1; id < 6; id++) { $('#modal-' + id).modal('hide'); } }
 function hidesystems() { for (var id = 0; id < 17; id++) { $("#system" + id).hide(); } }
 function hideTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); } }
 function hideMenuTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("inverted basic"); } }
 
 function ClickEvents() {
+	$("#modalmenu").on("click", "a", function () {
+		var id = $(this).data('id');
+		$('#modal-' + id).modal('show');
+		$('.ui.sidebar').sidebar('toggle');
+	});
 	$("#game-menu").on("click", "button", function () {
 		var id = $(this).data('id'); hideMenuTabs();
 		$("#tab" + id).show();

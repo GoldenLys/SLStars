@@ -2,7 +2,8 @@
 
 <head>
     <title>SpaceL is loading..</title>
-    <meta charset="UTF-8" name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <meta charset="UTF-8" name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+    />
 </head>
 <link rel="shortcut icon" type="image/x-icon" href="../images/spaceL.ico" />
 <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" />
@@ -15,27 +16,26 @@
 <script src="dropdown.min.js"></script>
 <script src="sidebar.min.js"></script>
 
-<link href="style.css?v=1.54" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=1.54"></script>
-<script src="js/data.js?v=1.54"></script>
-<script src="js/core.js?v=1.54"></script>
-<script src="js/ui.js?v=1.54"></script>
+<link href="style.css?v=1.55" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=1.55"></script>
+<script src="js/data.js?v=1.55"></script>
+<script src="js/core.js?v=1.55"></script>
+<script src="js/ui.js?v=1.55"></script>
 
 <body id="body" class="noselect" oncontextmenu="return true;">
     <!--SIDE BAR-->
     <div id="sidebar" class="ui left demo vertical visible inverted sidebar labeled icon menu">
-        <a class="item" id="menu1" data-id="1">
-            <i class="space shuttle icon"></i>Exploration</a>
-        <a class="item" id="menu2" data-id="2">
-            <i class="dollar icon"></i>Market</a>
-        <a class="item" id="menu3" data-id="3">
-            <i class="flask icon"></i>Technologies</a>
+        <div id="modalmenu">
+            <a class="item" id="modal1" data-id="1">
+                <i class="save icon"></i>Save</a>
+        </div>
         <a class="item" id="menu4" data-id="4">
             <i class="info icon"></i>How to play ?</a>
         <a class="item" id="menu5" data-id="5">
             <i class="clipboard icon"></i>Contact</a>
         <a class="item" target="_blank" href="https://www.paypal.me/Aizen45/1">
             <i class="paypal icon"></i>Give a coffee ♥</a>
+
     </div>
     <div class="pusher">
         <!--TOP MENU-->
@@ -195,7 +195,7 @@
                 <!--SPACE MARKET-->
                 <div id="tab2" style="display: none; width: 100%; height: 97%; overflow: auto;">
                     <div class="ui black message">
-                        <p class="type2 title text" id="Title">Space Market</p>
+                        <p class="type2 title text" id="Title">Market</p>
                         <table id="system0sm" class="ui inverted table"></table>
                     </div>
                 </div>
@@ -203,7 +203,7 @@
                 <!--SPACE STATION-->
                 <div id="tab3" style="display: none; width: 100%; height: 97%; overflow: auto;">
                     <div class="ui black message">
-                        <p class="type2 title text" id="Title">Space Station</p>
+                        <p class="type2 title text" id="Title">Technologies</p>
                         <table id="system0ss" class="ui inverted table"></table>
                     </div>
                 </div>
@@ -236,6 +236,32 @@
                             Join our community :
                             <a class="rouge type1" href="https://discord.gg/esXaYdV">discord.gg/esXaYdV</a>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <!--SAVE-->
+            <div class="ui basic modal" id="modal-1">
+                <div class="ui icon header">
+                    <i class="save icon"></i>
+                    <font id="savemenu" class="title blanc"></font>
+                </div>
+                <div class="center content">
+                    <p>Here you can export your save to another naviator or computer.</p>
+                    <p>You can also reset your save to start a new game.</p>
+                    <div id="exportBody"></div>
+                    <p id='debugtext' class='copytext'></p>
+                </div>
+                <div class="actions">
+                    <div class="three ui buttons">
+                        <button onClick="exportSave();" id="btnExport" class="ui green inverted button">Export</button>
+                        <button onClick="importSave();" id="btnExport" class="ui green inverted button">Import</button>
+                        <button onClick="confirmReset();" id="Recommencer" class="ui red button">Reset</button>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="fluid ui buttons">
+                        <div onclick="hideModals();" class="ui red basic inverted button">
+                            <i class="remove icon"></i>Close </div>
                     </div>
                 </div>
             </div>

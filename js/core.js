@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.54";
+var version = "v1.55";
 var sitename = "SpaceL";
 var announces = "Welcome to SpaceL " + version;
 var Game = {
@@ -39,15 +39,15 @@ function explore(id) {
     if (Game.cash >= Missions[id].price) {
         if (Game.explored[id] != 1) {
             Game.cash -= Missions[id].price / 2;
-            Game.cash += Missions[id].money / 2;
+            // Game.cash += Missions[id].money / 2;
             Game.inventory[Missions[id].type] += Missions[id].nbr * 2;
             Game.explored[id] = 1;
             Game.rank++;
         } else {
             Game.cash -= Missions[id].price;
-            Game.cash += Missions[id].money;
+            // Game.cash += Missions[id].money;
             Game.inventory[Missions[id].type] += Missions[id].nbr;
-            Game.rank=Game.rank+1*Game.system;
+            Game.rank = Game.rank + 1 + (1 * Game.system);
         }
     } else {
         console.log("Not enough cash");
@@ -68,10 +68,13 @@ function sellitem(id, qty) {
 function buyupgrade(id, buyable, req1, nbr1, req2, nbr2) {
     if (buyable > 0) {
         if (Game.technologies[id] != 1) {
-            Game.inventory[req1] -= nbr1;
-            Game.inventory[req2] -= nbr2;
-            if (Technologies[id].type == 0) { Game.cashps += Technologies[id].gain; }
-            Game.technologies[id] = 1;
+            if (Game.cash >= Technologies[id].cost) {
+                Game.inventory[req1] -= nbr1;
+                Game.inventory[req2] -= nbr2;
+                Game.cash -= Technologies[id].cost;
+                if (Technologies[id].type == 0) { Game.cashps += Technologies[id].gain; }
+                Game.technologies[id] = 1;
+            }
         }
     }
 
