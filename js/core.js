@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.6";
+var version = "v1.61";
 var sitename = "SpaceL";
 var announces = "Welcome to SpaceL " + version;
 var Game = {
@@ -37,20 +37,19 @@ function UpdateGame() {
 
 function explore(id) {
     if (Game.cash >= Missions[id].price) {
-        if (Game.explored[id] != 1) {
-            Game.cash -= Missions[id].price / 2;
-            // Game.cash += Missions[id].money / 2;
-            Game.inventory[Missions[id].type] += Missions[id].nbr * 2;
-            Game.explored[id] = 1;
-            Game.rank++;
-        } else {
+        if (Game.explored[id] > 0) {
             Game.cash -= Missions[id].price;
-            // Game.cash += Missions[id].money;
             Game.inventory[Missions[id].type] += Missions[id].nbr;
             Game.rank = Game.rank + 1 + (1 * Game.system);
         }
-    } else {
-        console.log("Not enough cash");
+    }
+    if (Game.explored[i] < 1) {
+        if (Game.cash >= Missions[id].price / 2) {
+            Game.cash -= Missions[id].price / 2;
+            Game.inventory[Missions[id].type] += Missions[id].nbr * 2;
+            Game.explored[id] = 1;
+            Game.rank = Game.rank + 1 + (1 * Game.system);
+        }
     }
     UpdateUI();
     save();
