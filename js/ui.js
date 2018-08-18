@@ -120,7 +120,7 @@ function GenStation() {
 			} else { buyable = "disabled"; buyVar = 0; pricecolor = "rouge"; }
 		} else { buyable = "disabled"; buyVar = 0; pricecolor = "rouge"; }
 		if (Game.technologies[i] == 1) { buyable = "disabled"; buyVar = 0; buytext = "Activated"; pricecolor = "noir"; } else { buytext = "Create"; }
-
+        if (Game.cash < offer.cost) { pricecolor="rouge"; buyable = "disabled"; buyVar = 0; }
 		var require = requiretext1 + "<img class='ui avatar image' src='images/items/" + offer.req1 + ".png'><br>" + requiretext2 + "<img class='ui avatar image' src='images/items/" + offer.req2 + ".png'>";
 
 		name = "<span class='Palladium'><font class='type2'>" + offer.name + "</font></span>";
