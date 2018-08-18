@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.55";
+var version = "v1.6";
 var sitename = "SpaceL";
 var announces = "Welcome to SpaceL " + version;
 var Game = {
@@ -18,7 +18,7 @@ var Game = {
 //LOADING BASE CODE & DEBUG IF NEEDED
 
 $(document).ready(function () {
-    if (localStorage.getItem("SpaceL1") != null) { load(); }
+    if (localStorage.getItem("SpaceL2") != null) { load(); }
     setInterval(function () { UpdateGame(); }, 1000);
     UpdateTexts();
     ClickEvents();

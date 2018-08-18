@@ -1,8 +1,8 @@
 ﻿var UpdateUI = function () {
-	for (var inv = 0; inv < 18; inv++) { $("#inv" + inv).html(" <font class='" + SetColor(Game.inventory[inv]) + "'>" + Game.inventory[inv] + "</font>"); }
 	$("#money").html("" + fix(Game.cash, 1) + " + <font class='bold vert'>" + fix(Game.cashps, 1) + "</font>/s");
 	$("#rank").html("" + fix(Game.rank, 1) + "");
 	$('#system-select').val(texts.systemname[Game.system]);
+	GenInventory();
 	GenMissions();
 	GenMarket();
 	GenStation();
@@ -120,7 +120,7 @@ function GenStation() {
 			} else { buyable = "disabled"; buyVar = 0; pricecolor = "rouge"; }
 		} else { buyable = "disabled"; buyVar = 0; pricecolor = "rouge"; }
 		if (Game.technologies[i] == 1) { buyable = "disabled"; buyVar = 0; buytext = "Activated"; pricecolor = "noir"; } else { buytext = "Create"; }
-        if (Game.cash < offer.cost) { pricecolor="rouge"; buyable = "disabled"; buyVar = 0; }
+		if (Game.cash < offer.cost) { pricecolor = "rouge"; buyable = "disabled"; buyVar = 0; }
 		var require = requiretext1 + "<img class='ui avatar image' src='images/items/" + offer.req1 + ".png'><br>" + requiretext2 + "<img class='ui avatar image' src='images/items/" + offer.req2 + ".png'>";
 
 		name = "<span class='Palladium'><font class='type2'>" + offer.name + "</font></span>";
@@ -199,5 +199,13 @@ function AddTravelPoints() {
 	if (Game.rank >= 2500) { $("#system-select").append("<option id='V6' value='6'>" + texts.systemname[6] + "</option>"); }
 	if (Game.rank >= 5000) { $("#system-select").append("<option id='V7' value='7'>" + texts.systemname[7] + "</option>"); }
 	if (Game.rank >= 10000) { $("#system-select").append("<option id='V8' value='8'>" + texts.systemname[8] + "</option>"); }
+	if (Game.rank >= 100000) { $("#system-select").append("<option id='V9' value='9'>" + texts.systemname[9] + "</option>"); }
 	$('#system-select').val(texts.systemname[Game.system]);
+}
+
+function GenInventory() {
+	$("#inventory").html("");
+	for (var id in texts.items) {
+		$("#inventory").append("<span class='Palladium'><font class='bold " + SetColor(Game.inventory[id]) + "'>" + Game.inventory[id] + "</font> " + texts.items[id] + " </span><img class='ui avatar image' src='images/items/" + id + ".png'><br>");
+	}
 }
