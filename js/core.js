@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.62";
+var version = "v1.63";
 var sitename = "SpaceL";
 var announces = "Welcome to SpaceL " + version;
 var Game = {
@@ -43,7 +43,7 @@ function explore(id) {
             Game.rank = Game.rank + 1 + (1 * Game.system);
         }
     }
-    if (Game.explored[i] < 1) {
+    if (Game.explored[id] < 1) {
         if (Game.cash >= Missions[id].price / 2) {
             Game.cash -= Missions[id].price / 2;
             Game.inventory[Missions[id].type] += Missions[id].nbr * 2;
