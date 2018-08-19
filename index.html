@@ -16,11 +16,11 @@
 <script src="dropdown.min.js"></script>
 <script src="sidebar.min.js"></script>
 
-<link href="style.css?v=1.63" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=1.63"></script>
-<script src="js/data.js?v=1.63"></script>
-<script src="js/core.js?v=1.63"></script>
-<script src="js/ui.js?v=1.63"></script>
+<link href="style.css?v=1.64" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=1.64"></script>
+<script src="js/data.js?v=1.64"></script>
+<script src="js/core.js?v=1.64"></script>
+<script src="js/ui.js?v=1.64"></script>
 
 <body id="body" class="noselect" oncontextmenu="return true;">
     <!--SIDE BAR-->
@@ -49,15 +49,17 @@
                     </div>
                 </div>
             </div>
-            <div class="ui inverted secondary menu" id="game-menu" style="width:100%;">
+            <div class="ui inverted secondary menu" style="width:100%;">
                 <button id="sidebar" class="ui button item">
                     <i class="sidebar icon"></i>Menu</button>
-                <button class="ui inverted basic button item" id="t1" data-id="1">
-                    <i class="space shuttle icon"></i>Exploration</button>
-                <button class="ui button item" id="t2" data-id="2">
-                    <i class="dollar list icon"></i>Market</button>
-                <button class="ui button item" id="t3" data-id="3">
-                    <i class="flask icon"></i>Technologies</button>
+                <div class="item" id="game-menu">
+                    <button class="ui inverted basic button item" id="t1" data-id="1">
+                        <i class="space shuttle icon"></i>Exploration</button>
+                    <button class="ui button item" id="t2" data-id="2">
+                        <i class="dollar list icon"></i>Market</button>
+                    <button class="ui button item" id="t3" data-id="3">
+                        <i class="flask icon"></i>Technologies</button>
+                </div>
                 <div class="right menu">
                     <div class="item">
                         <marquee class="type1" direction="left" behavior="scroll" scrollamount="6" style="font-size:22pt;color:#ffffff; " id="announces">.</marquee>

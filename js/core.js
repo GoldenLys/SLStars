@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.63";
+var version = "v1.64";
 var sitename = "SpaceL";
 var announces = "Welcome to SpaceL " + version;
 var Game = {
