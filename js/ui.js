@@ -1,4 +1,5 @@
 ﻿var UpdateUI = function () {
+	if (Game.fl == 0) { $("#modal-2").modal('show'); }
 	$("#money").html("" + fix(Game.cash, 1) + " + <font class='bold vert'>" + fix(Game.cashps, 1) + "</font>/s");
 	$("#rank").html("" + fix(Game.rank, 1) + "");
 	$('#system-select').val(texts.systemname[Game.system]);
@@ -7,6 +8,7 @@
 	GenMarket();
 	GenStation();
 	AddTravelPoints();
+	setTutorial(Game.tutorial);
 };
 
 function UpdateTexts() {
@@ -91,7 +93,7 @@ function GenMarket() {
 //GENERATE STATION
 
 function GenStation() {
-	$('#system0ss').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Technology</th><th class='ui center aligned'>Require</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>");
+	$('#system0ss').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Technology</th><th class='ui center aligned'>Require</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
 
 	for (var i in Technologies) {
 		var offer = Technologies[i];
@@ -131,7 +133,7 @@ function GenStation() {
 			"<td class='center aligned type3'> " + type + "</td>" +
 			"<td class='center aligned'>" + requiretext1 + "<img class='ui avatar image' src='images/items/" + offer.req1 + ".png'><br>" + requiretext2 + "<img class='ui avatar image' src='images/items/" + offer.req2 + ".png'></td>" +
 			"<td class='center aligned'>" + cost + "</td>" +
-			"<td class='center aligned'></button><button class='ui " + buyable + " red button' " + visible + " onClick='buyupgrade(" + i + ", " + buyVar + ", " + offer.req1 + ", " + offer.nbr1 + ", " + offer.req2 + ", " + offer.nbr2 + ");'>" + buytext + "</button></td>" +
+			"<td class='center aligned'><button class='ui " + buyable + " red button' " + visible + " onClick='buyupgrade(" + i + ", " + buyVar + ", " + offer.req1 + ", " + offer.nbr1 + ", " + offer.req2 + ", " + offer.nbr2 + ");'>" + buytext + "</button></td>" +
 			"</tr>"
 		);
 		if (Game.technologies[i] == 1) { $('#system0ss').append(SYSTEMDIV); }
@@ -147,41 +149,15 @@ function hideTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); }
 function hideMenuTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("inverted basic"); } }
 
 function ClickEvents() {
-	$("#modalmenu").on("click", "a", function () {
-		var id = $(this).data('id');
-		$('#modal-' + id).modal('show');
-		$('.ui.sidebar').sidebar('toggle');
-	});
-	$("#game-menu").on("click", "button", function () {
-		var id = $(this).data('id'); hideMenuTabs();
-		$("#tab" + id).show();
-		$("#t" + id).addClass("inverted basic");
-	});
-	$("#sidebar").on("click", "a", function () {
-		var id = $(this).data('id'); hideTabs();
-		$("#tab" + id).show();
-		$('.ui.sidebar').sidebar('toggle');
-	});
+	$("#modalmenu").on("click", "a", function () { var id = $(this).data('id'); $('#modal-' + id).modal('show'); $('.ui.sidebar').sidebar('toggle'); });
+	$("#game-menu").on("click", "button", function () { var id = $(this).data('id'); hideMenuTabs(); $("#tab" + id).show(); $("#t" + id).addClass("inverted basic"); });
+	$("#sidebar").on("click", "a", function () { var id = $(this).data('id'); hideTabs(); $("#tab" + id).show(); $('.ui.sidebar').sidebar('toggle'); });
 	$('#select').dropdown();
 	$('.ui.dropdown').dropdown();
-	$("#system-select").change(function () {
-		var id = $(this).val();
-		hidesystems();
-		Game.system = id;
-		$('#system' + id).show();
-		$("#V" + id).addClass('active');
-	});
-	$("#top-menu").on("click", "#sidebar", function () {
-		$('.ui.sidebar').sidebar('toggle');
-	});
-	$("#endmessages").on("click", "#ViewContact", function () {
-		hideTabs();
-		$("#tab4").show();
-	});
-	$("#how").on("click", "#ViewContact", function () {
-		hideTabs();
-		$("#tab4").show();
-	});
+	$("#system-select").change(function () { var id = $(this).val(); hidesystems(); Game.system = id; $('#system' + id).show(); $("#V" + id).addClass('active'); });
+	$("#top-menu").on("click", "#sidebar", function () { $('.ui.sidebar').sidebar('toggle'); });
+	$("#endmessages").on("click", "#ViewContact", function () { hideTabs(); $("#tab4").show(); });
+	$("#how").on("click", "#ViewContact", function () { hideTabs(); $("#tab4").show(); });
 }
 
 function AddTravelPoints() {
@@ -202,6 +178,29 @@ function AddTravelPoints() {
 function GenInventory() {
 	$("#inventory").html("");
 	for (var id in texts.items) {
-		$("#inventory").append("<span class='Palladium'><font class='bold " + SetColor(Game.inventory[id]) + "'>" + Game.inventory[id] + "</font> " + texts.items[id] + " </span><img class='ui avatar image' src='images/items/" + id + ".png'><br>");
+		if (Game.inventory[id] > 0) { $("#inventory").append("<span class='Palladium'><font class='bold " + SetColor(Game.inventory[id]) + "'>" + Game.inventory[id] + "</font> " + texts.items[id] + " </span><img class='ui avatar image' src='images/items/" + id + ".png'><br>"); }
 	}
+}
+
+function setTutorial(id) {
+	Game.tutorial = id;
+	$("#tutorial-title").html("Guide - " + tutorials[id].title);
+	$("#tutorial-text").html(tutorials[id].text);
+
+	if (Game.tutorial == 0) { $("#tuto-prev").addClass("disabled"); }
+	else { $("#tuto-prev").removeClass("disabled"); }
+
+	if (Game.tutorial == 3) { $("#tuto-next").addClass("disabled"); }
+	else { $("#tuto-next").removeClass("disabled"); }
+}
+
+function closeTutorial() { hideModals(); Game.tutorial = 0; }
+
+function NextTuto() {
+	if (Game.fl == 0) { Game.fl = 1; }
+	if (Game.tutorial < 3) { Game.tutorial++; setTutorial(Game.tutorial); }
+}
+
+function PrevTuto() {
+	if (Game.tutorial >= 1) { Game.tutorial--; setTutorial(Game.tutorial); }
 }

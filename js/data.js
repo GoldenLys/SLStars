@@ -52,7 +52,7 @@ var Missions = {
     42: { name: '2', desc: 'Alien spaceship', price: 1000000, type: 18, nbr: 1, system: 8 },
     43: { name: '3', desc: 'Alien spaceship', price: 13000000, type: 16, nbr: 100, system: 8 },
     44: { name: '4', desc: 'Alien spaceship', price: 3000000, type: 12, nbr: 100, system: 8 },
-    45: { name: '5', desc: 'Alien spaceship', price: 550000, type: 10, nbr: 100, system: 8 }, 
+    45: { name: '5', desc: 'Alien spaceship', price: 550000, type: 10, nbr: 100, system: 8 },
     46: { name: '6', desc: 'Alien spaceship', price: 125000, type: 5, nbr: 200, system: 8 }, //SYSTEM 9
 
     47: { name: '1', desc: 'Alien planet', price: 1250000, type: 9, nbr: 1000, system: 9 },
@@ -113,3 +113,10 @@ var texts = {
     systemname: ["Lysen", "Zelas", "Centra", "Vecis", "Ivurd", "Sentori", "Fasis", "Luya", "Kisae", "Gaia"],
     items: ["Copper", "Zinc", "Nickel", "Thamium9", "Iron", "Gold", "Aluminium", "Platinum", "Iridium", "Carbon", "Plutonium", "Antimatter", "Titanium", "Heridium", "Radnox", "Emeril", "Omegon", "Cymatygen", "Rubeum"]
 };
+
+var tutorials = {
+    0: { title: "How to play ?", text: "You can start by making money with an exploration mission,<br> then sell your merchandise to the market.", },
+    1: { title: "Exploration", text: "The base mission of the game,<br> where you can get materials and also unlock new planets.", },
+    2: { title: "Market", text: "The space market is a place to gain money,<br> the prices are different on certain systems.", },
+    3: { title: "Technologies", text: "Technologies can enable auto-mining drones to automatically get money.", },
+}

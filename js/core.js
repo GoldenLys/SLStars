@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.64";
+var version = "v1.7";
 var sitename = "SpaceL";
 var announces = "Welcome to SpaceL " + version;
 var Game = {
@@ -13,6 +13,8 @@ var Game = {
     cashps: 0,
     shipname: "Unusable spaceship",
     technologies: [],
+    tutorial: 0,
+    fl: 0,
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED

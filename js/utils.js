@@ -48,7 +48,7 @@ function fix(x, type) {
 			return beautify(x, 3);
 		else
 			return beautify(x, 0);
-}		
+}
 
 function getDate() {
 	var today = new Date();

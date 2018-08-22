@@ -16,11 +16,11 @@
 <script src="dropdown.min.js"></script>
 <script src="sidebar.min.js"></script>
 
-<link href="style.css?v=1.64" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=1.64"></script>
-<script src="js/data.js?v=1.64"></script>
-<script src="js/core.js?v=1.64"></script>
-<script src="js/ui.js?v=1.64"></script>
+<link href="style.css?v=1.7" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=1.7"></script>
+<script src="js/data.js?v=1.7"></script>
+<script src="js/core.js?v=1.7"></script>
+<script src="js/ui.js?v=1.7"></script>
 
 <body id="body" class="noselect" oncontextmenu="return true;">
     <!--SIDE BAR-->
@@ -28,9 +28,9 @@
         <div id="modalmenu">
             <a class="item" id="modal1" data-id="1">
                 <i class="save icon"></i>Save</a>
+                <a class="item" id="modal2" data-id="2">
+                    <i class="info icon"></i>Guide</a>
         </div>
-        <a class="item" id="menu4" data-id="4">
-            <i class="info icon"></i>How to play ?</a>
         <a class="item" id="menu5" data-id="5">
             <i class="clipboard icon"></i>Contact</a>
         <a class="item" target="_blank" href="https://www.paypal.me/Aizen45/1">
@@ -126,14 +126,6 @@
                     </div>
                 </div>
 
-                <!--HOW TO PLAY-->
-                <div id="tab4" style="display: none; width: 100%;">
-                    <div id="how" class="ui black message">
-                        <p class="type2 title text" id="Title">HOW TO PLAY</p>
-                        <p class="text">it is still a work in progress and so there isn't a tutorial right now. :(</p>
-                    </div>
-                </div>
-
                 <!--CONTACT-->
                 <div id="tab5" style="display: none; width: 100%;">
                     <div class="ui black message">
@@ -183,6 +175,27 @@
                     </div>
                 </div>
             </div>
+
+            <!--TUTORIAL-->
+            <div class="ui basic modal" id="modal-2">
+
+                <div class="ui icon header">
+                    <i class="info icon"></i>
+                    <font id="tutorial-title" class="title blanc"></font>
+                </div>
+                <div class="centrer content">
+                    <p id="tutorial-text"></p>
+                </div>
+                <div class="actions">
+                    <div class="large three ui buttons">
+                        <button onClick="PrevTuto();" id="tuto-prev" class="ui inverted basic button">Previous</button>
+                        <button onClick="NextTuto();" id="tuto-next" class="ui green inverted basic button">Next</button>
+                        <div onclick="closeTutorial();" class="ui red basic inverted button">
+                            <i class="remove icon"></i>Close </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
