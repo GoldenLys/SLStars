@@ -33,6 +33,7 @@ function UpdateGame() {
     Game.cash += Game.cashps;
     for (var inv in texts.items) { if (Game.inventory[inv] == null) { Game.inventory[inv] = 0; } }
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
+    for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
     UpdateUI();
     save();
 }
