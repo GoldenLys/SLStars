@@ -137,7 +137,7 @@ function GenStation() {
 			"</tr>"
 		);
 		if (Game.technologies[i] == 1) { $('#system0ss').append(SYSTEMDIV); }
-		else { if (Game.technologies[i - 1] == 1) { $('#system0ss').append(SYSTEMDIV); } }
+		else { if (Game.technologies[i - 1] == 1) { $('#system0ss').append(SYSTEMDIV); } else if(Game.technologies[0] == 0) { $('#system0ss').append(SYSTEMDIV); } }
 	}
 }
 
