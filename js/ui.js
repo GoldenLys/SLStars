@@ -36,6 +36,7 @@ function GenMissions() {
 	for (var i in Missions) {
 		var offer = Missions[i];
 		var canbuy = Game.cash < offer.price ? ' disabled' : '';
+		if (Game.explored[i] == 0) { canbuy = Game.cash < offer.price / 2 ? ' disabled' : ''; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
 		var rewardstext = SetColor(rewards);
@@ -137,7 +138,7 @@ function GenStation() {
 			"</tr>"
 		);
 		if (Game.technologies[i] == 1) { $('#system0ss').append(SYSTEMDIV); }
-		if (i == 0) { if(Game.technologies[0] == 0) { $('#system0ss').append(SYSTEMDIV); } }
+		if (i == 0) { if (Game.technologies[0] == 0) { $('#system0ss').append(SYSTEMDIV); } }
 		else { if (Game.technologies[i - 1] == 1) { $('#system0ss').append(SYSTEMDIV); } }
 	}
 }
