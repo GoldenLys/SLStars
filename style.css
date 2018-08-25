@@ -19,7 +19,6 @@
 }
 
 #colonne-m {
-    text-align: center;
     padding-left: 4rem;
     padding-right: 0rem;
     width: 20%;
@@ -146,7 +145,7 @@
 }
 
 .ui.black.message, .ui.inverted.message {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .text {
@@ -233,4 +232,8 @@ body ::-webkit-scrollbar-track {
 
 .topmenu-space {
     padding: 4vh;
+}
+
+.centrer {
+    text-align: center;
 }

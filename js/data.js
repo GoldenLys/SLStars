@@ -119,4 +119,4 @@ var tutorials = {
     1: { title: "Exploration", text: "The base mission of the game,<br> where you can get materials and also unlock new planets.", },
     2: { title: "Market", text: "The space market is a place to gain money,<br> the prices are different on certain systems.", },
     3: { title: "Technologies", text: "Technologies can enable auto-mining drones to automatically get money.", },
-}
+};

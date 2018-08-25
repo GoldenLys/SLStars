@@ -2,7 +2,6 @@
 	if (Game.fl == 0) { $("#modal-2").modal('show'); }
 	$("#money").html("" + fix(Game.cash, 1) + " + <font class='bold vert'>" + fix(Game.cashps, 1) + "</font>/s");
 	$("#rank").html("" + fix(Game.rank, 1) + "");
-	$('#system-select').val(texts.systemname[Game.system]);
 	GenInventory();
 	GenMissions();
 	GenMarket();
@@ -12,7 +11,6 @@
 };
 
 function UpdateTexts() {
-	$("#announces").html(announces);
 	document.title = sitename + " " + version;
 }
 
@@ -156,25 +154,27 @@ function ClickEvents() {
 	$("#sidebar").on("click", "a", function () { var id = $(this).data('id'); hideTabs(); $("#tab" + id).show(); $('.ui.sidebar').sidebar('toggle'); });
 	$('#select').dropdown();
 	$('.ui.dropdown').dropdown();
-	$("#system-select").change(function () { var id = $(this).val(); hidesystems(); Game.system = id; $('#system' + id).show(); $("#V" + id).addClass('active'); });
+
+	$("#selection-content").on("click", "div", function () { var id = $(this).data('id'); hidesystems(); Game.system = id; $('#system' + id).show(); });
+	
 	$("#top-menu").on("click", "#sidebar", function () { $('.ui.sidebar').sidebar('toggle'); });
 	$("#endmessages").on("click", "#ViewContact", function () { hideTabs(); $("#tab4").show(); });
 	$("#how").on("click", "#ViewContact", function () { hideTabs(); $("#tab4").show(); });
 }
 
 function AddTravelPoints() {
-	$("#system-select").html(""); //RESET VIEW
-	$("#system-select").append("<option id='V0' value='0'>" + texts.systemname[0] + "</option>");
-	if (Game.rank >= 10) { $("#system-select").append("<option id='V1' value='1'>" + texts.systemname[1] + "</option>"); }
-	if (Game.rank >= 50) { $("#system-select").append("<option id='V2' value='2'>" + texts.systemname[2] + "</option>"); }
-	if (Game.rank >= 100) { $("#system-select").append("<option id='V3' value='3'>" + texts.systemname[3] + "</option>"); }
-	if (Game.rank >= 250) { $("#system-select").append("<option id='V4' value='4'>" + texts.systemname[4] + "</option>"); }
-	if (Game.rank >= 1000) { $("#system-select").append("<option id='V5' value='5'>" + texts.systemname[5] + "</option>"); }
-	if (Game.rank >= 2500) { $("#system-select").append("<option id='V6' value='6'>" + texts.systemname[6] + "</option>"); }
-	if (Game.rank >= 5000) { $("#system-select").append("<option id='V7' value='7'>" + texts.systemname[7] + "</option>"); }
-	if (Game.rank >= 10000) { $("#system-select").append("<option id='V8' value='8'>" + texts.systemname[8] + "</option>"); }
-	if (Game.rank >= 100000) { $("#system-select").append("<option id='V9' value='9'>" + texts.systemname[9] + "</option>"); }
-	$('#system-select').val(texts.systemname[Game.system]);
+	$("#selection-content").html(""); //RESET VIEW
+	$("#selection-content").append("<div class='item' id='V0' data-id='0'>" + texts.systemname[0] + "</div>");
+	if (Game.rank >= 10) { $("#selection-content").append("<div class='item' id='V1' data-id='1'>" + texts.systemname[1] + "</div>"); }
+	if (Game.rank >= 50) { $("#selection-content").append("<div class='item' id='V2' data-id='2'>" + texts.systemname[2] + "</div>"); }
+	if (Game.rank >= 100) { $("#selection-content").append("<div class='item' id='V3' data-id='3'>" + texts.systemname[3] + "</div>"); }
+	if (Game.rank >= 350) { $("#selection-content").append("<div class='item' id='V4' data-id='4'>" + texts.systemname[4] + "</div>"); }
+	if (Game.rank >= 1000) { $("#selection-content").append("<div class='item' id='V5' data-id='5'>" + texts.systemname[5] + "</div>"); }
+	if (Game.rank >= 2500) { $("#selection-content").append("<div class='item' id='V6' data-id='6'>" + texts.systemname[6] + "</div>"); }
+	if (Game.rank >= 5000) { $("#selection-content").append("<div class='item' id='V7' data-id='7'>" + texts.systemname[7] + "</div>"); }
+	if (Game.rank >= 10000) { $("#selection-content").append("<div class='item' id='V8' data-id='8'>" + texts.systemname[8] + "</div>"); }
+	if (Game.rank >= 100000) { $("#selection-content").append("<div class='item' id='V9' data-id='9'>" + texts.systemname[9] + "</div>"); }
+	$("#selection-text").html(texts.systemname[Game.system]);
 }
 
 function GenInventory() {
