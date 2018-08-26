@@ -85,15 +85,16 @@ var Market = {
 };
 
 var Technologies = {
-    0: { name: "Rusty mining drone", desc: "A mining drone", cost: 100, gain: 1, type: 0, req1: 3, nbr1: 5, req2: 0, nbr2: 5, },
-    1: { name: "Basic mining drone", desc: "A mining drone", cost: 1000, gain: 9, type: 0, req1: 3, nbr1: 10, req2: 4, nbr2: 10, },
-    2: { name: "Basic mining drone MK2", desc: "A mining drone", cost: 5000, gain: 40, type: 0, req1: 3, nbr1: 20, req2: 4, nbr2: 20, },
-    3: { name: "Advanced mining drone", desc: "A mining drone", cost: 50000, gain: 450, type: 0, req1: 10, nbr1: 30, req2: 6, nbr2: 30, },
-    4: { name: "Alien mining drone", desc: "A mining drone", cost: 500000, gain: 4500, type: 0, req1: 10, nbr1: 50, req2: 7, nbr2: 50, },
-    5: { name: "Advanced alien mining drone", desc: "A mining drone", cost: 5000000, gain: 45000, type: 0, req1: 10, nbr1: 100, req2: 12, nbr2: 100, },
-    6: { name: "Advanced alien mining drone MK2", desc: "A mining drone", cost: 100000000, gain: 950000, type: 0, req1: 10, nbr1: 200, req2: 12, nbr2: 200, },
-    7: { name: "Dimensional mining drone", desc: "A mining drone", cost: 10000000000, gain: 99000000, type: 0, req1: 16, nbr1: 500, req2: 11, nbr2: 500, },
-    8: { name: "Time mining drone", desc: "A mining drone", cost: 100000000000, gain: 901000000, type: 0, req1: 16, nbr1: 1000, req2: 17, nbr2: 1000, },
+    0: { name: "Extraction drone", cost: 100, gain: 1, type: 0, req: [3, 5], req2: [0, 5]},
+    1: { name: "Extraction drone Sigma", cost: 1000, gain: 9, type: 0, req: [3, 10], req2: [0, 10]},
+    2: { name: "Extraction drone Tau", cost: 5000, gain: 40, type: 0, req: [3, 20], req2: [4, 20]},
+    3: { name: "Extraction drone Theta", cost: 50000, gain: 450, type: 0, req: [10, 30], req2: [6, 30]},
+    4: { name: "Extraction drone Omega", cost: 500000, gain: 4500, type: 0, req: [10, 50], req2: [7, 50]},
+    5: { name: "Advanced extraction drone", cost: 5000000, gain: 45000, type: 0, req: [10, 100], req2: [12, 100]},
+    6: { name: "Advanced extraction drone Sigma", cost: 100000000, gain: 950000, type: 0, req: [10, 200], req2: [12, 200]},
+    7: { name: "Advanced extraction drone Tau", cost: 10000000000, gain: 99000000, type: 0, req: [16, 500], req2: [11, 500]},
+    8: { name: "Advanced extraction drone Theta", cost: 50000000000, gain: 101000000, type: 0, req: [16, 1000], req2: [17, 1000]},
+    9: { name: "Advanced extraction drone Omega", cost: 100000000000, gain: 801000000, type: 0, req: [16, 2000], req2: [17, 2000]},
 };
 
 var SystemMult = {
@@ -116,7 +117,7 @@ var texts = {
 
 var tutorials = {
     0: { title: "How to play ?", text: "You can start by making money with an exploration mission,<br> then sell your merchandise to the market.", },
-    1: { title: "Exploration", text: "The base mission of the game,<br> where you can get materials and also unlock new planets.", },
-    2: { title: "Market", text: "The space market is a place to gain money,<br> the prices are different on certain systems.", },
+    1: { title: "Exploration", text: "The base mission of the game,<br> where you can get materials and also unlock new systems.", },
+    2: { title: "Market", text: "The space market is a place to gain money,<br> the prices are differents on every system.", },
     3: { title: "Technologies", text: "Technologies can enable auto-mining drones to automatically get money.", },
 };

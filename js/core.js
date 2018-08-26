@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.8";
+var version = "v1.81";
 var sitename = "SpaceL";
 var Game = {
     DateStarted: getDate(),
@@ -20,16 +20,15 @@ var Game = {
 
 $(document).ready(function () {
     if (localStorage.getItem("SpaceL2") != null) { load(); }
-    setInterval(function () { UpdateGame(); }, 1000);
-    UpdateTexts();
+    setInterval(function () { UpdateGame(Game.cashps); }, 1000);
     ClickEvents();
     $(".pusher").css("background-image", "url(images/bg.jpg)");
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
 });
 
-function UpdateGame() {
-    Game.cash += Game.cashps;
+function UpdateGame(cashps) {
+    Game.cash += cashps;
     for (var inv in texts.items) { if (Game.inventory[inv] == null) { Game.inventory[inv] = 0; } }
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }

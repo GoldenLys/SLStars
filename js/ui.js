@@ -1,5 +1,6 @@
 ﻿var UpdateUI = function () {
 	if (Game.fl == 0) { $("#modal-2").modal('show'); }
+	document.title = sitename + " " + version;
 	$("#money").html("" + fix(Game.cash, 1) + " + <font class='bold vert'>" + fix(Game.cashps, 1) + "</font>/s");
 	$("#rank").html("" + fix(Game.rank, 1) + "");
 	GenInventory();
@@ -9,10 +10,6 @@
 	AddTravelPoints();
 	setTutorial(Game.tutorial);
 };
-
-function UpdateTexts() {
-	document.title = sitename + " " + version;
-}
 
 function SetColor(value) {
 	var color = "";
@@ -103,12 +100,12 @@ function GenStation() {
 		var pricecolor = offer.cost > Game.cash ? 'rouge' : 'vert';
 		var cost = "<i class='green dollar sign icon'></i><font class='" + pricecolor + "'>" + fix(offer.cost, 1) + "</font>";
 
-		if (offer.req1 > -1) {
-			requiretext1 = "<font class='" + SetColor(offer.nbr1) + "'>" + offer.nbr1 + "</font> " + texts.items[offer.req1];
-			if (offer.nbr1 <= Game.inventory[offer.req1]) { buy1 = 1; } else { buy1 = 0; }
-			if (offer.req2 > -1) {
-				requiretext2 = "<font class='" + SetColor(offer.nbr2) + "'>" + offer.nbr2 + "</font> " + texts.items[offer.req2];
-				if (offer.nbr2 <= Game.inventory[offer.req2]) { buy2 = 1; } else { buy2 = 0; }
+		if (offer.req[0] > -1) {
+			requiretext1 = "<font class='" + SetColor(offer.req[1]) + "'>" + offer.req[1] + "</font> " + texts.items[offer.req[0]];
+			if (offer.req[1] <= Game.inventory[offer.req[0]]) { buy1 = 1; } else { buy1 = 0; }
+			if (offer.req2[0] > -1) {
+				requiretext2 = "<font class='" + SetColor(offer.req2[1]) + "'>" + offer.req2[1] + "</font> " + texts.items[offer.req2[0]];
+				if (offer.req2[1] <= Game.inventory[offer.req2[0]]) { buy2 = 1; } else { buy2 = 0; }
 			} else { buy2 = 1; }
 		}
 
@@ -130,9 +127,9 @@ function GenStation() {
 			"<tr class=''>" +
 			"<td class='center aligned ui'><span class='Palladium'><font class='type2'>" + offer.name + "</font></span></td>" +
 			"<td class='center aligned type3'> " + type + "</td>" +
-			"<td class='center aligned'>" + requiretext1 + "<img class='ui avatar image' src='images/items/" + offer.req1 + ".png'><br>" + requiretext2 + "<img class='ui avatar image' src='images/items/" + offer.req2 + ".png'></td>" +
+			"<td class='center aligned'>" + requiretext1 + "<img class='ui avatar image' src='images/items/" + offer.req[0] + ".png'><br>" + requiretext2 + "<img class='ui avatar image' src='images/items/" + offer.req2[0] + ".png'></td>" +
 			"<td class='center aligned'>" + cost + "</td>" +
-			"<td class='center aligned'><button class='ui " + buyable + " red button' " + visible + " onClick='buyupgrade(" + i + ", " + buyVar + ", " + offer.req1 + ", " + offer.nbr1 + ", " + offer.req2 + ", " + offer.nbr2 + ");'>" + buytext + "</button></td>" +
+			"<td class='center aligned'><button class='ui " + buyable + " red button' " + visible + " onClick='buyupgrade(" + i + ", " + buyVar + ", " + offer.req[0] + ", " + offer.req[1] + ", " + offer.req2[0] + ", " + offer.req2[1] + ");'>" + buytext + "</button></td>" +
 			"</tr>"
 		);
 		if (Game.technologies[i] == 1) { $('#system0ss').append(SYSTEMDIV); }
@@ -180,7 +177,7 @@ function AddTravelPoints() {
 function GenInventory() {
 	$("#inventory").html("");
 	for (var id in texts.items) {
-		if (Game.inventory[id] > 0) { $("#inventory").append("<span class='Palladium'><font class='bold " + SetColor(Game.inventory[id]) + "'>" + Game.inventory[id] + "</font> " + texts.items[id] + " </span><img class='ui avatar image' src='images/items/" + id + ".png'><br>"); }
+		if (Game.inventory[id] > 0) { $("#inventory").append("<span class='Palladium'><font class='bold " + SetColor(Game.inventory[id]) + "'>" + fix(Game.inventory[id], 1) + "</font> " + texts.items[id] + " </span><img class='ui avatar image' src='images/items/" + id + ".png'><br>"); }
 	}
 }
 
