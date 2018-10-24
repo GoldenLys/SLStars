@@ -85,16 +85,16 @@ var Market = {
 };
 
 var Technologies = {
-    0: { name: "Extraction drone", cost: 100, gain: 1, type: 0, req: [3, 5], req2: [0, 5]},
-    1: { name: "Extraction drone Sigma", cost: 1000, gain: 9, type: 0, req: [3, 10], req2: [0, 10]},
-    2: { name: "Extraction drone Tau", cost: 5000, gain: 40, type: 0, req: [3, 20], req2: [4, 20]},
-    3: { name: "Extraction drone Theta", cost: 50000, gain: 450, type: 0, req: [10, 30], req2: [6, 30]},
-    4: { name: "Extraction drone Omega", cost: 500000, gain: 4500, type: 0, req: [10, 50], req2: [7, 50]},
-    5: { name: "Advanced extraction drone", cost: 5000000, gain: 45000, type: 0, req: [10, 100], req2: [12, 100]},
-    6: { name: "Advanced extraction drone Sigma", cost: 100000000, gain: 950000, type: 0, req: [10, 200], req2: [12, 200]},
-    7: { name: "Advanced extraction drone Tau", cost: 10000000000, gain: 99000000, type: 0, req: [16, 500], req2: [11, 500]},
-    8: { name: "Advanced extraction drone Theta", cost: 50000000000, gain: 101000000, type: 0, req: [16, 1000], req2: [17, 1000]},
-    9: { name: "Advanced extraction drone Omega", cost: 100000000000, gain: 801000000, type: 0, req: [16, 2000], req2: [17, 2000]},
+    0: { name: "Extraction drone", cost: 100, gain: 1, type: 0, req: [3, 5], req2: [0, 5] },
+    1: { name: "Extraction drone Sigma", cost: 1000, gain: 9, type: 0, req: [3, 10], req2: [0, 10] },
+    2: { name: "Extraction drone Tau", cost: 5000, gain: 40, type: 0, req: [3, 20], req2: [4, 20] },
+    3: { name: "Extraction drone Theta", cost: 50000, gain: 450, type: 0, req: [10, 30], req2: [6, 30] },
+    4: { name: "Extraction drone Omega", cost: 500000, gain: 4500, type: 0, req: [10, 50], req2: [7, 50] },
+    5: { name: "Advanced extraction drone", cost: 5000000, gain: 45000, type: 0, req: [10, 100], req2: [12, 100] },
+    6: { name: "Advanced extraction drone Sigma", cost: 100000000, gain: 950000, type: 0, req: [10, 200], req2: [12, 200] },
+    7: { name: "Advanced extraction drone Tau", cost: 10000000000, gain: 99000000, type: 0, req: [16, 500], req2: [11, 500] },
+    8: { name: "Advanced extraction drone Theta", cost: 50000000000, gain: 101000000, type: 0, req: [16, 1000], req2: [17, 1000] },
+    9: { name: "Advanced extraction drone Omega", cost: 100000000000, gain: 801000000, type: 0, req: [16, 2000], req2: [17, 2000] },
 };
 
 var SystemMult = {

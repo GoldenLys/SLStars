@@ -153,7 +153,7 @@ function ClickEvents() {
 	$('.ui.dropdown').dropdown();
 
 	$("#selection-content").on("click", "div", function () { var id = $(this).data('id'); hidesystems(); Game.system = id; $('#system' + id).show(); });
-	
+
 	$("#top-menu").on("click", "#sidebar", function () { $('.ui.sidebar').sidebar('toggle'); });
 	$("#endmessages").on("click", "#ViewContact", function () { hideTabs(); $("#tab4").show(); });
 	$("#how").on("click", "#ViewContact", function () { hideTabs(); $("#tab4").show(); });
