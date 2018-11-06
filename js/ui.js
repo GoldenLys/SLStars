@@ -56,7 +56,7 @@ function GenMissions() {
 //GENERATE MARKET
 
 function GenMarket() {
-	$('#system0sm').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell item</th></tr></thead>");
+	$('#system0sm').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Type</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell item</th></tr></thead>");
 
 	for (var i in Market) {
 		var offer = Market[i];
@@ -79,7 +79,7 @@ function GenMarket() {
 			"<td class='center aligned'>" + description + "</td>" +
 			"<td class='center aligned type3'> " + cost + "</td>" +
 			"<td class='center aligned'> " + inventory + "</td>" +
-			"<td class='center aligned'><div class='ui buttons'><button class='ui " + canSell + " red button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " red button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " red button' onClick='sellitem(" + i + ",100);'>100</button><button class='ui " + canSell1000 + " red button' onClick='sellitem(" + i + ",1000);'>1000</button></div></td>" +
+			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canSell + " button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " button' onClick='sellitem(" + i + ",100);'>100</button><button class='ui " + canSell1000 + " button' onClick='sellitem(" + i + ",1000);'>1000</button></div></td>" +
 			"</tr>"
 		);
 		$('#system0sm').append(SYSTEMDIV);
@@ -95,6 +95,7 @@ function GenStation() {
 		var offer = Technologies[i];
 		var buytext = "";
 		var visible = "";
+		var active = "";
 		var buy1 = 0;
 		var buy2 = 0;
 		var pricecolor = offer.cost > Game.cash ? 'rouge' : 'vert';
@@ -115,8 +116,8 @@ function GenStation() {
 		}
 		else { buyable = "disabled"; buyVar = 0; }
 
-		if (Game.technologies[i] == 1) { buyable = "disabled"; buyVar = 0; cost = "<font class='vert'>Activated</font>"; visible = "style='display:none;'"; }
-		else { buytext = "Create"; }
+		if (Game.technologies[i] == 1) { buyable = "disabled"; buyVar = 0; cost= ""; active = "<font class='vert'>Activated</font>"; visible = "style='display:none;'"; }
+		else { buytext = "Build"; }
 
 		if (Game.cash < offer.cost) { pricecolor = "rouge"; buyable = "disabled"; buyVar = 0; }
 
@@ -129,7 +130,7 @@ function GenStation() {
 			"<td class='center aligned type3'> " + type + "</td>" +
 			"<td class='center aligned'>" + requiretext1 + "<img class='ui avatar image' src='images/items/" + offer.req[0] + ".png'><br>" + requiretext2 + "<img class='ui avatar image' src='images/items/" + offer.req2[0] + ".png'></td>" +
 			"<td class='center aligned'>" + cost + "</td>" +
-			"<td class='center aligned'><button class='ui " + buyable + " red button' " + visible + " onClick='buyupgrade(" + i + ", " + buyVar + ", " + offer.req[0] + ", " + offer.req[1] + ", " + offer.req2[0] + ", " + offer.req2[1] + ");'>" + buytext + "</button></td>" +
+			"<td class='center aligned'>" + active + "<button class='ui " + buyable + " red button' " + visible + " onClick='buyupgrade(" + i + ", " + buyVar + ", " + offer.req[0] + ", " + offer.req[1] + ", " + offer.req2[0] + ", " + offer.req2[1] + ");'>" + buytext + "</button></td>" +
 			"</tr>"
 		);
 		if (Game.technologies[i] == 1) { $('#system0ss').append(SYSTEMDIV); }
@@ -143,11 +144,11 @@ function GenStation() {
 function hideModals() { for (var id = 1; id < 6; id++) { $('#modal-' + id).modal('hide'); } }
 function hidesystems() { for (var id = 0; id < 17; id++) { $("#system" + id).hide(); } }
 function hideTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); } }
-function hideMenuTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("inverted basic"); } }
+function hideMenuTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("spacelborder"); } }
 
 function ClickEvents() {
 	$("#modalmenu").on("click", "a", function () { var id = $(this).data('id'); $('#modal-' + id).modal('show'); $('.ui.sidebar').sidebar('toggle'); });
-	$("#game-menu").on("click", "button", function () { var id = $(this).data('id'); hideMenuTabs(); $("#tab" + id).show(); $("#t" + id).addClass("inverted basic"); });
+	$("#game-menu").on("click", "button", function () { var id = $(this).data('id'); hideMenuTabs(); $("#tab" + id).show(); $("#t" + id).addClass("spacelborder"); });
 	$("#sidebar").on("click", "a", function () { var id = $(this).data('id'); hideTabs(); $("#tab" + id).show(); $('.ui.sidebar').sidebar('toggle'); });
 	$('#select').dropdown();
 	$('.ui.dropdown').dropdown();
@@ -162,15 +163,15 @@ function ClickEvents() {
 function AddTravelPoints() {
 	$("#selection-content").html(""); //RESET VIEW
 	$("#selection-content").append("<div class='item' id='V0' data-id='0'>" + texts.systemname[0] + "</div>");
-	if (Game.rank >= 10) { $("#selection-content").append("<div class='item' id='V1' data-id='1'>" + texts.systemname[1] + "</div>"); }
-	if (Game.rank >= 50) { $("#selection-content").append("<div class='item' id='V2' data-id='2'>" + texts.systemname[2] + "</div>"); }
-	if (Game.rank >= 100) { $("#selection-content").append("<div class='item' id='V3' data-id='3'>" + texts.systemname[3] + "</div>"); }
-	if (Game.rank >= 350) { $("#selection-content").append("<div class='item' id='V4' data-id='4'>" + texts.systemname[4] + "</div>"); }
-	if (Game.rank >= 1000) { $("#selection-content").append("<div class='item' id='V5' data-id='5'>" + texts.systemname[5] + "</div>"); }
-	if (Game.rank >= 2500) { $("#selection-content").append("<div class='item' id='V6' data-id='6'>" + texts.systemname[6] + "</div>"); }
-	if (Game.rank >= 5000) { $("#selection-content").append("<div class='item' id='V7' data-id='7'>" + texts.systemname[7] + "</div>"); }
-	if (Game.rank >= 10000) { $("#selection-content").append("<div class='item' id='V8' data-id='8'>" + texts.systemname[8] + "</div>"); }
-	if (Game.rank >= 100000) { $("#selection-content").append("<div class='item' id='V9' data-id='9'>" + texts.systemname[9] + "</div>"); }
+	if (Game.rank >= 10) { $("#selection-content").append("<div class='item' id='V1' data-id='1'>" + texts.systemname[1] + "</div>"); $("#percentrank").html("50"); }
+	if (Game.rank >= 50) { $("#selection-content").append("<div class='item' id='V2' data-id='2'>" + texts.systemname[2] + "</div>"); $("#percentrank").html("100"); }
+	if (Game.rank >= 100) { $("#selection-content").append("<div class='item' id='V3' data-id='3'>" + texts.systemname[3] + "</div>"); $("#percentrank").html("350"); }
+	if (Game.rank >= 350) { $("#selection-content").append("<div class='item' id='V4' data-id='4'>" + texts.systemname[4] + "</div>"); $("#percentrank").html("1000"); }
+	if (Game.rank >= 1000) { $("#selection-content").append("<div class='item' id='V5' data-id='5'>" + texts.systemname[5] + "</div>"); $("#percentrank").html("2500"); }
+	if (Game.rank >= 2500) { $("#selection-content").append("<div class='item' id='V6' data-id='6'>" + texts.systemname[6] + "</div>"); $("#percentrank").html("5000"); }
+	if (Game.rank >= 5000) { $("#selection-content").append("<div class='item' id='V7' data-id='7'>" + texts.systemname[7] + "</div>"); $("#percentrank").html("10000"); }
+	if (Game.rank >= 10000) { $("#selection-content").append("<div class='item' id='V8' data-id='8'>" + texts.systemname[8] + "</div>"); $("#percentrank").html("100000"); }
+	if (Game.rank >= 100000) { $("#selection-content").append("<div class='item' id='V9' data-id='9'>" + texts.systemname[9] + "</div>"); $("#percentrank").html("Maxed out"); }
 	$("#selection-text").html(texts.systemname[Game.system]);
 }
 

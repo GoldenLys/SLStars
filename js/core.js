@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.83";
+var version = "v1.9";
 var sitename = "SpaceL";
 var Game = {
     DateStarted: getDate(),
@@ -22,7 +22,7 @@ $(document).ready(function () {
     if (localStorage.getItem("SpaceL2") != null) { load(); }
     setInterval(function () { UpdateGame(Game.cashps); }, 1000);
     ClickEvents();
-    $(".pusher").css("background-image", "url(images/bg.jpg)");
+    $(".pusher").css("background-image", "url(images/bg.png)");
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
 });

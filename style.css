@@ -1,5 +1,5 @@
 #body {
-    background-image: url(images/bg.jpg);
+    background-image: url(images/bg.png);
     background-repeat: repeat;
     background-attachment: fixed;
     background-size: contain;
@@ -8,7 +8,7 @@
 }
 
 .pusher {
-    background-image: url(images/bg.jpg);
+    background-image: url(images/bg.png);
     background-attachment: fixed;
     background-size: contain;
 }
@@ -141,7 +141,7 @@
 }
 
 .ui.inverted.table {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.0);
 }
 
 .ui.black.message, .ui.inverted.message {
@@ -190,11 +190,11 @@
 }
 
 body ::-webkit-scrollbar-thumb {
-    background: rgb(219, 40, 40);
+    background-image: linear-gradient(to bottom, #520004 51%, #310036 100%);
 }
 
 body ::-webkit-scrollbar-thumb:hover {
-    background: rgb(200, 50, 50);
+    background-image: linear-gradient(to bottom, #520004 51%, #310036 100%);
 }
 
 body ::-webkit-scrollbar-track {
@@ -202,7 +202,7 @@ body ::-webkit-scrollbar-track {
 }
 
 .ui.inverted.table th {
-    background-color: rgba(0,0,0,0.01);
+    background-color: rgba(0,0,0,0.0);
 }
 
 .ui.grid>[class*="very relaxed"].row>.column, .ui[class*="very relaxed"].grid>.column:not(.row), .ui[class*="very relaxed"].grid>.row>.column {
@@ -236,4 +236,71 @@ body ::-webkit-scrollbar-track {
 
 .centrer {
     text-align: center;
+}
+
+.ui.spacel.menu {
+    transition: 1.5s;
+    background-size: 200% auto;
+    background-image: linear-gradient(to left, #61011e 0%, #520004 51%, #61011e 100%);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.ui.spacel.menu:hover {
+    background-position: right center; /* change the direction of the change here */
+  }
+
+  .ui.red.button {
+    transition: 1.5s;
+    background-size: 200% auto;
+    background-image: linear-gradient(to left, #310036 0%, #520004 51%, #310036 100%);
+  }
+
+  .ui.red.button:focus {
+    background-image: linear-gradient(to left, #310036 0%, #520004 51%, #310036 100%);
+  }
+
+  .ui.red.button:hover, .ui.red.buttons:hover {
+    background-position: right center; /* change the direction of the change here */
+  }
+
+ .ui.spacel.buttons {
+    transition: 1.5s;
+    background-size: 200% auto;
+    background-image: linear-gradient(to left, #310036 0%, #520004 51%, #310036 100%);
+  }
+
+  .ui.spacel.button, .button {
+      background-color: transparent;
+  }
+
+  .ui.button:hover, .button:hover {
+    background-color: #520004;
+}
+
+  .ui.button {
+    background: none;
+  }
+  
+  .ui.button, .ui.menu .item, .ui.basic.button {
+      color: rgba(255, 255, 255, 1.0)!important;
+  }
+
+.spacelborder {
+    background: none!important;
+    color: rgba(255, 255, 255, 1.0)!important;
+    border: 0.5px solid #ffffff!important;
+}
+
+.ui.button:disabled, .ui.buttons .disabled.button, .ui.disabled.active.button, .ui.disabled.button, .ui.disabled.button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.ui.inverted.menu {
+    background-image: linear-gradient(to bottom, #520004 0%, #310036 50%); 
+}
+
+.color1 {
+    color: #520004;
 }
