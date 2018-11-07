@@ -19,7 +19,7 @@
 <script src="js/utils.js?v=1.91"></script>
 <script src="js/data.js?v=1.91"></script>
 <script src="js/core.js?v=1.91"></script>
-<script src="js/ui.js?v=1.91"></script>
+<script src="js/ui2.js?v=1.91"></script>
 <script src="js/lodash.js"></script>
 <script src="js/numeral.min.js"></script>
 
@@ -28,14 +28,14 @@
     <div id="sidebar" class="ui left demo vertical visible inverted sidebar labeled icon menu">
         <div id="modalmenu">
             <a class="item" id="modal1" data-id="1">
-                <i class="save icon"></i>Save</a>
+                <i class="save icon"></i>Sauvegarde</a>
             <a class="item" id="modal2" data-id="2">
                 <i class="info icon"></i>Guide</a>
         </div>
         <a class="item" id="menu5" data-id="5">
             <i class="clipboard icon"></i>Contact</a>
         <a class="item" target="_blank" href="https://www.paypal.me/Aizen45/1">
-            <i class="paypal icon"></i>Send me a coffee ♥</a>
+            <i class="paypal icon"></i>Faire un don ♥</a>
 
     </div>
     <div class="pusher">
@@ -57,7 +57,7 @@
                     <button class="ui button item spacelborder" id="t1" data-id="1">
                         <i class="space shuttle icon"></i>Exploration</button>
                     <button class="ui button item" id="t2" data-id="2">
-                        <i class="dollar list icon"></i>Market</button>
+                        <i class="dollar list icon"></i>Marché</button>
                     <button class="ui button item" id="t3" data-id="3">
                         <i class="flask icon"></i>Technologies</button>
                 </div>
@@ -68,7 +68,7 @@
             <!--STATS COLUMN-->
             <div class="column" id="colonne-m">
                 <div id="travel" class="ui black message">
-                    <h3 class="centrer ui type1">Location</h3>
+                    <h3 class="centrer ui type1">Localisation</h3>
 
 
 
@@ -88,14 +88,14 @@
                     <div class="ui divider"></div>
 
                     <h3 class="centrer ui type1">Stats</h3>
-                    <p><i class="green dollar sign icon"></i>
+                    <p><i class="green euro sign icon"></i>
                         <span class="left" id="money"></span>
                         <br>
                         <i class="red heart icon"></i>
                         <span class="text" id="rank"></span> / <span class="rouge" id="percentrank">10</span></p>
                     <div class="ui divider"></div>
 
-                    <h3 class="centrer ui type1">Inventory</h3>
+                    <h3 class="centrer ui type1">Inventaire</h3>
                     <div id="inventory" style="height: auto;max-height: 30%;overflow: auto; text-align: left;">
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                 <!--MARKET-->
                 <div id="tab2" style="display: none; width: 100%; height: 97%; overflow: auto;">
                     <div class="ui black message">
-                        <h3 class="ui type1">Market</h3>
+                        <h3 class="ui type1">Marché</h3>
                         <table id="system0sm" class="ui inverted table"></table>
                     </div>
                 </div>
@@ -171,15 +171,15 @@
                 </div>
                 <div class="actions">
                     <div class="three ui buttons">
-                        <button onClick="exportSave();" id="btnExport" class="ui green inverted button">Export</button>
-                        <button onClick="importSave();" id="btnExport" class="ui green inverted button">Import</button>
-                        <button onClick="confirmReset();" id="Recommencer" class="ui red button">Reset</button>
+                        <button onClick="exportSave();" id="btnExport" class="ui green inverted button">Exporter</button>
+                        <button onClick="importSave();" id="btnExport" class="ui green inverted button">Importer</button>
+                        <button onClick="confirmReset();" id="Recommencer" class="ui red button">Remise à 0</button>
                     </div>
                     <br />
                     <br />
                     <div class="fluid ui buttons">
                         <div onclick="hideModals();" class="ui red basic inverted button">
-                            <i class="remove icon"></i>Close </div>
+                            <i class="remove icon"></i>Fermer </div>
                     </div>
                 </div>
             </div>
@@ -196,10 +196,10 @@
                 </div>
                 <div class="actions">
                     <div class="large three ui buttons">
-                        <button onClick="PrevTuto();" id="tuto-prev" class="ui inverted basic button">Previous</button>
-                        <button onClick="NextTuto();" id="tuto-next" class="ui green inverted basic button">Next</button>
+                        <button onClick="PrevTuto();" id="tuto-prev" class="ui inverted basic button">Précédent</button>
+                        <button onClick="NextTuto();" id="tuto-next" class="ui green inverted basic button">Prochain</button>
                         <div onclick="closeTutorial();" class="ui red basic inverted button">
-                            <i class="remove icon"></i>Close </div>
+                            <i class="remove icon"></i>Fermer </div>
                     </div>
                 </div>
             </div>

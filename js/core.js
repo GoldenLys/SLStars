@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v1.9";
+var version = "v1.91";
 var sitename = "SpaceL";
 var Game = {
     DateStarted: getDate(),

@@ -241,7 +241,7 @@ body ::-webkit-scrollbar-track {
 .ui.spacel.menu {
     transition: 1.5s;
     background-size: 200% auto;
-    background-image: linear-gradient(to left, #61011e 0%, #520004 51%, #61011e 100%);
+    background-image: linear-gradient(to left, #7c0025 0%, #520004 51%, #7c0025 100%);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -267,6 +267,7 @@ body ::-webkit-scrollbar-track {
 
  .ui.spacel.buttons {
     transition: 1.5s;
+    border-radius: 0.1vw;
     background-size: 200% auto;
     background-image: linear-gradient(to left, #310036 0%, #520004 51%, #310036 100%);
   }

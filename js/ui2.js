@@ -24,33 +24,33 @@ function SetColor(value) {
 }
 
 function GetSystemType(value) {
-	if (value == 0) { type = "Planet"; }
-	if (value == 1) { type = "Moon"; }
-	if (value == 2) { type = "Sun"; }
-	if (value == 3) { type = "Asteroid"; }
-	if (value == 4) { type = "Black Hole"; }
-	if (value == 5) { type = "Alien Spaceship"; }
-	if (value == 6) { type = "Alien Flagship"; }
-	if (value == 7) { type = "Alien Planet"; }
+	if (value == 0) { type = "Planète"; }
+	if (value == 1) { type = "Lune"; }
+	if (value == 2) { type = "Soleil"; }
+	if (value == 3) { type = "Asteroide"; }
+	if (value == 4) { type = "Trou noir"; }
+	if (value == 5) { type = "Vaisseau alien"; }
+	if (value == 6) { type = "Vaisseau mère alien"; }
+	if (value == 7) { type = "Planète alien"; }
 	return type;
 }
 
 //GENERATE MISSIONS
 
 function GenMissions() {
-	for (var id = 0; id < 10; id++) { $('#system' + id).html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Mission cost            </th><th class='ui center aligned'>Action</th></tr></thead>"); }
+	for (var id = 0; id < 10; id++) { $('#system' + id).html("<thead><tr class='shadow'><th class='ui center aligned'>Nom</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Coût de mission            </th><th class='ui center aligned'>Action</th></tr></thead>"); }
 
 	for (var i in Missions) {
 		var offer = Missions[i];
 		var canbuy = Game.cash < offer.price ? ' disabled' : '';
 		if (Game.explored[i] == 0) { canbuy = Game.cash < offer.price / 2 ? ' disabled' : ''; }
-		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
+		var exploretext = Game.explored[i] > 0 ? 'Visiter' : 'Explorer';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
 		var rewardstext = SetColor(rewards);
 		var pricetext = Game.explored[i] < 1 ? fix(offer.price / 2, 1) : fix(offer.price, 1);
 		reward = texts.items[offer.type];
 		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
-		cost = "<font class='vert bold type3'>$" + pricetext + "</font>";
+		cost = "<font class='vert bold type3'>" + pricetext + "€</font>";
 		description = GetSystemType(offer.desc);
 
 		var SYSTEMDIV = $(
@@ -68,7 +68,7 @@ function GenMissions() {
 //GENERATE MARKET
 
 function GenMarket() {
-	$('#system0sm').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Type</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell item</th></tr></thead>");
+	$('#system0sm').html("<thead><tr class='shadow'><th class='ui center aligned'>Nom</th><th class='ui center aligned'>Type</th><th class='ui center aligned'>Valeur</th><th class='ui center aligned'>Inventaire</th><th class='ui center aligned'>Vendre</th></tr></thead>");
 
 	for (var i in Market) {
 		var offer = Market[i];
@@ -81,7 +81,7 @@ function GenMarket() {
 		if (SystemMult[Game.system][i] > 1) { pricecolor = 'vert'; }
 
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
-		cost = "<font class='" + pricecolor + " bold'>$" + fix(offer.value * SystemMult[Game.system][i], 1) + "</font>";
+		cost = "<font class='" + pricecolor + " bold'>" + fix(offer.value * SystemMult[Game.system][i], 1) + "€</font>";
 		description = offer.desc;
 		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">' + fix(Game.inventory[i], 1) + '</font>' : '<font class="vert">' + fix(Game.inventory[i], 1) + '</font>';
 
@@ -101,7 +101,7 @@ function GenMarket() {
 //GENERATE STATION
 
 function GenStation() {
-	$('#system0ss').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Technology</th><th class='ui center aligned'>Require</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
+	$('#system0ss').html("<thead><tr class='shadow'><th class='ui center aligned'>Nom</th><th class='ui center aligned'>Technologie</th><th class='ui center aligned'>Requiert</th><th class='ui center aligned'>Prix</th><th class='ui center aligned'>Action</th></tr></thead>");
 
 	for (var i in Technologies) {
 		var offer = Technologies[i];
@@ -128,13 +128,13 @@ function GenStation() {
 		}
 		else { buyable = "disabled"; buyVar = 0; }
 
-		if (Game.technologies[i] == 1) { buyable = "disabled"; buyVar = 0; cost = ""; active = "<font class='vert'>Activated</font>"; visible = "style='display:none;'"; }
-		else { buytext = "Build"; }
+		if (Game.technologies[i] == 1) { buyable = "disabled"; buyVar = 0; cost = ""; active = "<font class='vert'>Activaté</font>"; visible = "style='display:none;'"; }
+		else { buytext = "Construire"; }
 
 		if (Game.cash < offer.cost) { pricecolor = "rouge"; buyable = "disabled"; buyVar = 0; }
 
 
-		if (offer.type == 0) { type = "Auto-mining upgrade"; }
+		if (offer.type == 0) { type = "Automatisation de minage"; }
 
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
