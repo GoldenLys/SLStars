@@ -190,11 +190,11 @@
 }
 
 body ::-webkit-scrollbar-thumb {
-    background-image: linear-gradient(to bottom, #520004 51%, #310036 100%);
+    background-image: linear-gradient(to bottom, #500101 51%, #230031 100%);
 }
 
 body ::-webkit-scrollbar-thumb:hover {
-    background-image: linear-gradient(to bottom, #520004 51%, #310036 100%);
+    background-image: linear-gradient(to bottom, #500101 51%, #230031 100%);
 }
 
 body ::-webkit-scrollbar-track {
@@ -241,7 +241,7 @@ body ::-webkit-scrollbar-track {
 .ui.spacel.menu {
     transition: 1.5s;
     background-size: 200% auto;
-    background-image: linear-gradient(to left, #7c0025 0%, #520004 51%, #7c0025 100%);
+    background-image: linear-gradient(to left, #230031 0%, #500101 71%, #230031 100%);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -262,6 +262,20 @@ body ::-webkit-scrollbar-track {
   }
 
   .ui.red.button:hover, .ui.red.buttons:hover {
+    background-position: right center; /* change the direction of the change here */
+  }
+
+  .ui.green.button {
+    transition: 1.5s;
+    background-size: 200% auto;
+    background-image: linear-gradient(to left, #061f46 0%, #073a01 51%, #061f46 100%);
+  }
+
+  .ui.green.button:focus {
+    background-image: linear-gradient(to left, #310036 0%, #520004 51%, #310036 100%);
+  }
+
+  .ui.green.button:hover, .ui.green.buttons:hover {
     background-position: right center; /* change the direction of the change here */
   }
 
@@ -305,3 +319,9 @@ body ::-webkit-scrollbar-track {
 .color1 {
     color: #520004;
 }
+
+.C1 {
+    background: linear-gradient(to right, #520004 0%, #310036 70%, #310036 100%); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
