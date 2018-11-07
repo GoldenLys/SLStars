@@ -128,7 +128,7 @@ function GenStation() {
 		}
 		else { buyable = "disabled"; buyVar = 0; }
 
-		if (Game.technologies[i] == 1) { buyable = "disabled"; buyVar = 0; cost = ""; active = "<font class='vert'>Activaté</font>"; visible = "style='display:none;'"; }
+		if (Game.technologies[i] == 1) { buyable = "disabled"; buyVar = 0; cost = ""; active = "<font class='vert'>Activé</font>"; visible = "style='display:none;'"; }
 		else { buytext = "Construire"; }
 
 		if (Game.cash < offer.cost) { pricecolor = "rouge"; buyable = "disabled"; buyVar = 0; }
