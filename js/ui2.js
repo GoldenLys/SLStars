@@ -1,8 +1,8 @@
 ﻿var UpdateUI = function () {
 	if (Game.fl == 0) { $("#modal-2").modal('show'); }
 	document.title = sitename + " " + version;
-	$("#money").html("" + fix(Game.cash, 1) + " + <font class='bold vert'>" + fix(Game.cashps, 1) + "</font>/s");
-	$("#rank").html("" + fix(Game.rank, 1) + "");
+	$("#money").html("" + fix(Game.cash, 1) + " + <font class='bold vert'>" + fix(Game.cashps, 0) + "</font>/s");
+	$("#rank").html("" + fix(Game.rank, 0) + "");
 	GenInventory();
 	GenMissions();
 	GenMarket();
@@ -83,7 +83,7 @@ function GenMarket() {
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
 		cost = "<font class='" + pricecolor + " bold'>" + fix(offer.value * SystemMult[Game.system][i], 1) + "€</font>";
 		description = offer.desc;
-		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">' + fix(Game.inventory[i], 1) + '</font>' : '<font class="vert">' + fix(Game.inventory[i], 1) + '</font>';
+		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">' + fix(Game.inventory[i], 0) + '</font>' : '<font class="vert">' + fix(Game.inventory[i], 0) + '</font>';
 
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
