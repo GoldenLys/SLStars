@@ -1,0 +1,34 @@
+#body {
+    background-image: url(images/bg.png);
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-size: contain;
+    font-size: 15px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.pusher {
+    background-image: url(images/bg.png);
+    background-attachment: fixed;
+    background-size: contain;
+}
+
+#top-menu {
+    width: 101%;
+    z-index: 998;
+}
+
+#colonne-m {
+    padding-left: 4rem;
+    padding-right: 0rem;
+    width: 100%;
+    left: 0%;
+}
+
+#colonne-d {
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 0rem;
+    width: 100%;
+    right: 0%;
+}
