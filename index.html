@@ -15,11 +15,11 @@
 <script src="dropdown.min.js"></script>
 <script src="sidebar.min.js"></script>
 
-<link href="style.css?v=2.1" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=2.1"></script>
-<script src="js/data.js?v=2.1"></script>
-<script src="js/core.js?v=2.1"></script>
-<script src="js/ui.js?v=2.1"></script>
+<link href="style.css?v=2.2" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=2.2"></script>
+<script src="js/data.js?v=2.2"></script>
+<script src="js/core.js?v=2.2"></script>
+<script src="js/ui.js?v=2.2"></script>
 <script src="js/lodash.js"></script>
 <script src="js/numeral.min.js"></script>
 
@@ -55,24 +55,19 @@
                     <i class="sidebar icon"></i>Menu</button>
                 <div class="item" id="game-menu">
                     <button class="ui button item spacelborder" id="t1" data-id="1">
-                        <i class="space shuttle icon"></i>Exploration</button>
+                        <i class="space shuttle icon"></i>Game</button>
                     <button class="ui button item" id="t2" data-id="2">
-                        <i class="dollar list icon"></i>Market</button>
-                    <button class="ui button item" id="t3" data-id="3">
                         <i class="flask icon"></i>Technologies</button>
                 </div>
             </div>
         </div>
         <!--COLUMNS-->
         <div class="ui two column very relaxed grid" style="height: 94%; position: relative; z-index: 99;">
+
             <!--STATS COLUMN-->
             <div class="column" id="colonne-m">
                 <div id="travel" class="ui black message">
                     <h3 class="centrer ui type1 C1">Location</h3>
-
-
-
-
 
                     <div id="selection" class="ui fluid red floating dropdown labeled icon button">
                         <i class="world icon"></i>
@@ -80,10 +75,6 @@
                         <div id="selection-content" class="menu">
                         </div>
                     </div>
-
-
-
-
 
                     <div class="ui divider"></div>
 
@@ -99,112 +90,116 @@
                     <div id="inventory" style="height: auto;max-height: 30%;overflow: auto; text-align: left;">
                     </div>
                 </div>
+
             </div>
             <!--GAME COLUMN-->
             <div class="column" id="colonne-d">
 
-                <!--EXPLORATION-->
-                <div id="tab1" style="display: block; width: 100%;">
-                    <div class="ui black message">
-                        <h3 class="ui type1 C1">Exploration</h3>
-                        <table id="system0" class="ui inverted table"></table>
-                        <table id="system1" class="ui inverted table" style="display: none;"></table>
-                        <table id="system2" class="ui inverted table" style="display: none;"></table>
-                        <table id="system3" class="ui inverted table" style="display: none;"></table>
-                        <table id="system4" class="ui inverted table" style="display: none;"></table>
-                        <table id="system5" class="ui inverted table" style="display: none;"></table>
-                        <table id="system6" class="ui inverted table" style="display: none;"></table>
-                        <table id="system7" class="ui inverted table" style="display: none;"></table>
-                        <table id="system8" class="ui inverted table" style="display: none;"></table>
-                        <table id="system9" class="ui inverted table" style="display: none;"></table>
-                        <table id="system10" class="ui inverted table" style="display: none;"></table>
+                <div class="ui equal width grid" id="tab1">
+                    <div class="column">
+                        <div class="ui black message">
+                            <h3 class="ui type1 C1">Exploration</h3>
+                            <table id="system0" class="ui inverted table"></table>
+                            <table id="system1" class="ui inverted table" style="display: none;"></table>
+                            <table id="system2" class="ui inverted table" style="display: none;"></table>
+                            <table id="system3" class="ui inverted table" style="display: none;"></table>
+                            <table id="system4" class="ui inverted table" style="display: none;"></table>
+                            <table id="system5" class="ui inverted table" style="display: none;"></table>
+                            <table id="system6" class="ui inverted table" style="display: none;"></table>
+                            <table id="system7" class="ui inverted table" style="display: none;"></table>
+                            <table id="system8" class="ui inverted table" style="display: none;"></table>
+                            <table id="system9" class="ui inverted table" style="display: none;"></table>
+                            <table id="system10" class="ui inverted table" style="display: none;"></table>
+                        </div>
                     </div>
-                </div>
+                    <div class="column">
 
-                <!--MARKET-->
-                <div id="tab2" style="display: none; width: 100%; height: 97%; overflow: auto;">
-                    <div class="ui black message">
-                        <h3 class="ui type1 C1">Market</h3>
-                        <table id="system0sm" class="ui inverted table"></table>
+                        <div class="ui black message">
+                            <h3 class="ui type1 C1">Market</h3>
+                            <table id="system0sm" class="ui inverted table"></table>
+                        </div>
                     </div>
                 </div>
 
                 <!--TECHNOLOGIES-->
-                <div id="tab3" style="display: none; width: 100%; height: 97%; overflow: auto;">
+                <div id="tab2" style="display: none; width: 100%;">
                     <div class="ui black message">
                         <h3 class="ui type1 C1">Technologies</h3>
                         <table id="system0ss" class="ui inverted table"></table>
                     </div>
                 </div>
 
-                <!--CONTACT-->
-                <div id="tab5" style="display: none; width: 100%;">
-                    <div class="ui black message">
-                        <p class="type2 title text" id="Title">Contact</p>
+            </div>
+            <!--CONTACT-->
+            <div id="tab5" style="display: none; width: 100%;">
+                <div class="ui black message">
+                    <p class="type2 title text" id="Title">Contact</p>
 
-                        <div class="ui black icon message">
-                            <img class="ui tiny rounded image" src="images/lys.jpg">
-                            <div class="content">
-                                <div class="header">
-                                    Lys - SpaceL developer
-                                </div>
-                                <p>
-                                    <font class='type1 rouge'>Discord : </font>SUN#0001
-                                </p>
+                    <div class="ui black icon message">
+                        <img class="ui tiny rounded image" src="images/lys.jpg">
+                        <div class="content">
+                            <div class="header">
+                                Lys - SpaceL developer
                             </div>
+                            <p>
+                                <font class='type1 rouge'>Discord : </font>SUN#0001
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--SAVE-->
-            <div class="ui basic modal" id="modal-1">
-                <div class="ui icon header">
-                    <i class="save icon"></i>
-                    <font id="savemenu" class="title color1"></font>
-                </div>
-                <div class="centrer content">
-                    <p>Here you can export your save to another navigator or computer.<br> You can also reset your save
-                        to
-                        start a new game.</p>
-                    <div id="exportBody"></div>
-                    <p id='debugtext' class='copytext'></p>
-                </div>
-                <div class="actions">
-                    <div class="three ui buttons">
-                        <button onClick="exportSave();" id="btnExport" class="ui green button">Export</button>
-                        <button onClick="importSave();" id="btnImport" class="ui green button">Import</button>
-                        <button onClick="confirmReset();" id="Recommencer" class="ui red button">Reset</button>
-                    </div>
-                    <br />
-                    <br />
-                    <div class="fluid ui buttons">
-                        <div onclick="hideModals();" class="ui red button">
-                            <i class="remove icon"></i>Close </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--TUTORIAL-->
-            <div class="ui basic modal" id="modal-2">
-
-                <div class="ui icon header">
-                    <i class="info icon"></i>
-                    <font id="tutorial-title" class="title blanc"></font>
-                </div>
-                <div class="centrer content">
-                    <p id="tutorial-text"></p>
-                </div>
-                <div class="actions">
-                    <div class="large three ui buttons">
-                        <button onClick="PrevTuto();" id="tuto-prev" class="ui green button">Previous</button>
-                        <button onClick="NextTuto();" id="tuto-next" class="ui green button">Next</button>
-                        <div onclick="closeTutorial();" class="ui red button">
-                            <i class="remove icon"></i>Close </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <!--SAVE-->
+        <div class="ui basic modal" id="modal-1">
+            <div class="ui icon header">
+                <i class="save icon"></i>
+                <font id="savemenu" class="title color1"></font>
+            </div>
+            <div class="centrer content">
+                <p>Here you can export your save to another navigator or computer.<br> You can also reset your
+                    save
+                    to
+                    start a new game.</p>
+                <div id="exportBody"></div>
+                <p id='debugtext' class='copytext'></p>
+            </div>
+            <div class="actions">
+                <div class="three ui buttons">
+                    <button onClick="exportSave();" id="btnExport" class="ui green button">Export</button>
+                    <button onClick="importSave();" id="btnImport" class="ui green button">Import</button>
+                    <button onClick="confirmReset();" id="Recommencer" class="ui red button">Reset</button>
+                </div>
+                <br />
+                <br />
+                <div class="fluid ui buttons">
+                    <div onclick="hideModals();" class="ui red button">
+                        <i class="remove icon"></i>Close </div>
+                </div>
+            </div>
+        </div>
+
+        <!--TUTORIAL-->
+        <div class="ui basic modal" id="modal-2">
+
+            <div class="ui icon header">
+                <i class="info icon"></i>
+                <font id="tutorial-title" class="title blanc"></font>
+            </div>
+            <div class="centrer content">
+                <p id="tutorial-text"></p>
+            </div>
+            <div class="actions">
+                <div class="large three ui buttons">
+                    <button onClick="PrevTuto();" id="tuto-prev" class="ui green button">Previous</button>
+                    <button onClick="NextTuto();" id="tuto-next" class="ui green button">Next</button>
+                    <div onclick="closeTutorial();" class="ui red button">
+                        <i class="remove icon"></i>Close </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
     </div>
 
 </body>

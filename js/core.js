@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v2.1";
+var version = "v2.2";
 var sitename = "SpaceL";
 var Game = {
     DateStarted: getDate(),
@@ -26,6 +26,8 @@ $(document).ready(function () {
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
 });
+
+//GAME FUNCTIONS
 
 function UpdateGame(cashps) {
     Game.cash += cashps;

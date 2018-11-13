@@ -28,8 +28,16 @@
 #colonne-d {
     text-align: center;
     padding-left: 1rem;
-    padding-right: 0rem;
+    padding-right: 1rem;
     width: 78%;
+    right: 0%;
+}
+
+#colonne-d2 {
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 0rem;
+    width: 39%;
     right: 0%;
 }
 
