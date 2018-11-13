@@ -1,6 +1,7 @@
 #body {
     background-image: url(images/bg.png);
     background-repeat: repeat;
+    text-align: center;
     background-attachment: fixed;
     background-size: contain;
     font-size: 15px;
