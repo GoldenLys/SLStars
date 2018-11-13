@@ -43,7 +43,9 @@ function GenMissions() {
 	for (var i in Missions) {
 		var offer = Missions[i];
 		var canbuy = Game.cash < offer.price ? ' disabled' : '';
-		if (Game.explored[i] == 0) { canbuy = Game.cash < offer.price / 2 ? ' disabled' : ''; }
+		var canExploreMax = Game.cash < offer.price ? ' disabled' : '';
+		var maxexplore = fix(Game.cash/Missions[0].price, 4);
+		if (Game.explored[i] == 0) { canbuy = Game.cash < offer.price / 2 ? ' disabled' : ''; canExploreMax="disabled"; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
 		var rewardstext = SetColor(rewards);
@@ -58,7 +60,7 @@ function GenMissions() {
 			"<td class='center aligned ui'>" + name + "</td>" +
 			"<td class='center aligned'>" + description + ", <font class='type3'><font class=' " + rewardstext + "'>" + rewards + "</font> " + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></font></td>" +
 			"<td class='center aligned'> " + cost + "</td>" +
-			"<td class='center aligned'><a class='fluid ui " + canbuy + " red button' onClick='explore(" + i + ");'>" + exploretext + "</a></td>" +
+			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1);'>" + exploretext + "</button><button class='ui " + canExploreMax + " button' onClick='explore(" + i + ", " + maxexplore + ");'>Visit max</button></div></td>" + 
 			"</tr>"
 		);
 		$('#system' + offer.system).append(SYSTEMDIV);
@@ -75,7 +77,7 @@ function GenMarket() {
 		var canSell = Game.inventory[i] < 1 ? ' disabled' : '';
 		var canSell10 = Game.inventory[i] < 10 ? ' disabled' : '';
 		var canSell100 = Game.inventory[i] < 100 ? ' disabled' : '';
-		var canSell1000 = Game.inventory[i] < 1000 ? ' disabled' : '';
+		var canSellAll = Game.inventory[i] < 1 ? ' disabled' : '';
 		if (SystemMult[Game.system][i] == 1) { pricecolor = ''; }
 		if (SystemMult[Game.system][i] < 1) { pricecolor = 'rouge'; }
 		if (SystemMult[Game.system][i] > 1) { pricecolor = 'vert'; }
@@ -91,7 +93,7 @@ function GenMarket() {
 			"<td class='center aligned'>" + description + "</td>" +
 			"<td class='center aligned type3'> " + cost + "</td>" +
 			"<td class='center aligned'> " + inventory + "</td>" +
-			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canSell + " button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " button' onClick='sellitem(" + i + ",100);'>100</button><button class='ui " + canSell1000 + " button' onClick='sellitem(" + i + ",1000);'>1000</button></div></td>" +
+			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canSell + " button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " button' onClick='sellitem(" + i + ",100);'>100</button><button class='ui " + canSellAll + " button' onClick='sellitem(" + i + "," + Game.inventory[i] + ");'>All</button></div></td>" +
 			"</tr>"
 		);
 		$('#system0sm').append(SYSTEMDIV);
@@ -206,7 +208,7 @@ function setTutorial(id) {
 	else { $("#tuto-next").removeClass("disabled"); }
 }
 
-function closeTutorial() { hideModals(); Game.tutorial = 0; }
+function closeTutorial() { hideModals(); Game.tutorial = 0; if (Game.fl == 0) { Game.fl = 1; } }
 
 function NextTuto() {
 	if (Game.fl == 0) { Game.fl = 1; }

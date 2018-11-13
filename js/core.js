@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v2";
+var version = "v2.1";
 var sitename = "SpaceL";
 var Game = {
     DateStarted: getDate(),
@@ -36,12 +36,12 @@ function UpdateGame(cashps) {
     save();
 }
 
-function explore(id) {
+function explore(id, nbr) {
     if (Game.explored[id] > 0) {
-        if (Game.cash >= Missions[id].price) {
-            Game.cash -= Missions[id].price;
-            Game.inventory[Missions[id].type] += Missions[id].nbr;
-            Game.rank = Game.rank + 1 + (1 * Game.system);
+        if (Game.cash >= Missions[id].price * nbr) {
+            Game.cash -= Missions[id].price * nbr;
+            Game.inventory[Missions[id].type] += Missions[id].nbr * nbr;
+            Game.rank += nbr + (1 * Game.system);
         }
     }
     if (Game.explored[id] < 1) {
