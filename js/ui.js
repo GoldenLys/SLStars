@@ -78,9 +78,9 @@ function GenMarket() {
 		var canSell10 = Game.inventory[i] < 10 ? ' disabled' : '';
 		var canSell100 = Game.inventory[i] < 100 ? ' disabled' : '';
 		var canSellAll = Game.inventory[i] < 1 ? ' disabled' : '';
-		if (SystemMult[i] == 1) { pricecolor = ''; }
 		if (SystemMult[i] < 1) { pricecolor = 'rouge'; }
 		if (SystemMult[i] > 1) { pricecolor = 'vert'; }
+		if (SystemMult[i] > 0.75) { if (SystemMult[i] < 1.1) {  pricecolor = ''; } }
 
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
 		cost = "<font class='" + pricecolor + " bold'>$" + fix(offer.value * SystemMult[i], 1) + "</font>";

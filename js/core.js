@@ -69,7 +69,7 @@ function sellitem(id, qty) {
 }
 
 function changeSystemMult() {
-    for (var SID in SystemMult) { SystemMult[SID]=random(0, 150) / 100; }
+    for (var SID in SystemMult) { SystemMult[SID]=random(0, 150000) / 100000; }
 }
 
 function buyupgrade(id, buyable, req1, nbr1, req2, nbr2) {
