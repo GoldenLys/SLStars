@@ -192,7 +192,7 @@ function AddTravelPoints() {
 function GenInventory() {
 	$("#inventory").html("");
 	for (var id in texts.items) {
-		if (Game.inventory[id] > 0) { $("#inventory").append("<span class='Palladium'><font class='bold " + SetColor(Game.inventory[id]) + "'>" + fix(Game.inventory[id], 1) + "</font> " + texts.items[id] + " </span><img class='ui avatar image' src='images/items/" + id + ".png'><br>"); }
+		if (Game.inventory[id] > 0) { $("#inventory").append("<span class='Palladium'><font class='bold " + SetColor(Game.inventory[id]) + "'>" + fix(Game.inventory[id], 5) + "</font> " + texts.items[id] + " </span><img class='ui avatar image' src='images/items/" + id + ".png'><br>"); }
 	}
 }
 
