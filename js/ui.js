@@ -44,7 +44,7 @@ function GenMissions() {
 		var offer = Missions[i];
 		var canbuy = Game.cash < offer.price ? ' disabled' : '';
 		var canExploreMax = Game.cash < offer.price ? ' disabled' : '';
-		var maxexplore = fix(Game.cash/Missions[0].price, 4);
+		var maxexplore = fix(Math.floor(Game.cash/Missions[i].price), 4);
 		if (Game.explored[i] == 0) { canbuy = Game.cash < offer.price / 2 ? ' disabled' : ''; canExploreMax="disabled"; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
@@ -78,12 +78,12 @@ function GenMarket() {
 		var canSell10 = Game.inventory[i] < 10 ? ' disabled' : '';
 		var canSell100 = Game.inventory[i] < 100 ? ' disabled' : '';
 		var canSellAll = Game.inventory[i] < 1 ? ' disabled' : '';
-		if (SystemMult[Game.system][i] == 1) { pricecolor = ''; }
-		if (SystemMult[Game.system][i] < 1) { pricecolor = 'rouge'; }
-		if (SystemMult[Game.system][i] > 1) { pricecolor = 'vert'; }
+		if (SystemMult[i] == 1) { pricecolor = ''; }
+		if (SystemMult[i] < 1) { pricecolor = 'rouge'; }
+		if (SystemMult[i] > 1) { pricecolor = 'vert'; }
 
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
-		cost = "<font class='" + pricecolor + " bold'>$" + fix(offer.value * SystemMult[Game.system][i], 1) + "</font>";
+		cost = "<font class='" + pricecolor + " bold'>$" + fix(offer.value * SystemMult[i], 1) + "</font>";
 		description = offer.desc;
 		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">' + fix(Game.inventory[i], 0) + '</font>' : '<font class="vert">' + fix(Game.inventory[i], 0) + '</font>';
 
@@ -167,7 +167,7 @@ function ClickEvents() {
 	$('#select').dropdown();
 	$('.ui.dropdown').dropdown();
 
-	$("#selection-content").on("click", "div", function () { var id = $(this).data('id'); hidesystems(); Game.system = id; $('#system' + id).show(); });
+	$("#selection-content").on("click", "div", function () { var id = $(this).data('id'); hidesystems(); Game.system = id; $('#system' + id).show(); changeSystemMult(); });
 
 	$("#top-menu").on("click", "#sidebar", function () { $('.ui.sidebar').sidebar('toggle'); });
 	$("#endmessages").on("click", "#ViewContact", function () { hideTabs(); $("#tab4").show(); });

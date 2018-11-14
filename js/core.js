@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v2.2";
+var version = "v2.3";
 var sitename = "SpaceL";
 var Game = {
     DateStarted: getDate(),
@@ -22,6 +22,7 @@ $(document).ready(function () {
     if (localStorage.getItem("SpaceL2") != null) { load(); }
     setInterval(function () { UpdateGame(Game.cashps); }, 1000);
     ClickEvents();
+    changeSystemMult()
     $(".pusher").css("background-image", "url(images/bg.png)");
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
@@ -60,11 +61,15 @@ function explore(id, nbr) {
 
 function sellitem(id, qty) {
     if (Game.inventory[id] >= qty) {
-        Game.cash += Market[id].value * SystemMult[Game.system][id] * qty;
+        Game.cash += Market[id].value * SystemMult[id] * qty;
         Game.inventory[id] -= qty;
     }
     UpdateUI();
     save();
+}
+
+function changeSystemMult() {
+    for (var SID in SystemMult) { SystemMult[SID]=random(0, 150) / 100; }
 }
 
 function buyupgrade(id, buyable, req1, nbr1, req2, nbr2) {
