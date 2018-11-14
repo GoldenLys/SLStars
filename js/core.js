@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v2.31";
+var version = "v2.32";
 var sitename = "SpaceL";
 var Game = {
     DateStarted: getDate(),
@@ -61,6 +61,8 @@ function explore(id, nbr) {
 
 function sellitem(id, qty) {
     if (Game.inventory[id] >= qty) {
+        if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 100; }
+        if (SystemMult[id] < 0) { SystemMult[id] = 0; } 
         Game.cash += Market[id].value * SystemMult[id] * qty;
         Game.inventory[id] -= qty;
     }
@@ -69,7 +71,7 @@ function sellitem(id, qty) {
 }
 
 function changeSystemMult() {
-    for (var SID in SystemMult) { SystemMult[SID]=random(0, 150000) / 100000; }
+    for (var SID in SystemMult) { SystemMult[SID] = random(0, 150000) / 100000; }
 }
 
 function buyupgrade(id, buyable, req1, nbr1, req2, nbr2) {
