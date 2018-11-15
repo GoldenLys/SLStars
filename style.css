@@ -20,26 +20,12 @@
 }
 
 #colonne-m {
-    padding-left: 4rem;
-    padding-right: 0rem;
     width: 20%;
-    left: 0%;
 }
 
 #colonne-d {
     text-align: center;
-    padding-left: 1rem;
-    padding-right: 1rem;
     width: 78%;
-    right: 0%;
-}
-
-#colonne-d2 {
-    text-align: center;
-    padding-left: 1rem;
-    padding-right: 0rem;
-    width: 39%;
-    right: 0%;
 }
 
 .bronze {
@@ -335,3 +321,11 @@ body ::-webkit-scrollbar-track {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
+  .ui.message {
+    background: #f8f8f900;
+    color: #ffffff;
+    border-radius: .0rem;
+    -webkit-box-shadow: 0 0 0 0px rgba(34,36,38,.22) inset, 0 0 0 0 transparent;
+    box-shadow: 0 0 0 0px rgba(34,36,38,.22) inset, 0 0 0 0 transparent;
+}

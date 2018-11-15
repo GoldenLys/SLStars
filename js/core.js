@@ -1,6 +1,6 @@
 //CONFIG
 
-var version = "v2.32";
+var version = "v2.33";
 var sitename = "SpaceL";
 var Game = {
     DateStarted: getDate(),
@@ -14,6 +14,7 @@ var Game = {
     technologies: [],
     tutorial: 0,
     fl: 0,
+    days: 0,
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -22,7 +23,7 @@ $(document).ready(function () {
     if (localStorage.getItem("SpaceL2") != null) { load(); }
     setInterval(function () { UpdateGame(Game.cashps); }, 1000);
     ClickEvents();
-    changeSystemMult()
+    changeLocation();
     $(".pusher").css("background-image", "url(images/bg.png)");
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
@@ -61,8 +62,8 @@ function explore(id, nbr) {
 
 function sellitem(id, qty) {
     if (Game.inventory[id] >= qty) {
-        if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 100; }
-        if (SystemMult[id] < 0) { SystemMult[id] = 0; } 
+        if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 10000; }
+        if (SystemMult[id] < 0) { SystemMult[id] = 0; }
         Game.cash += Market[id].value * SystemMult[id] * qty;
         Game.inventory[id] -= qty;
     }
@@ -70,8 +71,9 @@ function sellitem(id, qty) {
     save();
 }
 
-function changeSystemMult() {
+function changeLocation() {
     for (var SID in SystemMult) { SystemMult[SID] = random(0, 150000) / 100000; }
+    Game.days++;
 }
 
 function buyupgrade(id, buyable, req1, nbr1, req2, nbr2) {

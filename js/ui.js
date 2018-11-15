@@ -3,6 +3,7 @@
 	document.title = sitename + " " + version;
 	$("#money").html("" + fix(Game.cash, 1) + " + <font class='bold vert'>" + fix(Game.cashps, 2) + "</font>/s");
 	$("#rank").html("" + fix(Game.rank, 2) + "");
+	$("#dayscount").html("" + Game.days + " days passed.");
 	GenInventory();
 	GenMissions();
 	GenMarket();
@@ -167,7 +168,7 @@ function ClickEvents() {
 	$('#select').dropdown();
 	$('.ui.dropdown').dropdown();
 
-	$("#selection-content").on("click", "div", function () { var id = $(this).data('id'); hidesystems(); Game.system = id; $('#system' + id).show(); changeSystemMult(); });
+	$("#selection-content").on("click", "div", function () { var id = $(this).data('id'); hidesystems(); Game.system = id; $('#system' + id).show(); changeLocation(); });
 
 	$("#top-menu").on("click", "#sidebar", function () { $('.ui.sidebar').sidebar('toggle'); });
 	$("#endmessages").on("click", "#ViewContact", function () { hideTabs(); $("#tab4").show(); });

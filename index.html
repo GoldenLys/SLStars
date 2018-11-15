@@ -1,5 +1,3 @@
-<link>
-
 <head>
     <title>SpaceL is loading..</title>
     <meta charset="UTF-8" name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
@@ -15,11 +13,11 @@
 <script src="dropdown.min.js"></script>
 <script src="sidebar.min.js"></script>
 
-<link href="style.css?v=2.32" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=2.32"></script>
-<script src="js/data.js?v=2.32"></script>
-<script src="js/core.js?v=2.32"></script>
-<script src="js/ui.js?v=2.32"></script>
+<link href="style.css?v=2.33" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=2.33"></script>
+<script src="js/data.js?v=2.33"></script>
+<script src="js/core.js?v=2.33"></script>
+<script src="js/ui.js?v=2.33"></script>
 <script src="js/lodash.js"></script>
 <script src="js/numeral.min.js"></script>
 
@@ -31,9 +29,9 @@
                 <i class="save icon"></i>Save</a>
             <a class="item" id="modal2" data-id="2">
                 <i class="info icon"></i>Guide</a>
+            <a class="item" id="modal3" data-id="3">
+                <i class="address book icon"></i>Contact</a>
         </div>
-        <a class="item" id="menu5" data-id="5">
-            <i class="clipboard icon"></i>Contact</a>
         <a class="item" target="_blank" href="https://www.paypal.me/Aizen45/1">
             <i class="paypal icon"></i>Send me a coffee ♥</a>
 
@@ -62,7 +60,7 @@
             </div>
         </div>
         <!--COLUMNS-->
-        <div class="ui two column very relaxed grid" style="height: 94%; position: relative; z-index: 99;">
+        <div class="ui equal width grid" style="height: 94%; position: relative; z-index: 99;">
 
             <!--STATS COLUMN-->
             <div class="column" id="colonne-m">
@@ -83,7 +81,11 @@
                         <span class="left" id="money"></span>
                         <br>
                         <i class="red sort amount up icon"></i>
-                        <span class="text" id="rank"></span> / <span class="rouge" id="percentrank">10</span></p>
+                        <span class="text" id="rank"></span> / <span class="rouge" id="percentrank">10</span>
+                        <br>
+                        <i class="yellow clock icon"></i>
+                        <span class="text" id="dayscount"></span>
+                    </p>
                     <div class="ui divider"></div>
 
                     <h3 class="centrer ui type1 C1">Inventory</h3>
@@ -130,76 +132,84 @@
                 </div>
 
             </div>
-            <!--CONTACT-->
-            <div id="tab5" style="display: none; width: 100%;">
-                <div class="ui black message">
-                    <p class="type2 title text" id="Title">Contact</p>
 
-                    <div class="ui black icon message">
+            <!--CONTACT-->
+            <div class="ui basic modal" id="modal-3">
+                <div class="ui icon header">
+                    <i class="address book icon"></i>
+                    <font id="contact-title" class="title blanc">Contact</font>
+                </div>
+                <div class="centrer content">
+                    <div class="ui icon message">
                         <img class="ui tiny rounded image" src="images/lys.jpg">
                         <div class="content">
                             <div class="header">
-                                Lys - SpaceL developer
+                                <font class='type1'>Lys - SpaceL developer</font>
                             </div>
                             <p>
-                                <font class='type1 rouge'>Discord : </font>SUN#0001
+                                <i class="large blue discord icon"></i>SUN#0001<br>
+                                <i class="large red reddit icon"></i>u/Aizen45<br>
+                                <i class="large blue steam icon"></i>AizenFR
                             </p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div class="fluid ui buttons">
+                            <div onclick="hideModals();" class="ui red button">
+                                <i class="remove icon"></i>Close </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!--SAVE-->
-        <div class="ui basic modal" id="modal-1">
-            <div class="ui icon header">
-                <i class="save icon"></i>
-                <font id="savemenu" class="title color1"></font>
-            </div>
-            <div class="centrer content">
-                <p>Here you can export your save to another navigator or computer.<br> You can also reset your
-                    save
-                    to
-                    start a new game.</p>
-                <div id="exportBody"></div>
-                <p id='debugtext' class='copytext'></p>
-            </div>
-            <div class="actions">
-                <div class="three ui buttons">
-                    <button onClick="exportSave();" id="btnExport" class="ui green button">Export</button>
-                    <button onClick="importSave();" id="btnImport" class="ui green button">Import</button>
-                    <button onClick="confirmReset();" id="Recommencer" class="ui red button">Reset</button>
+            <!--SAVE-->
+            <div class="ui basic modal" id="modal-1">
+                <div class="ui icon header">
+                    <i class="save icon"></i>
+                    <font id="savemenu" class="title color1"></font>
                 </div>
-                <br />
-                <br />
-                <div class="fluid ui buttons">
-                    <div onclick="hideModals();" class="ui red button">
-                        <i class="remove icon"></i>Close </div>
+                <div class="centrer content">
+                    <p>Here you can export your save to another navigator or computer.
+                        <br> You can also reset your save to start a new game.</p>
+                    <div id="exportBody"></div>
+                    <p id='debugtext' class='copytext'></p>
+                </div>
+                <div class="actions">
+                    <div class="three ui buttons">
+                        <button onClick="exportSave();" id="btnExport" class="ui green button">Export</button>
+                        <button onClick="importSave();" id="btnImport" class="ui green button">Import</button>
+                        <button onClick="confirmReset();" id="Recommencer" class="ui red button">Reset</button>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="fluid ui buttons">
+                        <div onclick="hideModals();" class="ui red button">
+                            <i class="remove icon"></i>Close </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!--TUTORIAL-->
-        <div class="ui basic modal" id="modal-2">
+            <!--TUTORIAL-->
+            <div class="ui basic modal" id="modal-2">
 
-            <div class="ui icon header">
-                <i class="info icon"></i>
-                <font id="tutorial-title" class="title blanc"></font>
-            </div>
-            <div class="centrer content">
-                <p id="tutorial-text"></p>
-            </div>
-            <div class="actions">
-                <div class="large three ui buttons">
-                    <button onClick="PrevTuto();" id="tuto-prev" class="ui green button">Previous</button>
-                    <button onClick="NextTuto();" id="tuto-next" class="ui green button">Next</button>
-                    <div onclick="closeTutorial();" class="ui red button">
-                        <i class="remove icon"></i>Close </div>
+                <div class="ui icon header">
+                    <i class="info icon"></i>
+                    <font id="tutorial-title" class="title blanc"></font>
+                </div>
+                <div class="centrer content">
+                    <p id="tutorial-text"></p>
+                </div>
+                <div class="actions">
+                    <div class="large three ui buttons">
+                        <button onClick="PrevTuto();" id="tuto-prev" class="ui green button">Previous</button>
+                        <button onClick="NextTuto();" id="tuto-next" class="ui green button">Next</button>
+                        <div onclick="closeTutorial();" class="ui red button">
+                            <i class="remove icon"></i>Close </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
+        </div>
     </div>
 
 </body>
