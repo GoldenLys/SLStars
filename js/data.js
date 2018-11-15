@@ -107,8 +107,8 @@ var texts = {
 
 var tutorials = {
     0: { title: "How to play ?", text: "You can start by making money with an exploration mission,<br> then sell your merchandise to the market.", },
-    1: { title: "Exploration", text: "The base mission of the game,<br> where you can get materials and also unlock new systems.", },
-    2: { title: "Market", text: "The space market is a place to gain money,<br> the prices are differents on every system.", },
+    1: { title: "Exploration", text: "The exploration is a first objective in the game,<br> you can get materials and also unlock new systems.", },
+    2: { title: "Market", text: "The space market is a place to gain money,<br> the prices are differents on every system & change every days.", },
     3: { title: "Technologies", text: "Technologies can enable auto-mining drones to automatically get money.", },
 };
 
