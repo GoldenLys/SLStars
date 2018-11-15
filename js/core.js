@@ -1,6 +1,20 @@
+//////////////////////////
+//TODO & IDEAS
+//////////////////////////
+//
+// Fuel system to explore
+// Technology to unlock new systems
+//
+//
+//
+//
+//////////////////////////
+
+
+
 //CONFIG
 
-var version = "v2.33";
+var version = "v2.34";
 var sitename = "SpaceL";
 var Game = {
     DateStarted: getDate(),
@@ -42,8 +56,8 @@ function UpdateGame(cashps) {
 
 function explore(id, nbr) {
     if (Game.explored[id] > 0) {
-        if (Game.cash >= Missions[id].price * nbr) {
-            Game.cash -= Missions[id].price * nbr;
+        if (Game.cash >= (Market[Missions[id].type].value * Missions[id].nbr) * nbr) {
+            Game.cash -= (Market[Missions[id].type].value * Missions[id].nbr) * nbr;
             Game.inventory[Missions[id].type] += Missions[id].nbr * nbr;
             Game.rank += nbr + (1 * Game.system);
         }
@@ -62,7 +76,16 @@ function explore(id, nbr) {
 
 function sellitem(id, qty) {
     if (Game.inventory[id] >= qty) {
-        if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 10000; }
+        if (id < 2) {
+            if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 100; }
+        } else {
+            if (id < 7) {
+                if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 1000; }
+            }
+        }
+        if (id > 6) {
+                if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 10000; }
+            }
         if (SystemMult[id] < 0) { SystemMult[id] = 0; }
         Game.cash += Market[id].value * SystemMult[id] * qty;
         Game.inventory[id] -= qty;

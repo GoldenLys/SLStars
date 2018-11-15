@@ -43,14 +43,14 @@ function GenMissions() {
 
 	for (var i in Missions) {
 		var offer = Missions[i];
-		var canbuy = Game.cash < offer.price ? ' disabled' : '';
-		var canExploreMax = Game.cash < offer.price ? ' disabled' : '';
-		var maxexplore = fix(Math.floor(Game.cash/Missions[i].price), 4);
-		if (Game.explored[i] == 0) { canbuy = Game.cash < offer.price / 2 ? ' disabled' : ''; canExploreMax="disabled"; }
+		var canbuy = Game.cash < Market[offer.type].value ? ' disabled' : '';
+		var canExploreMax = Game.cash < Market[offer.type].value ? ' disabled' : '';
+		var maxexplore = fix(Math.floor(Game.cash / Market[offer.type].value), 4);
+		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
 		var rewardstext = SetColor(rewards);
-		var pricetext = Game.explored[i] < 1 ? fix(offer.price / 2, 1) : fix(offer.price, 1);
+		var pricetext = Game.explored[i] < 1 ? fix((Market[offer.type].value * offer.nbr) / 2, 1) : fix(Market[offer.type].value * offer.nbr, 1);
 		reward = texts.items[offer.type];
 		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
 		cost = "<font class='vert bold type3'>$" + pricetext + "</font>";
@@ -61,7 +61,7 @@ function GenMissions() {
 			"<td class='center aligned ui'>" + name + "</td>" +
 			"<td class='center aligned'>" + description + ", <font class='type3'><font class=' " + rewardstext + "'>" + rewards + "</font> " + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></font></td>" +
 			"<td class='center aligned'> " + cost + "</td>" +
-			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1);'>" + exploretext + "</button><button class='ui " + canExploreMax + " button' onClick='explore(" + i + ", " + maxexplore + ");'>Visit max</button></div></td>" + 
+			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1);'>" + exploretext + "</button><button class='ui " + canExploreMax + " button' onClick='explore(" + i + ", " + maxexplore + ");'>Visit max</button></div></td>" +
 			"</tr>"
 		);
 		$('#system' + offer.system).append(SYSTEMDIV);
@@ -71,7 +71,7 @@ function GenMissions() {
 //GENERATE MARKET
 
 function GenMarket() {
-	$('#system0sm').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Type</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell item</th></tr></thead>");
+	$('#system0sm').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Type</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell</th></tr></thead>");
 
 	for (var i in Market) {
 		var offer = Market[i];
@@ -81,7 +81,7 @@ function GenMarket() {
 		var canSellAll = Game.inventory[i] < 1 ? ' disabled' : '';
 		if (SystemMult[i] < 1) { pricecolor = 'rouge'; }
 		if (SystemMult[i] > 1) { pricecolor = 'vert'; }
-		if (SystemMult[i] > 0.75) { if (SystemMult[i] < 1.1) {  pricecolor = ''; } }
+		if (SystemMult[i] > 0.75) { if (SystemMult[i] < 1.1) { pricecolor = ''; } }
 
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
 		cost = "<font class='" + pricecolor + " bold'>$" + fix(offer.value * SystemMult[i], 1) + "</font>";
@@ -137,7 +137,7 @@ function GenStation() {
 		if (Game.cash < offer.cost) { pricecolor = "rouge"; buyable = "disabled"; buyVar = 0; }
 
 
-		if (offer.type == 0) { type = "Auto-mining upgrade"; }
+		if (offer.type == 0) { type = "Drone upgrade"; }
 
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
@@ -149,30 +149,30 @@ function GenStation() {
 			"</tr>"
 		);
 		if (Game.technologies[i] == 1) { $('#system0ss').append(SYSTEMDIV); }
+		if (Game.technologies[i] == 0) { if (offer.need == -1) { $('#system0ss').append(SYSTEMDIV); } }
 		if (i == 0) { if (Game.technologies[0] == 0) { $('#system0ss').append(SYSTEMDIV); } }
-		else { if (Game.technologies[i - 1] == 1) { $('#system0ss').append(SYSTEMDIV); } }
+		else {
+			if (Game.technologies[offer.need] == 1) { $('#system0ss').append(SYSTEMDIV); }
+		}
 	}
 }
 
 //UI FUNCTIONS
 
-function hideModals() { for (var id = 1; id < 6; id++) { $('#modal-' + id).modal('hide'); } }
-function hidesystems() { for (var id = 0; id < 17; id++) { $("#system" + id).hide(); } }
-function hideTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); } }
+function hideModals() { for (var id = 1; id < 4; id++) { $('#modal-' + id).modal('hide'); } }
+function hidesystems() { for (var id = 0; id < 11; id++) { $("#system" + id).hide(); } }
+function hideTabs() { for (var id = 0; id < 3; id++) { $("#tab" + id).hide(); } }
 function hideMenuTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("spacelborder"); } }
 
 function ClickEvents() {
 	$("#modalmenu").on("click", "a", function () { var id = $(this).data('id'); $('#modal-' + id).modal('show'); $('.ui.sidebar').sidebar('toggle'); });
 	$("#game-menu").on("click", "button", function () { var id = $(this).data('id'); hideMenuTabs(); $("#tab" + id).show(); $("#t" + id).addClass("spacelborder"); });
-	$("#sidebar").on("click", "a", function () { var id = $(this).data('id'); hideTabs(); $("#tab" + id).show(); $('.ui.sidebar').sidebar('toggle'); });
+	$("#sidebar").on("click", "a", function () { var id = $(this).data('id'); $('.ui.sidebar').sidebar('toggle'); });
 	$('#select').dropdown();
 	$('.ui.dropdown').dropdown();
 
 	$("#selection-content").on("click", "div", function () { var id = $(this).data('id'); hidesystems(); Game.system = id; $('#system' + id).show(); changeLocation(); });
-
 	$("#top-menu").on("click", "#sidebar", function () { $('.ui.sidebar').sidebar('toggle'); });
-	$("#endmessages").on("click", "#ViewContact", function () { hideTabs(); $("#tab4").show(); });
-	$("#how").on("click", "#ViewContact", function () { hideTabs(); $("#tab4").show(); });
 }
 
 function AddTravelPoints() {

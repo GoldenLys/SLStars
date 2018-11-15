@@ -13,11 +13,11 @@
 <script src="dropdown.min.js"></script>
 <script src="sidebar.min.js"></script>
 
-<link href="style.css?v=2.33" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=2.33"></script>
-<script src="js/data.js?v=2.33"></script>
-<script src="js/core.js?v=2.33"></script>
-<script src="js/ui.js?v=2.33"></script>
+<link href="style.css?v=2.34" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=2.34"></script>
+<script src="js/data.js?v=2.34"></script>
+<script src="js/core.js?v=2.34"></script>
+<script src="js/ui.js?v=2.34"></script>
 <script src="js/lodash.js"></script>
 <script src="js/numeral.min.js"></script>
 
@@ -132,84 +132,84 @@
                 </div>
 
             </div>
+        </div>
 
-            <!--CONTACT-->
-            <div class="ui basic modal" id="modal-3">
-                <div class="ui icon header">
-                    <i class="address book icon"></i>
-                    <font id="contact-title" class="title blanc">Contact</font>
+        <!--SAVE-->
+        <div class="ui basic modal" id="modal-1">
+            <div class="ui icon header">
+                <i class="save icon"></i>
+                <font id="savemenu" class="title color1"></font>
+            </div>
+            <div class="centrer content">
+                <p>Here you can export your save to another navigator or computer.
+                    <br> You can also reset your save to start a new game.</p>
+                <div id="exportBody"></div>
+                <p id='debugtext' class='copytext'></p>
+            </div>
+            <div class="actions">
+                <div class="three ui buttons">
+                    <button onClick="exportSave();" id="btnExport" class="ui green button">Export</button>
+                    <button onClick="importSave();" id="btnImport" class="ui green button">Import</button>
+                    <button onClick="confirmReset();" id="Recommencer" class="ui red button">Reset</button>
                 </div>
-                <div class="centrer content">
-                    <div class="ui icon message">
-                        <img class="ui tiny rounded image" src="images/lys.jpg">
-                        <div class="content">
-                            <div class="header">
-                                <font class='type1'>Lys - SpaceL developer</font>
-                            </div>
-                            <p>
-                                <i class="large blue discord icon"></i>SUN#0001<br>
-                                <i class="large red reddit icon"></i>u/Aizen45<br>
-                                <i class="large blue steam icon"></i>AizenFR
-                            </p>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <div class="fluid ui buttons">
-                            <div onclick="hideModals();" class="ui red button">
-                                <i class="remove icon"></i>Close </div>
-                        </div>
-                    </div>
+                <br />
+                <br />
+                <div class="fluid ui buttons">
+                    <div onclick="hideModals();" class="ui red button">
+                        <i class="remove icon"></i>Close </div>
                 </div>
             </div>
+        </div>
 
-            <!--SAVE-->
-            <div class="ui basic modal" id="modal-1">
-                <div class="ui icon header">
-                    <i class="save icon"></i>
-                    <font id="savemenu" class="title color1"></font>
+        <!--TUTORIAL-->
+        <div class="ui basic modal" id="modal-2">
+
+            <div class="ui icon header">
+                <i class="info icon"></i>
+                <font id="tutorial-title" class="title blanc"></font>
+            </div>
+            <div class="centrer content">
+                <p id="tutorial-text"></p>
+            </div>
+            <div class="actions">
+                <div class="large three ui buttons">
+                    <button onClick="PrevTuto();" id="tuto-prev" class="ui green button">Previous</button>
+                    <button onClick="NextTuto();" id="tuto-next" class="ui green button">Next</button>
+                    <div onclick="closeTutorial();" class="ui red button">
+                        <i class="remove icon"></i>Close </div>
                 </div>
-                <div class="centrer content">
-                    <p>Here you can export your save to another navigator or computer.
-                        <br> You can also reset your save to start a new game.</p>
-                    <div id="exportBody"></div>
-                    <p id='debugtext' class='copytext'></p>
+            </div>
+        </div>
+
+        <!--CONTACT-->
+        <div class="ui basic modal" id="modal-3">
+            <div class="ui icon header">
+                <i class="address book icon"></i>
+                <font id="contact-title" class="title blanc">Contact</font>
+            </div>
+            <div class="centrer content">
+                <div class="ui icon message">
+                    <img class="ui tiny rounded image" src="images/lys.jpg">
+                    <div class="content">
+                        <div class="header">
+                            <font class='type1'>Lys - SpaceL developer</font>
+                        </div>
+                        <p>
+                            <i class="large blue discord icon"></i>SUN#0001<br>
+                            <i class="large red reddit icon"></i>u/Aizen45<br>
+                            <i class="large blue steam icon"></i>AizenFR
+                        </p>
+                    </div>
                 </div>
                 <div class="actions">
-                    <div class="three ui buttons">
-                        <button onClick="exportSave();" id="btnExport" class="ui green button">Export</button>
-                        <button onClick="importSave();" id="btnImport" class="ui green button">Import</button>
-                        <button onClick="confirmReset();" id="Recommencer" class="ui red button">Reset</button>
-                    </div>
-                    <br />
-                    <br />
                     <div class="fluid ui buttons">
                         <div onclick="hideModals();" class="ui red button">
                             <i class="remove icon"></i>Close </div>
                     </div>
                 </div>
             </div>
-
-            <!--TUTORIAL-->
-            <div class="ui basic modal" id="modal-2">
-
-                <div class="ui icon header">
-                    <i class="info icon"></i>
-                    <font id="tutorial-title" class="title blanc"></font>
-                </div>
-                <div class="centrer content">
-                    <p id="tutorial-text"></p>
-                </div>
-                <div class="actions">
-                    <div class="large three ui buttons">
-                        <button onClick="PrevTuto();" id="tuto-prev" class="ui green button">Previous</button>
-                        <button onClick="NextTuto();" id="tuto-next" class="ui green button">Next</button>
-                        <div onclick="closeTutorial();" class="ui red button">
-                            <i class="remove icon"></i>Close </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
     </div>
 
 </body>
