@@ -1,70 +1,69 @@
 var Missions = {
-    0: { name: 'A', desc: 0, type: 19, nbr: 0.1, system: 0 }, //SYSTEM 1
+    0: { name: 'Station A', desc: 0, type: 19, nbr: 0.1, system: 0 }, //SYSTEM 1
+    1: { name: '1', desc: 0, type: 2, nbr: 1, system: 0 },
+    2: { name: '2', desc: 1, type: 0, nbr: 1, system: 0 },
+    3: { name: '3', desc: 3, type: 3, nbr: 1, system: 0 }, //SYSTEM 2
 
-    1: { name: '1', desc: 0, type: 2, nbr: 1, system: 1 },
-    2: { name: '2', desc: 1, type: 0, nbr: 1, system: 1 },
-    3: { name: '3', desc: 3, type: 3, nbr: 1, system: 1 }, //SYSTEM 2
+    4: { name: '1', desc: 0, type: 1, nbr: 10, system: 1 },
+    5: { name: '2', desc: 1, type: 4, nbr: 5, system: 1 },
+    6: { name: '3', desc: 1, type: 5, nbr: 1, system: 1 },
+    7: { name: '4', desc: 2, type: 6, nbr: 1, system: 1 },
+    8: { name: '5', desc: 1, type: 12, nbr: 1, system: 1 }, //SYSTEM 3
 
-    4: { name: '1', desc: 0, type: 1, nbr: 10, system: 2 },
-    5: { name: '2', desc: 1, type: 4, nbr: 5, system: 2 },
-    6: { name: '3', desc: 1, type: 5, nbr: 1, system: 2 },
-    7: { name: '4', desc: 2, type: 6, nbr: 1, system: 2 },
-    8: { name: '5', desc: 1, type: 12, nbr: 1, system: 2 }, //SYSTEM 3
+    9: { name: '1', desc: 3, type: 10, nbr: 1, system: 2 },
+    10: { name: '2', desc: 3, type: 7, nbr: 1, system: 2 },
+    11: { name: '3', desc: 3, type: 8, nbr: 2, system: 2 },
+    12: { name: '4', desc: 3, type: 9, nbr: 1, system: 2 },
+    13: { name: '5', desc: 3, type: 0, nbr: 10, system: 2 },
+    14: { name: '6', desc: 3, type: 3, nbr: 10, system: 2 },
+    15: { name: '7', desc: 3, type: 5, nbr: 5, system: 2 }, //SYSTEM 4
 
-    9: { name: '1', desc: 3, type: 10, nbr: 1, system: 3 },
-    10: { name: '2', desc: 3, type: 7, nbr: 1, system: 3 },
-    11: { name: '3', desc: 3, type: 8, nbr: 2, system: 3 },
-    12: { name: '4', desc: 3, type: 9, nbr: 1, system: 3 },
-    13: { name: '5', desc: 3, type: 0, nbr: 10, system: 3 },
-    14: { name: '6', desc: 3, type: 3, nbr: 10, system: 3 },
-    15: { name: '7', desc: 3, type: 5, nbr: 5, system: 3 }, //SYSTEM 4
+    16: { name: '1', desc: 4, type: 11, nbr: 1, system: 3 },
+    17: { name: '2', desc: 3, type: 6, nbr: 10, system: 3 },
+    18: { name: '3', desc: 3, type: 1, nbr: 25, system: 3 },
+    19: { name: '4', desc: 3, type: 2, nbr: 10, system: 3 }, //SYSTEM 5
 
-    16: { name: '1', desc: 4, type: 11, nbr: 1, system: 4 },
-    17: { name: '2', desc: 3, type: 6, nbr: 10, system: 4 },
-    18: { name: '3', desc: 3, type: 1, nbr: 25, system: 4 },
-    19: { name: '4', desc: 3, type: 2, nbr: 10, system: 4 }, //SYSTEM 5
+    20: { name: '1', desc: 0, type: 9, nbr: 25, system: 4 },
+    21: { name: '2', desc: 1, type: 10, nbr: 10, system: 4 },
+    22: { name: '3', desc: 2, type: 5, nbr: 10, system: 4 },
+    23: { name: '4', desc: 2, type: 16, nbr: 10, system: 4 },
+    24: { name: '5', desc: 3, type: 3, nbr: 50, system: 4 },
+    25: { name: '6', desc: 3, type: 0, nbr: 100, system: 4 }, //SYSTEM 6
 
-    20: { name: '1', desc: 0, type: 9, nbr: 25, system: 5 },
-    21: { name: '2', desc: 1, type: 10, nbr: 10, system: 5 },
-    22: { name: '3', desc: 2, type: 5, nbr: 10, system: 5 },
-    23: { name: '4', desc: 2, type: 16, nbr: 10, system: 5 },
-    24: { name: '5', desc: 3, type: 3, nbr: 50, system: 5 },
-    25: { name: '6', desc: 3, type: 0, nbr: 100, system: 5 }, //SYSTEM 6
+    26: { name: '1', desc: 0, type: 9, nbr: 100, system: 5 },
+    27: { name: '2', desc: 1, type: 14, nbr: 2, system: 5 },
+    28: { name: '3', desc: 1, type: 13, nbr: 10, system: 5 },
+    29: { name: '4', desc: 1, type: 5, nbr: 50, system: 5 },
+    30: { name: '5', desc: 2, type: 16, nbr: 25, system: 5 }, //SYSTEM 7
 
-    26: { name: '1', desc: 0, type: 9, nbr: 100, system: 6 },
-    27: { name: '2', desc: 1, type: 14, nbr: 2, system: 6 },
-    28: { name: '3', desc: 1, type: 13, nbr: 10, system: 6 },
-    29: { name: '4', desc: 1, type: 5, nbr: 50, system: 6 },
-    30: { name: '5', desc: 2, type: 16, nbr: 25, system: 6 }, //SYSTEM 7
+    31: { name: '1', desc: 4, type: 11, nbr: 10, system: 6 },
+    32: { name: '2', desc: 2, type: 16, nbr: 50, system: 6 },
+    33: { name: '3', desc: 3, type: 14, nbr: 10, system: 6 },
+    34: { name: '4', desc: 3, type: 0, nbr: 50, system: 6 },
+    35: { name: '5', desc: 3, type: 6, nbr: 50, system: 6 },
+    36: { name: '6', desc: 3, type: 13, nbr: 50, system: 6 }, //SYSTEM 8
 
-    31: { name: '1', desc: 4, type: 11, nbr: 10, system: 7 },
-    32: { name: '2', desc: 2, type: 16, nbr: 50, system: 7 },
-    33: { name: '3', desc: 3, type: 14, nbr: 10, system: 7 },
-    34: { name: '4', desc: 3, type: 0, nbr: 50, system: 7 },
-    35: { name: '5', desc: 3, type: 6, nbr: 50, system: 7 },
-    36: { name: '6', desc: 3, type: 13, nbr: 50, system: 7 }, //SYSTEM 8
+    37: { name: '1', desc: 0, type: 5, nbr: 100, system: 7 },
+    38: { name: '2', desc: 0, type: 8, nbr: 100, system: 7 },
+    39: { name: '3', desc: 1, type: 14, nbr: 50, system: 7 },
+    40: { name: '4', desc: 2, type: 12, nbr: 50, system: 7 },
+    41: { name: '5', desc: 3, type: 15, nbr: 50, system: 7 },
+    42: { name: '6', desc: 3, type: 13, nbr: 50, system: 7 }, //SYSTEM 9
 
-    37: { name: '1', desc: 0, type: 5, nbr: 100, system: 8 },
-    38: { name: '2', desc: 0, type: 8, nbr: 100, system: 8 },
-    39: { name: '3', desc: 1, type: 14, nbr: 50, system: 8 },
-    40: { name: '4', desc: 2, type: 12, nbr: 50, system: 8 },
-    41: { name: '5', desc: 3, type: 15, nbr: 50, system: 8 },
-    42: { name: '6', desc: 3, type: 13, nbr: 50, system: 8 }, //SYSTEM 9
+    43: { name: '1', desc: 6, type: 17, nbr: 1, system: 8 },
+    44: { name: '2', desc: 5, type: 18, nbr: 1, system: 8 },
+    45: { name: '3', desc: 5, type: 16, nbr: 100, system: 8 },
+    46: { name: '4', desc: 5, type: 12, nbr: 100, system: 8 },
+    47: { name: '5', desc: 5, type: 10, nbr: 100, system: 8 },
+    48: { name: '6', desc: 5, type: 5, nbr: 200, system: 8 }, //SYSTEM 10
 
-    43: { name: '1', desc: 6, type: 17, nbr: 1, system: 9 },
-    44: { name: '2', desc: 5, type: 18, nbr: 1, system: 9 },
-    45: { name: '3', desc: 5, type: 16, nbr: 100, system: 9 },
-    46: { name: '4', desc: 5, type: 12, nbr: 100, system: 9 },
-    47: { name: '5', desc: 5, type: 10, nbr: 100, system: 9 },
-    48: { name: '6', desc: 5, type: 5, nbr: 200, system: 9 }, //SYSTEM 10
+    49: { name: '1', desc: 7, type: 9, nbr: 1000, system: 9 },
+    50: { name: '2', desc: 6, type: 17, nbr: 10, system: 9 },
+    51: { name: '3', desc: 6, type: 18, nbr: 10, system: 9 },
+    52: { name: '4', desc: 5, type: 13, nbr: 100, system: 9 },
+    53: { name: '5', desc: 5, type: 15, nbr: 100, system: 9 }, //SYSTEM 11
 
-    49: { name: '1', desc: 7, type: 9, nbr: 1000, system: 10 },
-    50: { name: '2', desc: 6, type: 17, nbr: 10, system: 10 },
-    51: { name: '3', desc: 6, type: 18, nbr: 10, system: 10 },
-    52: { name: '4', desc: 5, type: 13, nbr: 100, system: 10 },
-    53: { name: '5', desc: 5, type: 15, nbr: 100, system: 10 }, //SYSTEM 11
-
-    54: { name: 'B', desc: 0, type: 19, nbr: 100, system: 0 }, //SYSTEM 1
+    54: { name: 'Station B', desc: 0, type: 19, nbr: 100, system: 6 }, //SYSTEM 7
 };
 
 var Market = {
@@ -106,7 +105,7 @@ var Technologies = {
 var SystemMult = { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1};
 
 var texts = {
-    systemname: ["Space Station", "Lysen", "Zelas", "Centra", "Vecis", "Ivurd", "Sentori", "Fasis", "Luya", "Kisae", "Gaia"],
+    systemname: ["Lysen", "Zelas", "Centra", "Vecis", "Ivurd", "Sentori", "Fasis", "Luya", "Kisae", "Gaia"],
     items: ["Copper", "Zinc", "Nickel", "Thamium9", "Iron", "Gold", "Aluminium", "Platinum", "Iridium", "Carbon", "Plutonium", "Antimatter", "Titanium", "Heridium", "Radnox", "Emeril", "Omegon", "Cymatygen", "Rubeum", "Power Cell"]
 };
 

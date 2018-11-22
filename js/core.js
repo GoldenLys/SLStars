@@ -2,11 +2,8 @@
 //TODO & IDEAS
 //////////////////////////
 //
-// Fuel system to explore
 // Technology to unlock new systems
-//
-//
-//
+// Drone conversion to "Extraction drone" that mine materials and not money directly
 //
 //////////////////////////
 
@@ -14,7 +11,7 @@
 
 //CONFIG
 
-var version = "v2.4";
+var version = "v2.41";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,
@@ -37,8 +34,8 @@ var Game = {
 $(document).ready(function () {
     if (localStorage.getItem("SpaceL2") != null) { load(); }
     setInterval(function () { UpdateGame(Game.cashps); }, 1000);
+    changeLocation("loading");
     ClickEvents();
-    changeLocation(0);
     $(".pusher").css("background-image", "url(images/bg.png)");
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
@@ -56,18 +53,18 @@ function UpdateGame(cashps) {
     save();
 }
 
-function explore(id, nbr) {
+function explore(id, nbr, obj) {
     if (Game.explored[id] > 0) {
-        if (Game.cash >= (Market[Missions[id].type].value * Missions[id].nbr) * nbr) {
-            Game.cash -= (Market[Missions[id].type].value * Missions[id].nbr) * nbr;
-            Game.inventory[Missions[id].type] += Missions[id].nbr * nbr;
+        if (Game.cash >= (Market[obj].value * Missions[id].nbr) * nbr) {
+            Game.cash -= (Market[obj].value * Missions[id].nbr) * nbr;
+            Game.inventory[obj] += Missions[id].nbr * nbr;
             Game.rank += nbr + (1 * Game.system);
         }
     }
     if (Game.explored[id] < 1) {
-        if (Game.cash >= Market[Missions[id].type].value * Missions[id].nbr / 2) {
-            Game.cash -= Market[Missions[id].type].value * Missions[id].nbr / 2;
-            Game.inventory[Missions[id].type] += Missions[id].nbr * 2;
+        if (Game.cash >= Market[obj].value * Missions[id].nbr / 2) {
+            Game.cash -= Market[obj].value * Missions[id].nbr / 2;
+            Game.inventory[obj] += Missions[id].nbr * 2;
             Game.explored[id] = 1;
             Game.rank = Game.rank + 1 + (1 * Game.system);
         }
@@ -89,7 +86,7 @@ function sellitem(id, qty) {
             if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 10000; }
         }
         if (SystemMult[id] < 0) { SystemMult[id] = 0; }
-        var r = confirm("Do you want to sell every " + texts.items[id] + " in your inventory for " + fix(Market[id].value * SystemMult[id] * qty, 1) + "$");
+        var r = confirm("Do you want to sell " + qty + " " + texts.items[id] + " for " + fix(Market[id].value * SystemMult[id] * qty, 1) + "$ ?");
         if (r == true) {
             Game.cash += Market[id].value * SystemMult[id] * qty;
             Game.inventory[id] -= qty;
@@ -107,35 +104,17 @@ function changeLocation(id) {
             for (var SID in SystemMult) { SystemMult[SID] = random(0, 150000) / 100000; }
             Game.inventory[19] -= 10;
             Game.days++;
+            Game.isLoading = 0;
         }
-        Game.isLoading = 0;
     } else {
         if (Game.inventory[19] >= 10) {
-            if (id != 0) {
-                for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; }
-                Game.inventory[19] -= 10;
-                Game.days++;
-                hidesystems();
-                Game.system = id;
-                $('#system' + id).show();
-            } else {
-                for (var SID3 in SystemMult) { SystemMult[SID3] = random(1, 1); }
-                Game.days++;
-                hidesystems();
-                Game.system = id;
-                $('#system' + id).show();
-            }
-        } else {
-            if (id == 0) {
-                for (var SID4 in SystemMult) { SystemMult[SID4] = random(1, 1); }
-                Game.days++;
-                hidesystems();
-                Game.system = id;
-                $('#system' + id).show();
-            } else {
-                alert("Not enough power cell ! (10% are needed to change system)");
-            }
-        }
+            for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; }
+            Game.inventory[19] -= 10;
+            Game.days++;
+            hidesystems();
+            Game.system = id;
+            $('#system' + id).show();
+        } else { if (id != "loading") { alert("Not enough power cell ! (10% are needed to change system)"); } }
     }
 }
 

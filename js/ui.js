@@ -45,8 +45,8 @@ function GenMissions() {
 	for (var i in Missions) {
 		var offer = Missions[i];
 		var canbuy = Game.cash < Market[offer.type].value ? ' disabled' : '';
-		var canExploreMax = Game.cash < Market[offer.type].value ? ' disabled' : '';
-		var maxexplore = Math.floor(Game.cash / Market[offer.type].value);
+		var canExploreMax = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
+		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * offer.nbr));
 		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
@@ -62,7 +62,7 @@ function GenMissions() {
 			"<td class='center aligned ui'>" + name + "</td>" +
 			"<td class='center aligned'>" + description + ", <font class='type3'><font class=' " + rewardstext + "'>" + rewards + "</font> " + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></font></td>" +
 			"<td class='center aligned'> " + cost + "</td>" +
-			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1);'>" + exploretext + "</button><button class='ui " + canExploreMax + " button' onClick='explore(" + i + ", " + maxexplore + ");'>Visit max</button></div></td>" +
+			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1, " + offer.type + ");'>" + exploretext + "</button><button class='ui " + canExploreMax + " button' onClick='explore(" + i + ", " + maxexplore + ", " + offer.type + ");'>Visit max</button></div></td>" +
 			"</tr>"
 		);
 		$('#system' + offer.system).append(SYSTEMDIV);
@@ -98,7 +98,9 @@ function GenMarket() {
 			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canSell + " button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " button' onClick='sellitem(" + i + ",100);'>100</button><button class='ui " + canSellAll + " button' onClick='sellitem(" + i + "," + Game.inventory[i] + ");'>All</button></div></td>" +
 			"</tr>"
 		);
-		if (i != 19) { $('#system0sm').append(SYSTEMDIV); }
+		//if (i != 19) { 
+		$('#system0sm').append(SYSTEMDIV); 
+	    //}
 	}
 }
 
