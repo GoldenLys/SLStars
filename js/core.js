@@ -103,6 +103,7 @@ function sellitem(id, qty) {
 
 function changeLocation(id) {
     if (Game.inventory[19] >= Game.TravelCost) {
+        Game.system = id;
         for (var SID in SystemMult) { SystemMult[SID] = random(0, 150000) / 100000; }
         if (id != "loading") {
             Game.inventory[19] -= Game.TravelCost;
@@ -111,8 +112,7 @@ function changeLocation(id) {
     } else { if (id != "loading") { alert("Not enough power cell, " + fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; } }
     if (id == "loading") { id = 0; }
     hidesystems();
-    Game.system = id;
-    $('#system' + id).show();
+    $('#system' + Game.system).show();
 }
 
 function buyupgrade(id, buyable, type, req1, nbr1, req2, nbr2) {
