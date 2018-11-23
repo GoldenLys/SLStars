@@ -150,7 +150,7 @@ var Technologies = {
     7: { name: "Advanced drone III", cost: 10000000000, gain: 200, type: 0, need: 6, req: [16, 500], req2: [11, 500] },
     8: { name: "Alien drone I", cost: 50000000000, gain: 750, type: 0, need: 7, req: [16, 1000], req2: [17, 1000] },
     9: { name: "Alien drone II", cost: 100000000000, gain: 1000, type: 0, need: 8, req: [16, 2000], req2: [17, 2000] },
-    10: { name: "Travel cost reducer", cost: 1, gain: 1, type: 1, need: -1, req: [0, -1], req2: [0, -1] },
+    // 10: { name: "Travel cost reducer", cost: 1, gain: 1, type: 1, need: -1, req: [0, -1], req2: [0, -1] },
 };
 
 var SystemMult = { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1};
