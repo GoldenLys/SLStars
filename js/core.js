@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v2.5";
+var version = "v2.51";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,
@@ -77,22 +77,20 @@ function explore(id, nbr, obj) {
 }
 
 function sellitem(id, qty) {
+    var mult = SystemMult[id];
     if (Game.inventory[id] >= qty) {
         if (id < 2) {
-            if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 100; }
+            if (mult > 0) { mult -= mult * (1 * qty) / 100; }
         } else {
-            if (id < 7) {
-                if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 1000; }
-            }
+            if (id < 7) { if (mult > 0) { mult -= mult * (1 * qty) / 1000; } }
         }
-        if (id > 6) {
-            if (SystemMult[id] > 0) { SystemMult[id] -= SystemMult[id] * (1 * qty) / 10000; }
-        }
-        if (SystemMult[id] < 0) { SystemMult[id] = 0; }
-        var r = confirm("Do you want to sell " + qty + " " + texts.items[id] + " for " + fix(Market[id].value * SystemMult[id] * qty, 1) + "$ ?");
+        if (id > 6) { if (mult > 0) { mult -= mult * (1 * qty) / 10000; } }
+        if (mult < 0) { mult = 0.01; }
+        var r = confirm("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + " for " + fix(Market[id].value * mult * qty, 1) + "$ ?");
         if (r == true) {
             Game.cash += Market[id].value * SystemMult[id] * qty;
             Game.inventory[id] -= qty;
+            SystemMult[id] = mult;
         } else {
             UpdateUI();
         }
