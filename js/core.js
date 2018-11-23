@@ -3,7 +3,6 @@
 //////////////////////////
 //
 // Technology to unlock new systems
-// Drone conversion to "Extraction drone" that mine materials and not money directly
 //
 //////////////////////////
 
@@ -11,7 +10,7 @@
 
 //CONFIG
 
-var version = "v2.41";
+var version = "v2.5";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,
@@ -22,11 +21,13 @@ var Game = {
     inventory: [],
     cash: 100,
     cashps: 0,
-    shipname: "Unusable spaceship",
     technologies: [],
     tutorial: 0,
     fl: 0,
     days: 0,
+    extId: 3,
+    extGain: 0,
+    TravelCost: 10,
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -39,16 +40,18 @@ $(document).ready(function () {
     $(".pusher").css("background-image", "url(images/bg.png)");
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
+    GenExtractionMaterials();
 });
 
 //GAME FUNCTIONS
 
 function UpdateGame(cashps) {
-    Game.cash += cashps;
     if (Game.inventory[19] < 0) { Game.inventory[19] = 0; }
     for (var inv in texts.items) { if (Game.inventory[inv] == null) { Game.inventory[inv] = 0; } }
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
+    Game.cash += cashps;
+    Game.inventory[Game.extId] += Game.extGain;
     UpdateUI();
     save();
 }
@@ -99,35 +102,32 @@ function sellitem(id, qty) {
 }
 
 function changeLocation(id) {
-    if (Game.isLoading == 1) {
-        if (Game.inventory[19] >= 10) {
-            for (var SID in SystemMult) { SystemMult[SID] = random(0, 150000) / 100000; }
-            Game.inventory[19] -= 10;
+    if (Game.inventory[19] >= Game.TravelCost) {
+        for (var SID in SystemMult) { SystemMult[SID] = random(0, 150000) / 100000; }
+        if (id != "loading") {
+            Game.inventory[19] -= Game.TravelCost;
             Game.days++;
-            Game.isLoading = 0;
         }
-    } else {
-        if (Game.inventory[19] >= 10) {
-            for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; }
-            Game.inventory[19] -= 10;
-            Game.days++;
-            hidesystems();
-            Game.system = id;
-            $('#system' + id).show();
-        } else { if (id != "loading") { alert("Not enough power cell ! (10% are needed to change system)"); } }
-    }
+    } else { if (id != "loading") { alert("Not enough power cell, " + fix(Game.TravelCost, 3) + "% are required to travel !"); } }
+    if (id == "loading") { id = 0; }
+    hidesystems();
+    Game.system = id;
+    $('#system' + id).show();
 }
 
-function buyupgrade(id, buyable, req1, nbr1, req2, nbr2) {
+function buyupgrade(id, buyable, type, req1, nbr1, req2, nbr2) {
     if (buyable > 0) {
         if (Game.technologies[id] != 1) {
-            if (Game.cash >= Technologies[id].cost) {
-                Game.inventory[req1] -= nbr1;
-                Game.inventory[req2] -= nbr2;
-                Game.cash -= Technologies[id].cost;
-                if (Technologies[id].type == 0) { Game.cashps += Technologies[id].gain; }
-                Game.technologies[id] = 1;
+            if (type == 0) {
+                if (Game.cash >= Technologies[id].cost) {
+                    Game.inventory[req1] -= nbr1;
+                    Game.inventory[req2] -= nbr2;
+                    Game.cash -= Technologies[id].cost;
+                    Game.extGain = Technologies[id].gain;
+                    Game.technologies[id] = 1;
+                }
             }
+            if (type == 1) { }
         }
     }
 

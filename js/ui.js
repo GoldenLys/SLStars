@@ -1,15 +1,20 @@
 ﻿var UpdateUI = function () {
 	if (Game.fl == 0) { $("#modal-2").modal('show'); }
 	document.title = sitename + " " + version;
-	$("#money").html("" + fix(Game.cash, 1) + " + <font class='bold vert'>" + fix(Game.cashps, 2) + "</font>/s");
-	$("#rank").html("" + fix(Game.rank, 2) + "");
+	$("#money").html("" + fix(Game.cash, 1));
+	// + " + <font class='bold vert'>" + fix(Game.cashps, 2) + "</font>/s");
+	$("#rank").html("" + fix(Game.rank, 2) + " EP");
 	$("#dayscount").html("" + Game.days + " days passed.");
 	$("#fuel").html("" + fix(Game.inventory[19], 3) + "% fuel.");
+	$("#EXT-TITLE").html(texts.items[Game.extId] + "<img class='ui avatar image' src='images/items/" + Game.extId + ".png'>");
+	$("#EXT-DESC").html("The drone extract " + fix(Game.extGain, 1));
+	$("#EXT-DESC2").html("per seconds ");
 	GenInventory();
 	GenMissions();
 	GenMarket();
 	GenStation();
 	AddTravelPoints();
+	GenExtractionMaterials();
 	setTutorial(Game.tutorial);
 };
 
@@ -99,8 +104,8 @@ function GenMarket() {
 			"</tr>"
 		);
 		//if (i != 19) { 
-		$('#system0sm').append(SYSTEMDIV); 
-	    //}
+		$('#system0sm').append(SYSTEMDIV);
+		//}
 	}
 }
 
@@ -140,7 +145,8 @@ function GenStation() {
 		if (Game.cash < offer.cost) { pricecolor = "rouge"; buyable = "disabled"; buyVar = 0; }
 
 
-		if (offer.type == 0) { type = "Drone upgrade"; }
+		if (offer.type == 0) { type = "Extraction upgrade"; }
+		if (offer.type == 1) { type = "Navigation upgrade"; }
 
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
@@ -148,7 +154,7 @@ function GenStation() {
 			"<td class='center aligned type3'> " + type + "</td>" +
 			"<td class='center aligned'>" + requiretext1 + "<img class='ui avatar image' src='images/items/" + offer.req[0] + ".png'><br>" + requiretext2 + "<img class='ui avatar image' src='images/items/" + offer.req2[0] + ".png'></td>" +
 			"<td class='center aligned'>" + cost + "</td>" +
-			"<td class='center aligned'>" + active + "<button class='ui " + buyable + " red button' " + visible + " onClick='buyupgrade(" + i + ", " + buyVar + ", " + offer.req[0] + ", " + offer.req[1] + ", " + offer.req2[0] + ", " + offer.req2[1] + ");'>" + buytext + "</button></td>" +
+			"<td class='center aligned'>" + active + "<button class='ui " + buyable + " red button' " + visible + " onClick='buyupgrade(" + i + ", " + buyVar + ", " + offer.type + ", " + offer.req[0] + ", " + offer.req[1] + ", " + offer.req2[0] + ", " + offer.req2[1] + ");'>" + buytext + "</button></td>" +
 			"</tr>"
 		);
 		if (Game.technologies[i] == 1) { $('#system0ss').append(SYSTEMDIV); }
@@ -175,6 +181,7 @@ function ClickEvents() {
 	$('.ui.dropdown').dropdown();
 
 	$("#selection-content").on("click", "div", function () { var id = $(this).data('id'); changeLocation(id); });
+	$("#EXT-CONTENT").on("click", "div", function () { var id = $(this).data('id'); Game.extId = id; });
 	$("#top-menu").on("click", "#sidebar", function () { $('.ui.sidebar').sidebar('toggle'); });
 }
 
@@ -182,15 +189,15 @@ function AddTravelPoints() {
 	$("#selection-content").html(""); //RESET VIEW
 	$("#selection-content").append("<div class='item' id='V0' data-id='0'>" + texts.systemname[0] + "</div>");
 	$("#selection-content").append("<div class='item' id='V1' data-id='1'>" + texts.systemname[1] + "</div>");
-	if (Game.rank >= 10) { $("#selection-content").append("<div class='item' id='V2' data-id='2'>" + texts.systemname[2] + "</div>"); $("#percentrank").html(fix(50, 0)); }
-	if (Game.rank >= 50) { $("#selection-content").append("<div class='item' id='V3' data-id='3'>" + texts.systemname[3] + "</div>"); $("#percentrank").html(fix(100, 0)); }
-	if (Game.rank >= 100) { $("#selection-content").append("<div class='item' id='V4' data-id='4'>" + texts.systemname[4] + "</div>"); $("#percentrank").html(fix(350, 0)); }
-	if (Game.rank >= 350) { $("#selection-content").append("<div class='item' id='V5' data-id='5'>" + texts.systemname[5] + "</div>"); $("#percentrank").html(fix(1000, 0)); }
-	if (Game.rank >= 1000) { $("#selection-content").append("<div class='item' id='V6' data-id='6'>" + texts.systemname[6] + "</div>"); $("#percentrank").html(fix(2500, 0)); }
-	if (Game.rank >= 2500) { $("#selection-content").append("<div class='item' id='V7' data-id='7'>" + texts.systemname[7] + "</div>"); $("#percentrank").html(fix(5000, 0)); }
-	if (Game.rank >= 5000) { $("#selection-content").append("<div class='item' id='V8' data-id='8'>" + texts.systemname[8] + "</div>"); $("#percentrank").html(fix(10000, 0)); }
-	if (Game.rank >= 10000) { $("#selection-content").append("<div class='item' id='V9' data-id='9'>" + texts.systemname[9] + "</div>"); $("#percentrank").html(fix(100000, 0)); }
-	if (Game.rank >= 100000) { $("#selection-content").append("<div class='item' id='V10' data-id='10'>" + texts.systemname[10] + "</div>"); $("#percentrank").html("Maximun"); }
+	if (Game.rank >= 10) { $("#selection-content").append("<div class='item' id='V2' data-id='2'>" + texts.systemname[2] + "</div>"); $("#percentrank").html(fix(50, 0) + " EP"); }
+	if (Game.rank >= 50) { $("#selection-content").append("<div class='item' id='V3' data-id='3'>" + texts.systemname[3] + "</div>"); $("#percentrank").html(fix(100, 0) + " EP"); }
+	if (Game.rank >= 100) { $("#selection-content").append("<div class='item' id='V4' data-id='4'>" + texts.systemname[4] + "</div>"); $("#percentrank").html(fix(350, 0) + " EP"); }
+	if (Game.rank >= 350) { $("#selection-content").append("<div class='item' id='V5' data-id='5'>" + texts.systemname[5] + "</div>"); $("#percentrank").html(fix(1000, 0) + " EP"); }
+	if (Game.rank >= 1000) { $("#selection-content").append("<div class='item' id='V6' data-id='6'>" + texts.systemname[6] + "</div>"); $("#percentrank").html(fix(2500, 0) + " EP"); }
+	if (Game.rank >= 2500) { $("#selection-content").append("<div class='item' id='V7' data-id='7'>" + texts.systemname[7] + "</div>"); $("#percentrank").html(fix(5000, 0) + " EP"); }
+	if (Game.rank >= 5000) { $("#selection-content").append("<div class='item' id='V8' data-id='8'>" + texts.systemname[8] + "</div>"); $("#percentrank").html(fix(10000, 0) + " EP"); }
+	if (Game.rank >= 10000) { $("#selection-content").append("<div class='item' id='V9' data-id='9'>" + texts.systemname[9] + "</div>"); $("#percentrank").html(fix(100000, 0) + " EP"); }
+	if (Game.rank >= 100000) { $("#selection-content").append("<div class='item' id='V10' data-id='10'>" + texts.systemname[10] + "</div>"); $("#percentrank").html("Unlimited EP"); }
 	$("#selection-text").html(texts.systemname[Game.system]);
 }
 
@@ -217,10 +224,10 @@ function setTutorial(id) {
 	else { $("#tuto-next").removeClass("disabled"); }
 }
 
-function closeTutorial() { hideModals(); Game.tutorial = 0; if (Game.fl == 0) { Game.fl = 1; Game.inventory[19]=100; } }
+function closeTutorial() { hideModals(); Game.tutorial = 0; if (Game.fl == 0) { Game.fl = 1; Game.inventory[19] = 100; } }
 
 function NextTuto() {
-	if (Game.fl == 0) { Game.fl = 1; Game.inventory[19]=100; }
+	if (Game.fl == 0) { Game.fl = 1; Game.inventory[19] = 100; }
 	if (Game.tutorial < 3) { Game.tutorial++; setTutorial(Game.tutorial); }
 }
 

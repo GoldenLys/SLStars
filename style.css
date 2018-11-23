@@ -64,7 +64,7 @@
 }
 
 .vert {
-    color: #21ba45;
+    color: #21ba45!important;;
 }
 
 .gris {
@@ -327,4 +327,13 @@ body ::-webkit-scrollbar-track {
     color: #ffffff;
     -webkit-box-shadow: 0 0 0 0px rgba(34,36,38,.22) inset, 0 0 0 0 transparent;
     box-shadow: 0 0 0 0px rgba(34,36,38,.22) inset, 0 0 0 0 transparent;
+}
+
+.ui.avatar.image {
+    height: 1.8em;
+    width: 1.8em;
+}
+
+.ui.dropdown>.text>.image, .ui.dropdown>.text>img {
+    margin-right: .0rem;
 }
