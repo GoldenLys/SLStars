@@ -106,7 +106,7 @@ function changeLocation(id) {
             Game.inventory[19] -= Game.TravelCost;
             Game.days++;
         }
-    } else { if (id != "loading") { alert("Not enough power cell, " + fix(Game.TravelCost, 3) + "% are required to travel !"); } }
+    } else { if (id != "loading") { alert("Not enough power cell, " + fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; } }
     if (id == "loading") { id = 0; }
     hidesystems();
     Game.system = id;
