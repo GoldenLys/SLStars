@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v2.51";
+var version = "v2.52";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,
@@ -19,7 +19,7 @@ var Game = {
     system: 0,
     explored: [],
     inventory: [],
-    cash: 100,
+    cash: 50,
     cashps: 0,
     technologies: [],
     tutorial: 0,
@@ -28,6 +28,7 @@ var Game = {
     extId: 3,
     extGain: 0,
     TravelCost: 10,
+    Upgrades: [],
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -50,6 +51,7 @@ function UpdateGame(cashps) {
     for (var inv in texts.items) { if (Game.inventory[inv] == null) { Game.inventory[inv] = 0; } }
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
+    for (var u in Upgrades) { if (Game.Upgrades[u] == null) { Game.Upgrades[u] = 0; } }
     Game.cash += cashps;
     Game.inventory[Game.extId] += Game.extGain;
     UpdateUI();
@@ -129,4 +131,14 @@ function buyupgrade(id, buyable, type, req1, nbr1, req2, nbr2) {
         }
     }
 
+}
+
+function UPGPOWER(id) {
+    if (Game.cash > GetUPGprice(id)) {
+        if (Game.Upgrades[id] < 100) {
+            Game.cash -= GetUPGprice(id);
+            Game.TravelCost-=0.1;
+            Game.Upgrades[id]++;
+        }
+    }
 }

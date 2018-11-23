@@ -13,11 +13,11 @@
 <script src="dropdown.min.js"></script>
 <script src="sidebar.min.js"></script>
 
-<link href="style.css?v=2.51" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=2.51"></script>
-<script src="js/data.js?v=2.51"></script>
-<script src="js/core.js?v=2.51"></script>
-<script src="js/ui.js?v=2.51"></script>
+<link href="style.css?v=2.52" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=2.52"></script>
+<script src="js/data.js?v=2.52"></script>
+<script src="js/core.js?v=2.52"></script>
+<script src="js/ui.js?v=2.52"></script>
 <script src="js/lodash.js"></script>
 <script src="js/numeral.min.js"></script>
 
@@ -128,20 +128,30 @@
                 </div>
 
                 <!--TECHNOLOGIES-->
-                <div id="tab2" style="display: none; width: 100%;">
-                    <div class="ui black message">
-                        <h3 class="ui type1 C1">Technologies</h3> 
-                        <span>
-                            <font id="EXT-DESC"></font>
-                            <div class="ui inline dropdown">
-                                <div id="EXT-TITLE" class="text vert">
+                <div class="ui equal width grid" id="tab2" style="display: none;">
+                    <div class="column">
+                        <div class="ui black message">
+                            <h3 class="ui type1 C1">Extraction</h3>
+                            <span>
+                                <font id="EXT-DESC"></font>
+                                <div class="ui inline dropdown">
+                                    <div id="EXT-TITLE" class="text vert">
+                                    </div>
+                                    <i class="dropdown icon"></i>
+                                    <div id="EXT-CONTENT" class="menu"></div>
                                 </div>
-                                <i class="dropdown icon"></i>
-                                <div id="EXT-CONTENT" class="menu"></div>
-                            </div>
-                            <font id="EXT-DESC2"></font>
-                        </span>
-                        <table id="system0ss" class="ui inverted table"></table>
+                                <font id="EXT-DESC2"></font>
+                            </span>
+                            <table id="system0ss" class="ui inverted table"></table>
+                            
+                        </div>
+                    </div>
+                    <div class="column">
+                            <div class="ui black message">
+                                    <h3 class="ui type1 C1">Upgrades</h3>
+                                    <p id="HYPERSPACE-TEXT"></p>
+                        <table id="UPG-BOARD" class="ui inverted table"></table>
+                    </div>
                     </div>
                 </div>
 

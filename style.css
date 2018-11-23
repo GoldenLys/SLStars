@@ -20,12 +20,14 @@
 }
 
 #colonne-m {
-    width: 20%;
+    width: 15%;
+    margin-left: 0.1%;;
 }
 
 #colonne-d {
     text-align: center;
-    width: 78%;
+    width: 80%;
+    margin-right: 0.1%;
 }
 
 .bronze {

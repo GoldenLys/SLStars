@@ -5,14 +5,16 @@
 	// + " + <font class='bold vert'>" + fix(Game.cashps, 2) + "</font>/s");
 	$("#rank").html("" + fix(Game.rank, 2) + " EP");
 	$("#dayscount").html("" + Game.days + " days passed.");
-	$("#fuel").html("" + fix(Game.inventory[19], 3) + "% fuel.");
+	$("#fuel").html("" + fix(Game.inventory[19], 3) + "% power.");
 	$("#EXT-TITLE").html(texts.items[Game.extId] + "<img class='ui avatar image' src='images/items/" + Game.extId + ".png'>");
 	$("#EXT-DESC").html("The drone extract " + fix(Game.extGain, 1));
 	$("#EXT-DESC2").html("per seconds ");
+	$("#HYPERSPACE-TEXT").html("Travel to another location actually cost " + fix(Game.TravelCost, 3) + "% of power");
 	GenInventory();
 	GenMissions();
 	GenMarket();
 	GenStation();
+	GenUpgrades();
 	AddTravelPoints();
 	GenExtractionMaterials();
 	setTutorial(Game.tutorial);
@@ -59,7 +61,7 @@ function GenMissions() {
 		var pricetext = Game.explored[i] < 1 ? fix((Market[offer.type].value * offer.nbr) / 2, 1) : fix(Market[offer.type].value * offer.nbr, 1);
 		reward = texts.items[offer.type];
 		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
-		cost = "<font class='vert bold type3'>$" + pricetext + "</font>";
+		cost = "<i class='green dollar sign icon'></i><font class='vert bold type3'>" + pricetext + "</font>";
 		description = GetSystemType(offer.desc);
 
 		var SYSTEMDIV = $(
@@ -90,7 +92,7 @@ function GenMarket() {
 		if (SystemMult[i] > 0.75) { if (SystemMult[i] < 1.1) { pricecolor = ''; } }
 
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
-		cost = "<font class='" + pricecolor + " bold'>$" + fix(offer.value * SystemMult[i], 1) + "</font>";
+		cost = "<i class='green dollar sign icon'></i><font class='" + pricecolor + " bold'>" + fix(offer.value * SystemMult[i], 1) + "</font>";
 		description = offer.desc;
 		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">' + fix(Game.inventory[i], 0) + '</font>' : '<font class="vert">' + fix(Game.inventory[i], 0) + '</font>';
 
@@ -112,7 +114,7 @@ function GenMarket() {
 //GENERATE STATION
 
 function GenStation() {
-	$('#system0ss').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Technology</th><th class='ui center aligned'>Require</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
+	$('#system0ss').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Require</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
 
 	for (var i in Technologies) {
 		var offer = Technologies[i];
@@ -151,7 +153,6 @@ function GenStation() {
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
 			"<td class='center aligned ui'><span class='Palladium'><font class='type2'>" + offer.name + "</font></span></td>" +
-			"<td class='center aligned type3'> " + type + "</td>" +
 			"<td class='center aligned'>" + requiretext1 + "<img class='ui avatar image' src='images/items/" + offer.req[0] + ".png'><br>" + requiretext2 + "<img class='ui avatar image' src='images/items/" + offer.req2[0] + ".png'></td>" +
 			"<td class='center aligned'>" + cost + "</td>" +
 			"<td class='center aligned'>" + active + "<button class='ui " + buyable + " red button' " + visible + " onClick='buyupgrade(" + i + ", " + buyVar + ", " + offer.type + ", " + offer.req[0] + ", " + offer.req[1] + ", " + offer.req2[0] + ", " + offer.req2[1] + ");'>" + buytext + "</button></td>" +
@@ -164,6 +165,41 @@ function GenStation() {
 			if (Game.technologies[offer.need] == 1) { $('#system0ss').append(SYSTEMDIV); }
 		}
 	}
+}
+
+function GenUpgrades() {
+	$('#UPG-BOARD').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Level</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
+
+	for (var i in Upgrades) {
+		var canbuy = "";
+		var buyable = "";
+		var upg = Upgrades[i];
+		canbuy = Game.cash < GetUPGprice(i) ? ' disabled' : '';
+		buyable = Game.cash < GetUPGprice(i) ? ' rouge' : ' vert';
+
+		var SYSTEMDIV = $(
+			"<tr class=''>" +
+			"<td class='center aligned ui'><span class='Palladium'><font class='type2'>" + upg.name + "</font></span></td>" +
+			"<td class='center aligned ui'>" + Game.Upgrades[i] + "</td>" +
+			"<td class='center aligned ui'><i class='green dollar sign icon'></i><font class='" + buyable + "'>" + GetUPGprice(i) + "</font></td>" +
+			"<td class='center aligned ui'><a class='fluid ui " + canbuy + " red button' onClick='UPGPOWER(" + i + ");'>Upgrade</a><td>" +
+			"</tr>"
+		);
+		$('#UPG-BOARD').append(SYSTEMDIV);
+	}
+}
+
+function GetUPGprice(id) {
+	var value;
+	if (Game.Upgrades[id] == 0) { value = Upgrades[id].price; }
+	if (Game.Upgrades[id] > 0) {
+		if (Game.Upgrades[id] > 0) { value = fix(Upgrades[id].price * Math.pow(1.10, Game.Upgrades[id]), 1); }
+		if (Game.Upgrades[id] >= 10) { value = fix(Upgrades[id].price * Math.pow(1.15, Game.Upgrades[id]), 1); }
+		if (Game.Upgrades[id] >= 25) { value = fix(Upgrades[id].price * Math.pow(1.25, Game.Upgrades[id]), 1); }
+		if (Game.Upgrades[id] >= 50) { value = fix(Upgrades[id].price * Math.pow(1.5, Game.Upgrades[id]), 1); }
+		if (Game.Upgrades[id] == 100) { value = "Maximum"; }
+	}
+	return value;
 }
 
 //UI FUNCTIONS

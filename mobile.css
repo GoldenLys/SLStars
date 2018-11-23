@@ -12,3 +12,8 @@
     width: 100%;
     right: 0%;
 }
+
+.ui.item.menu, .ui.item.menu .item {
+    -webkit-box-pack: initial!important;   
+    display: -webkit-box!important;
+}
