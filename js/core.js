@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v2.53";
+var version = "v2.54";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,
@@ -27,7 +27,7 @@ var Game = {
     days: 0,
     extId: 3,
     extGain: 0,
-    TravelCost: 10,
+    TravelCost: 25,
     Upgrades: [],
     totalinv: 100,
 };
@@ -144,7 +144,7 @@ function UPGPOWER(id) {
     if (Game.cash > GetUPGprice(id)) {
         if (Game.Upgrades[id] < 100) {
             Game.cash -= GetUPGprice(id);
-            Game.TravelCost-=0.1;
+            Game.TravelCost-=Upgrades[id].gain;
             Game.Upgrades[id]++;
         }
     }

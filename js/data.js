@@ -97,55 +97,6 @@ var Market = {
     19: { desc: "common element", value: 15 }, //POWER CELL
 };
 
-function GenExtractionMaterials() {
-    var content;
-    $("#EXT-CONTENT").html(""); //RESET VIEW
-    for (var inv in texts.items) {
-        content = "<div class='item' data-id='" + inv + "'>" + texts.items[inv] + "<img class='ui avatar image' src='images/items/" + inv + ".png'></div>";
-        if (Game.technologies[0] == 1) {
-            if (inv == 3) { $("#EXT-CONTENT").append(content); }
-        }
-        if (Game.technologies[1] == 1) {
-            if (inv == 0) { $("#EXT-CONTENT").append(content); }
-            if (inv == 1) { $("#EXT-CONTENT").append(content); }
-        }
-        if (Game.technologies[2] == 1) {
-            if (inv == 2) { $("#EXT-CONTENT").append(content); }
-            if (inv == 4) { $("#EXT-CONTENT").append(content); }
-        }
-        if (Game.technologies[3] == 1) {
-            if (inv == 5) { $("#EXT-CONTENT").append(content); }
-        }
-        if (Game.technologies[4] == 1) {
-            if (inv == 6) { $("#EXT-CONTENT").append(content); }
-        }
-        if (Game.technologies[5] == 1) {
-            if (inv == 7) { $("#EXT-CONTENT").append(content); }
-            if (inv == 8) { $("#EXT-CONTENT").append(content); }
-        }
-        if (Game.technologies[6] == 1) {
-            if (inv == 9) { $("#EXT-CONTENT").append(content); }
-            if (inv == 10) { $("#EXT-CONTENT").append(content); }
-        }
-        if (Game.technologies[7] == 1) {
-            if (inv == 11) { $("#EXT-CONTENT").append(content); }
-            if (inv == 12) { $("#EXT-CONTENT").append(content); }
-            if (inv == 13) { $("#EXT-CONTENT").append(content); }
-        }
-        if (Game.technologies[8] == 1) {
-            if (inv == 14) { $("#EXT-CONTENT").append(content); }
-            if (inv == 15) { $("#EXT-CONTENT").append(content); }
-            if (inv == 16) { $("#EXT-CONTENT").append(content); }
-        }
-        if (Game.technologies[9] == 1) {
-            if (inv == 17) { $("#EXT-CONTENT").append(content); }
-            if (inv == 18) { $("#EXT-CONTENT").append(content); }
-            if (inv == 19) { $("#EXT-CONTENT").append(content); }
-        }
-        $("#EXT-TITLE").html(texts.items[Game.extId] + "<img class='ui avatar image' src='images/items/" + Game.extId + ".png'>");
-    }
-}
-
 var Technologies = {
     0: { name: "Rusty drone I", cost: 100, gain: 0.1, type: 0, need: -1, req: [3, 5], req2: [0, 5] },
     1: { name: "Rusty drone II", cost: 1000, gain: 0.5, type: 0, need: 0, req: [3, 10], req2: [0, 10] },
@@ -154,13 +105,13 @@ var Technologies = {
     4: { name: "Basic drone III", cost: 500000, gain: 5, type: 0, need: 3, req: [10, 50], req2: [7, 50] },
     5: { name: "Advanced drone I", cost: 5000000, gain: 7.5, type: 0, need: 4, req: [10, 100], req2: [12, 100] },
     6: { name: "Advanced drone II", cost: 100000000, gain: 10, type: 0, need: 5, req: [10, 200], req2: [12, 200] },
-    7: { name: "Advanced drone III", cost: 10000000000, gain: 15, type: 0, need: 6, req: [16, 500], req2: [11, 500] },
-    8: { name: "Alien drone I", cost: 50000000000, gain: 25, type: 0, need: 7, req: [16, 1000], req2: [17, 1000] },
-    9: { name: "Alien drone II", cost: 100000000000, gain: 50, type: 0, need: 8, req: [16, 2000], req2: [17, 2000] },
+    7: { name: "Advanced drone III", cost: 10000000000, gain: 15, type: 0, need: 6, req: [16, 150], req2: [11, 250] },
+    8: { name: "Alien drone I", cost: 50000000000, gain: 25, type: 0, need: 7, req: [16, 200], req2: [17, 250] },
+    9: { name: "Alien drone II", cost: 100000000000, gain: 50, type: 0, need: 8, req: [16, 500], req2: [17, 500] },
 };
 
 var Upgrades = {
-    0: { name: "Hyperspace", price: 100, gain: 0.1, type: 1, need: -1 },
+    0: { name: "Hyperspace", price: 100, gain: 0.25, type: 1, need: -1 },
 };
 
 var SystemMult = { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1 };

@@ -32,22 +32,18 @@
 
 .bronze {
 	color: rgb(148, 124, 52);
-	text-shadow: 0.1vh 0px 0px rgb(120, 100, 0);
 }
 
 .argent {
 	color: rgb(148, 148, 148);
-	text-shadow: 0.1vh 0px 0px rgb(148, 148, 148);
 }
 
 .or {
 	color: rgb(255, 190, 0);
-	text-shadow: 0.1vh 0px 0px rgb(120, 100, 0);
 }
 
 .platine {
 	color: rgb(214, 214, 214);
-	text-shadow: 0px 0px 3vh rgb(1, 73, 110);
 }
 
 .bleu {
@@ -57,12 +53,10 @@
 
 .rose {
 	color: rgb(237, 34, 255);
-	text-shadow: 0px 0px 3vh rgb(104, 6, 124);
 }
 
 .violet {
     color: rgb(137, 47, 255);
-    text-shadow: 0 0 3vh rgb(37, 0, 80);
 }
 
 .vert {
@@ -338,4 +332,9 @@ body ::-webkit-scrollbar-track {
 
 .ui.dropdown>.text>.image, .ui.dropdown>.text>img {
     margin-right: .0rem;
+}
+
+i.icon {
+    margin: 0;
+    width: 1em;
 }
