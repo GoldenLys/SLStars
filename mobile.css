@@ -17,3 +17,7 @@
     -webkit-box-pack: initial!important;   
     display: -webkit-box!important;
 }
+
+.pushable>.pusher {
+    overflow-y: hidden;
+}
