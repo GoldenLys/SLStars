@@ -1,70 +1,77 @@
 var Missions = {
-//SYSTEM 1    
-    0: { name: 'Station A', desc: 0, type: 19, nbr: 0.1, system: 0 }, 
+    //SYSTEM 1    
+    0: { name: 'Station', desc: 0, type: 19, nbr: 0.1, system: 0 },
     1: { name: '1', desc: 0, type: 2, nbr: 1, system: 0 },
     2: { name: '2', desc: 1, type: 0, nbr: 1, system: 0 },
-    3: { name: '3', desc: 3, type: 3, nbr: 1, system: 0 }, 
-//SYSTEM 2
-    4: { name: '1', desc: 0, type: 1, nbr: 10, system: 1 },
-    5: { name: '2', desc: 1, type: 4, nbr: 5, system: 1 },
-    6: { name: '3', desc: 1, type: 5, nbr: 1, system: 1 },
-    7: { name: '4', desc: 2, type: 6, nbr: 1, system: 1 },
-    8: { name: '5', desc: 1, type: 12, nbr: 1, system: 1 }, 
-//SYSTEM 3
-    9: { name: '1', desc: 3, type: 10, nbr: 1, system: 2 },
-    10: { name: '2', desc: 3, type: 7, nbr: 1, system: 2 },
-    11: { name: '3', desc: 3, type: 8, nbr: 2, system: 2 },
-    12: { name: '4', desc: 3, type: 9, nbr: 1, system: 2 },
-    13: { name: '5', desc: 3, type: 0, nbr: 10, system: 2 },
-    14: { name: '6', desc: 3, type: 3, nbr: 10, system: 2 },
-    15: { name: '7', desc: 3, type: 5, nbr: 5, system: 2 },
-//SYSTEM 4
-    16: { name: '1', desc: 4, type: 11, nbr: 1, system: 3 },
-    17: { name: '2', desc: 3, type: 6, nbr: 10, system: 3 },
-    18: { name: '3', desc: 3, type: 1, nbr: 25, system: 3 },
-    19: { name: '4', desc: 3, type: 2, nbr: 10, system: 3 }, 
-//SYSTEM 5
-    20: { name: '1', desc: 0, type: 9, nbr: 25, system: 4 },
-    21: { name: '2', desc: 1, type: 10, nbr: 10, system: 4 },
-    22: { name: '3', desc: 2, type: 5, nbr: 10, system: 4 },
-    23: { name: '4', desc: 2, type: 16, nbr: 10, system: 4 },
-    24: { name: '5', desc: 3, type: 3, nbr: 50, system: 4 },
-    25: { name: '6', desc: 3, type: 0, nbr: 100, system: 4 }, 
-//SYSTEM 6
-    26: { name: '1', desc: 0, type: 9, nbr: 100, system: 5 },
-    27: { name: '2', desc: 1, type: 14, nbr: 2, system: 5 },
-    28: { name: '3', desc: 1, type: 13, nbr: 10, system: 5 },
-    29: { name: '4', desc: 1, type: 5, nbr: 50, system: 5 },
-    30: { name: '5', desc: 2, type: 16, nbr: 25, system: 5 }, 
-//SYSTEM 7
-    31: { name: '1', desc: 4, type: 11, nbr: 10, system: 6 },
-    32: { name: '2', desc: 2, type: 16, nbr: 50, system: 6 },
-    33: { name: '3', desc: 3, type: 14, nbr: 10, system: 6 },
-    34: { name: '4', desc: 3, type: 0, nbr: 50, system: 6 },
-    35: { name: '5', desc: 3, type: 6, nbr: 50, system: 6 },
-    36: { name: '6', desc: 3, type: 13, nbr: 50, system: 6 }, 
-//SYSTEM 8
-    37: { name: '1', desc: 0, type: 5, nbr: 100, system: 7 },
-    38: { name: '2', desc: 0, type: 8, nbr: 100, system: 7 },
-    39: { name: '3', desc: 1, type: 14, nbr: 50, system: 7 },
-    40: { name: '4', desc: 2, type: 12, nbr: 50, system: 7 },
-    41: { name: '5', desc: 3, type: 15, nbr: 50, system: 7 },
-    42: { name: '6', desc: 3, type: 13, nbr: 50, system: 7 }, 
-//SYSTEM 9
-    43: { name: '1', desc: 6, type: 17, nbr: 1, system: 8 },
-    44: { name: '2', desc: 5, type: 18, nbr: 1, system: 8 },
-    45: { name: '3', desc: 5, type: 16, nbr: 100, system: 8 },
-    46: { name: '4', desc: 5, type: 12, nbr: 100, system: 8 },
-    47: { name: '5', desc: 5, type: 10, nbr: 100, system: 8 },
-    48: { name: '6', desc: 5, type: 5, nbr: 200, system: 8 }, 
-//SYSTEM 10
-    49: { name: '1', desc: 7, type: 9, nbr: 1000, system: 9 },
-    50: { name: '2', desc: 6, type: 17, nbr: 10, system: 9 },
-    51: { name: '3', desc: 6, type: 18, nbr: 10, system: 9 },
-    52: { name: '4', desc: 5, type: 13, nbr: 100, system: 9 },
-    53: { name: '5', desc: 5, type: 15, nbr: 100, system: 9 }, 
-//SYSTEM 7 - STATION UPDATE
-    54: { name: 'Station B', desc: 0, type: 19, nbr: 100, system: 6 }, 
+    3: { name: '3', desc: 3, type: 3, nbr: 1, system: 0 },
+    //SYSTEM 2
+    4: { name: 'Station', desc: 0, type: 19, nbr: 0.1, system: 1 },
+    5: { name: '1', desc: 0, type: 1, nbr: 10, system: 1 },
+    6: { name: '2', desc: 1, type: 4, nbr: 5, system: 1 },
+    7: { name: '3', desc: 1, type: 5, nbr: 1, system: 1 },
+    8: { name: '4', desc: 2, type: 6, nbr: 1, system: 1 },
+    9: { name: '5', desc: 1, type: 12, nbr: 1, system: 1 },
+    //SYSTEM 3
+    10: { name: 'Station ', desc: 0, type: 19, nbr: 0.1, system: 2 },
+    11: { name: '1', desc: 3, type: 10, nbr: 1, system: 2 },
+    12: { name: '2', desc: 3, type: 7, nbr: 1, system: 2 },
+    13: { name: '3', desc: 3, type: 8, nbr: 2, system: 2 },
+    14: { name: '4', desc: 3, type: 9, nbr: 1, system: 2 },
+    15: { name: '5', desc: 3, type: 0, nbr: 10, system: 2 },
+    16: { name: '6', desc: 3, type: 3, nbr: 10, system: 2 },
+    17: { name: '7', desc: 3, type: 5, nbr: 5, system: 2 },
+    //SYSTEM 4
+    18: { name: 'Station ', desc: 0, type: 19, nbr: 0.1, system: 3 },
+    19: { name: '1', desc: 4, type: 11, nbr: 1, system: 3 },
+    20: { name: '2', desc: 3, type: 6, nbr: 10, system: 3 },
+    21: { name: '3', desc: 3, type: 1, nbr: 25, system: 3 },
+    22: { name: '4', desc: 3, type: 2, nbr: 10, system: 3 },
+    //SYSTEM 5
+    23: { name: 'Station ', desc: 0, type: 19, nbr: 0.1, system: 4 },
+    24: { name: '1', desc: 0, type: 9, nbr: 25, system: 4 },
+    25: { name: '2', desc: 1, type: 10, nbr: 10, system: 4 },
+    26: { name: '3', desc: 2, type: 5, nbr: 10, system: 4 },
+    27: { name: '4', desc: 2, type: 16, nbr: 10, system: 4 },
+    28: { name: '5', desc: 3, type: 3, nbr: 50, system: 4 },
+    29: { name: '6', desc: 3, type: 0, nbr: 100, system: 4 },
+    //SYSTEM 6
+    30: { name: 'Station ', desc: 0, type: 19, nbr: 0.1, system: 5 },
+    31: { name: '1', desc: 0, type: 9, nbr: 100, system: 5 },
+    32: { name: '2', desc: 1, type: 14, nbr: 2, system: 5 },
+    33: { name: '3', desc: 1, type: 13, nbr: 10, system: 5 },
+    34: { name: '4', desc: 1, type: 5, nbr: 50, system: 5 },
+    35: { name: '5', desc: 2, type: 16, nbr: 25, system: 5 },
+    //SYSTEM 7
+    36: { name: 'Station ', desc: 0, type: 19, nbr: 0.1, system: 6 },
+    37: { name: '1', desc: 4, type: 11, nbr: 10, system: 6 },
+    38: { name: '2', desc: 2, type: 16, nbr: 50, system: 6 },
+    39: { name: '3', desc: 3, type: 14, nbr: 10, system: 6 },
+    40: { name: '4', desc: 3, type: 0, nbr: 50, system: 6 },
+    41: { name: '5', desc: 3, type: 6, nbr: 50, system: 6 },
+    42: { name: '6', desc: 3, type: 13, nbr: 50, system: 6 },
+    //SYSTEM 8
+    43: { name: 'Station ', desc: 0, type: 19, nbr: 0.1, system: 7 },
+    44: { name: '1', desc: 0, type: 5, nbr: 100, system: 7 },
+    45: { name: '2', desc: 0, type: 8, nbr: 100, system: 7 },
+    46: { name: '3', desc: 1, type: 14, nbr: 50, system: 7 },
+    47: { name: '4', desc: 2, type: 12, nbr: 50, system: 7 },
+    48: { name: '5', desc: 3, type: 15, nbr: 50, system: 7 },
+    49: { name: '6', desc: 3, type: 13, nbr: 50, system: 7 },
+    //SYSTEM 9
+    50: { name: 'Station ', desc: 0, type: 19, nbr: 0.1, system: 8 },
+    51: { name: '1', desc: 6, type: 17, nbr: 1, system: 8 },
+    52: { name: '2', desc: 5, type: 18, nbr: 1, system: 8 },
+    53: { name: '3', desc: 5, type: 16, nbr: 100, system: 8 },
+    54: { name: '4', desc: 5, type: 12, nbr: 100, system: 8 },
+    55: { name: '5', desc: 5, type: 10, nbr: 100, system: 8 },
+    56: { name: '6', desc: 5, type: 5, nbr: 200, system: 8 },
+    //SYSTEM 10
+    57: { name: 'Station ', desc: 0, type: 19, nbr: 0.1, system: 9 },
+    58: { name: '1', desc: 7, type: 9, nbr: 1000, system: 9 },
+    59: { name: '2', desc: 6, type: 17, nbr: 10, system: 9 },
+    60: { name: '3', desc: 6, type: 18, nbr: 10, system: 9 },
+    61: { name: '4', desc: 5, type: 13, nbr: 100, system: 9 },
+    62: { name: '5', desc: 5, type: 15, nbr: 100, system: 9 },
 };
 
 var Market = {
@@ -91,52 +98,52 @@ var Market = {
 };
 
 function GenExtractionMaterials() {
-	var content;
-	$("#EXT-CONTENT").html(""); //RESET VIEW
-	for (var inv in texts.items) {
-		content = "<div class='item' data-id='" + inv + "'>" + texts.items[inv] + "<img class='ui avatar image' src='images/items/" + inv + ".png'></div>";
-		if (Game.technologies[0] == 1) {
-			if (inv == 3) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[1] == 1) {
-			if (inv == 0) { $("#EXT-CONTENT").append(content); }
-			if (inv == 1) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[2] == 1) {
+    var content;
+    $("#EXT-CONTENT").html(""); //RESET VIEW
+    for (var inv in texts.items) {
+        content = "<div class='item' data-id='" + inv + "'>" + texts.items[inv] + "<img class='ui avatar image' src='images/items/" + inv + ".png'></div>";
+        if (Game.technologies[0] == 1) {
+            if (inv == 3) { $("#EXT-CONTENT").append(content); }
+        }
+        if (Game.technologies[1] == 1) {
+            if (inv == 0) { $("#EXT-CONTENT").append(content); }
+            if (inv == 1) { $("#EXT-CONTENT").append(content); }
+        }
+        if (Game.technologies[2] == 1) {
             if (inv == 2) { $("#EXT-CONTENT").append(content); }
-			if (inv == 4) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[3] == 1) {
-			if (inv == 5) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[4] == 1) {
-			if (inv == 6) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[5] == 1) {
+            if (inv == 4) { $("#EXT-CONTENT").append(content); }
+        }
+        if (Game.technologies[3] == 1) {
+            if (inv == 5) { $("#EXT-CONTENT").append(content); }
+        }
+        if (Game.technologies[4] == 1) {
+            if (inv == 6) { $("#EXT-CONTENT").append(content); }
+        }
+        if (Game.technologies[5] == 1) {
             if (inv == 7) { $("#EXT-CONTENT").append(content); }
             if (inv == 8) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[6] == 1) {
+        }
+        if (Game.technologies[6] == 1) {
             if (inv == 9) { $("#EXT-CONTENT").append(content); }
             if (inv == 10) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[7] == 1) {
+        }
+        if (Game.technologies[7] == 1) {
             if (inv == 11) { $("#EXT-CONTENT").append(content); }
             if (inv == 12) { $("#EXT-CONTENT").append(content); }
             if (inv == 13) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[8] == 1) {
+        }
+        if (Game.technologies[8] == 1) {
             if (inv == 14) { $("#EXT-CONTENT").append(content); }
             if (inv == 15) { $("#EXT-CONTENT").append(content); }
             if (inv == 16) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[9] == 1) {
+        }
+        if (Game.technologies[9] == 1) {
             if (inv == 17) { $("#EXT-CONTENT").append(content); }
             if (inv == 18) { $("#EXT-CONTENT").append(content); }
-			if (inv == 19) { $("#EXT-CONTENT").append(content); }
-		}
-		$("#EXT-TITLE").html(texts.items[Game.extId] + "<img class='ui avatar image' src='images/items/" + Game.extId + ".png'>");
-	}
+            if (inv == 19) { $("#EXT-CONTENT").append(content); }
+        }
+        $("#EXT-TITLE").html(texts.items[Game.extId] + "<img class='ui avatar image' src='images/items/" + Game.extId + ".png'>");
+    }
 }
 
 var Technologies = {
@@ -156,7 +163,7 @@ var Upgrades = {
     0: { name: "Hyperspace", price: 100, gain: 0.1, type: 1, need: -1 },
 };
 
-var SystemMult = { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1};
+var SystemMult = { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1 };
 
 var texts = {
     systemname: ["Lysen", "Zelas", "Centra", "Vecis", "Ivurd", "Sentori", "Fasis", "Luya", "Kisae", "Gaia"],

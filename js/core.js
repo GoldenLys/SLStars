@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v2.52";
+var version = "v2.53";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,
@@ -29,18 +29,21 @@ var Game = {
     extGain: 0,
     TravelCost: 10,
     Upgrades: [],
+    totalinv: 100,
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
 
 $(document).ready(function () {
+    changeLocation("loading");
     if (localStorage.getItem("SpaceL2") != null) { load(); }
     setInterval(function () { UpdateGame(Game.cashps); }, 1000);
-    changeLocation("loading");
     ClickEvents();
     $(".pusher").css("background-image", "url(images/bg.png)");
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
+    hidesystems();
+    $('#system' + Game.system).show();
     GenExtractionMaterials();
 });
 
@@ -54,6 +57,7 @@ function UpdateGame(cashps) {
     for (var u in Upgrades) { if (Game.Upgrades[u] == null) { Game.Upgrades[u] = 0; } }
     Game.cash += cashps;
     Game.inventory[Game.extId] += Game.extGain;
+    Game.totalinv += Game.extGain;
     UpdateUI();
     save();
 }
@@ -63,6 +67,7 @@ function explore(id, nbr, obj) {
         if (Game.cash >= (Market[obj].value * Missions[id].nbr) * nbr) {
             Game.cash -= (Market[obj].value * Missions[id].nbr) * nbr;
             Game.inventory[obj] += Missions[id].nbr * nbr;
+            Game.totalinv += Missions[id].nbr * nbr;
             Game.rank += nbr + (1 * Game.system);
         }
     }
@@ -70,6 +75,7 @@ function explore(id, nbr, obj) {
         if (Game.cash >= Market[obj].value * Missions[id].nbr / 2) {
             Game.cash -= Market[obj].value * Missions[id].nbr / 2;
             Game.inventory[obj] += Missions[id].nbr * 2;
+            Game.totalinv += Missions[id].nbr * 2;
             Game.explored[id] = 1;
             Game.rank = Game.rank + 1 + (1 * Game.system);
         }
@@ -92,6 +98,7 @@ function sellitem(id, qty) {
         if (r == true) {
             Game.cash += Market[id].value * SystemMult[id] * qty;
             Game.inventory[id] -= qty;
+            Game.totalinv -= qty;
             SystemMult[id] = mult;
         } else {
             UpdateUI();
@@ -110,7 +117,7 @@ function changeLocation(id) {
             Game.days++;
         }
     } else { if (id != "loading") { alert("Not enough power cell, " + fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; } }
-    if (id == "loading") { id = 0; }
+    if (id == "loading") { id = 0; Game.system = id; }
     hidesystems();
     $('#system' + Game.system).show();
 }
@@ -141,4 +148,5 @@ function UPGPOWER(id) {
             Game.Upgrades[id]++;
         }
     }
+    UpdateUI();
 }

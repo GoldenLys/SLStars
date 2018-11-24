@@ -10,6 +10,7 @@
 	$("#EXT-DESC").html("The drone extract " + fix(Game.extGain, 1));
 	$("#EXT-DESC2").html("per seconds ");
 	$("#HYPERSPACE-TEXT").html("Travel to another location actually cost " + fix(Game.TravelCost, 3) + "% of power");
+	$("#EXPLO-TITLE").html("Exploration - " + texts.systemname[Game.system]);
 	GenInventory();
 	GenMissions();
 	GenMarket();
@@ -47,7 +48,7 @@ function GetSystemType(value) {
 //GENERATE MISSIONS
 
 function GenMissions() {
-	for (var id = 0; id < 11; id++) { $('#system' + id).html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Mission cost            </th><th class='ui center aligned'>Action</th></tr></thead>"); }
+	for (var id = 0; id < 11; id++) { $('#system' + id).html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>"); }
 
 	for (var i in Missions) {
 		var offer = Missions[i];
