@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v2.55";
+var version = "v2.56";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,
@@ -25,7 +25,7 @@ var Game = {
     tutorial: 0,
     fl: 0,
     days: 0,
-    extId: 3,
+    extId: 0,
     extGain: 0,
     TravelCost: 25,
     Upgrades: [],
@@ -50,7 +50,7 @@ $(document).ready(function () {
 //GAME FUNCTIONS
 
 function UpdateGame(cashps) {
-    if (Game.inventory[19] < 0) { Game.inventory[19] = 0; }
+    if (Game.inventory[2] < 0) { Game.inventory[2] = 0; }
     for (var inv in texts.items) { if (Game.inventory[inv] == null) { Game.inventory[inv] = 0; } }
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
@@ -109,11 +109,11 @@ function sellitem(id, qty) {
 }
 
 function changeLocation(id) {
-    if (Game.inventory[19] >= Game.TravelCost) {
+    if (Game.inventory[2] >= Game.TravelCost) {
         Game.system = id;
         for (var SID in SystemMult) { SystemMult[SID] = random(0, 150000) / 100000; }
         if (id != "loading") {
-            Game.inventory[19] -= Game.TravelCost;
+            Game.inventory[2] -= Game.TravelCost;
             Game.days++;
         }
     } else { if (id != "loading") { alert("Not enough power cell, " + fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; } }

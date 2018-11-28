@@ -5,7 +5,7 @@
 	// + " + <font class='bold vert'>" + fix(Game.cashps, 2) + "</font>/s");
 	$("#rank").html("" + fix(Game.rank, 2) + " EP");
 	$("#dayscount").html("" + Game.days + " days passed.");
-	$("#fuel").html("" + fix(Game.inventory[19], 3) + "% power.");
+	$("#fuel").html("" + fix(Game.inventory[2], 3) + "% power.");
 	$("#EXT-TITLE").html(texts.items[Game.extId] + "<img class='ui avatar image' src='images/items/" + Game.extId + ".png'>");
 	$("#EXT-DESC").html("The drone extract " + fix(Game.extGain, 1));
 	$("#EXT-DESC2").html("per seconds ");
@@ -64,7 +64,7 @@ function GenMissions() {
 		var pricetext = Game.explored[i] < 1 ? fix((Market[offer.type].value * offer.nbr) / 2, 1) : fix(Market[offer.type].value * offer.nbr, 1);
 		reward = texts.items[offer.type];
 		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
-		cost = "<i class='green dollar sign icon'></i><font class='vert bold type3'>" + pricetext + "</font>";
+		cost = "<i class='green dollar sign icon'></i><font class='vert bold type1'>" + pricetext + "</font>";
 		description = GetSystemType(offer.desc);
 
 		var SYSTEMDIV = $(
@@ -96,7 +96,7 @@ function GenMarket() {
 		if (SystemMult[i] > 0.5) { if (SystemMult[i] < 0.96) { pricecolor = 'argent'; } }
 
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
-		cost = "<font class='" + pricecolor + " bold'><i class='dollar sign icon'></i>" + fix(offer.value * SystemMult[i], 1) + "</font>";
+		cost = "<font class='type1 " + pricecolor + " bold'><i class='dollar sign icon'></i>" + fix(offer.value * SystemMult[i], 1) + "</font>";
 		description = offer.desc;
 		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">' + fix(Game.inventory[i], 0) + '</font>' : '<font class="vert">' + fix(Game.inventory[i], 0) + '</font>';
 
@@ -104,7 +104,7 @@ function GenMarket() {
 			"<tr class=''>" +
 			"<td class='center aligned ui'>" + name + "</td>" +
 			"<td class='center aligned'>" + description + "</td>" +
-			"<td class='center aligned type3'> " + cost + "</td>" +
+			"<td class='center aligned'> " + cost + "</td>" +
 			"<td class='center aligned'> " + inventory + "</td>" +
 			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canSell + " button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " button' onClick='sellitem(" + i + ",100);'>100</button><button class='ui " + canSellAll + " button' onClick='sellitem(" + i + "," + Game.inventory[i] + ");'>All</button></div></td>" +
 			"</tr>"
@@ -128,7 +128,9 @@ function GenStation() {
 		var buy1 = 0;
 		var buy2 = 0;
 		var pricecolor = offer.cost > Game.cash ? 'rouge' : 'vert';
-		var cost = "<font class='" + pricecolor + "'><i class='dollar sign icon'></i><font class='type3 " + pricecolor + "'>" + fix(offer.cost, 1) + "</font>";
+
+
+		var cost = "<font class='" + pricecolor + "'><i class='dollar sign icon'></i><font class='type1 " + pricecolor + "'>" + fix(offer.cost, 1) + "</font>";
 
 		if (offer.req[0] > -1) {
 			requiretext1 = "<font class='" + SetColor(offer.req[1]) + "'>" + offer.req[1] + "</font> " + texts.items[offer.req[0]];
@@ -192,7 +194,7 @@ function GenUpgrades() {
 			"<tr class=''>" +
 			"<td class='center aligned ui'><span class='Palladium'><font class='type2'>" + upg.name + "</font></span></td>" +
 			"<td class='center aligned ui'>" + level + "</td>" +
-			"<td class='center aligned ui'><font class='type3 " + buyable + "'>" + price + "</font></td>" +
+			"<td class='center aligned ui'><font class='type1" + buyable + "'>" + price + "</font></td>" +
 			"<td class='center aligned ui'>" + action + "<td>" +
 			"</tr>"
 		);
@@ -226,7 +228,7 @@ function GenExtractionMaterials() {
 			if (inv == 1) { $("#EXT-CONTENT").append(content); }
 		}
 		if (Game.technologies[2] == 1) {
-			if (inv == 2) { $("#EXT-CONTENT").append(content); }
+			if (inv == 3) { $("#EXT-CONTENT").append(content); }
 			if (inv == 4) { $("#EXT-CONTENT").append(content); }
 		}
 		if (Game.technologies[3] == 1) {
@@ -257,6 +259,7 @@ function GenExtractionMaterials() {
 			if (inv == 17) { $("#EXT-CONTENT").append(content); }
 			if (inv == 18) { $("#EXT-CONTENT").append(content); }
 			if (inv == 19) { $("#EXT-CONTENT").append(content); }
+			if (inv == 2) { $("#EXT-CONTENT").append(content); }
 		}
 		$("#EXT-TITLE").html(texts.items[Game.extId] + "<img class='ui avatar image' src='images/items/" + Game.extId + ".png'>");
 	}
@@ -300,7 +303,7 @@ function GenInventory() {
 	$("#inventory").html("");
 	for (var id in texts.items) {
 		if (Game.inventory[id] > 0) {
-			if (id != 19) {
+			if (id != 2) {
 				$("#inventory").append("<span class='Palladium'><font class='bold " + SetColor(Game.inventory[id]) + "'>" + fix(Game.inventory[id], 5) + "</font> " + texts.items[id] + " </span><img class='ui avatar image' src='images/items/" + id + ".png'><br>");
 			}
 		}
@@ -319,10 +322,10 @@ function setTutorial(id) {
 	else { $("#tuto-next").removeClass("disabled"); }
 }
 
-function closeTutorial() { hideModals(); Game.tutorial = 0; if (Game.fl == 0) { Game.fl = 1; Game.inventory[19] = 100; } }
+function closeTutorial() { hideModals(); Game.tutorial = 0; if (Game.fl == 0) { Game.fl = 1; Game.inventory[2] = 100; } }
 
 function NextTuto() {
-	if (Game.fl == 0) { Game.fl = 1; Game.inventory[19] = 100; }
+	if (Game.fl == 0) { Game.fl = 1; Game.inventory[2] = 100; }
 	if (Game.tutorial < 3) { Game.tutorial++; setTutorial(Game.tutorial); }
 }
 
