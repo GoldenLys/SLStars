@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v2.54";
+var version = "v2.55";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,

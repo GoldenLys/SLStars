@@ -53,6 +53,8 @@ function GenMissions() {
 	for (var i in Missions) {
 		var offer = Missions[i];
 		var canbuy = Game.cash < Market[offer.type].value ? ' disabled' : '';
+		var canbuy10 = Game.cash < Market[offer.type].value * 10 ? ' disabled' : '';
+		var canbuy100 = Game.cash < Market[offer.type].value * 100 ? ' disabled' : '';
 		var canExploreMax = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
 		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * offer.nbr));
 		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; }
@@ -68,9 +70,9 @@ function GenMissions() {
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
 			"<td class='center aligned ui'>" + name + "</td>" +
-			"<td class='center aligned'>" + description + ", <font class='type3'><font class=' " + rewardstext + "'>" + rewards + "</font> " + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></font></td>" +
+			"<td class='center aligned'>" + description + ", <font class='type1'><font class=' " + rewardstext + "'>" + rewards + "</font> " + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></font></td>" +
 			"<td class='center aligned'> " + cost + "</td>" +
-			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1, " + offer.type + ");'>" + exploretext + "</button><button class='ui " + canExploreMax + " button' onClick='explore(" + i + ", " + maxexplore + ", " + offer.type + ");'>Visit max</button></div></td>" +
+			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1, " + offer.type + ");'>" + exploretext + "</button><button class='ui " + canbuy10 + " button' onClick='explore(" + i + ", 10, " + offer.type + ");'>10</button><button class='ui " + canbuy100 + " button' onClick='explore(" + i + ", 100, " + offer.type + ");'>100</button><button class='ui " + canExploreMax + " button' onClick='explore(" + i + ", " + maxexplore + ", " + offer.type + ");'>Max</button></div></td>" +
 			"</tr>"
 		);
 		$('#system' + offer.system).append(SYSTEMDIV);
@@ -126,7 +128,7 @@ function GenStation() {
 		var buy1 = 0;
 		var buy2 = 0;
 		var pricecolor = offer.cost > Game.cash ? 'rouge' : 'vert';
-		var cost = "<font class='" + pricecolor + "'><i class='dollar sign icon'></i><font class='" + pricecolor + "'>" + fix(offer.cost, 1) + "</font>";
+		var cost = "<font class='" + pricecolor + "'><i class='dollar sign icon'></i><font class='type3 " + pricecolor + "'>" + fix(offer.cost, 1) + "</font>";
 
 		if (offer.req[0] > -1) {
 			requiretext1 = "<font class='" + SetColor(offer.req[1]) + "'>" + offer.req[1] + "</font> " + texts.items[offer.req[0]];
@@ -190,7 +192,7 @@ function GenUpgrades() {
 			"<tr class=''>" +
 			"<td class='center aligned ui'><span class='Palladium'><font class='type2'>" + upg.name + "</font></span></td>" +
 			"<td class='center aligned ui'>" + level + "</td>" +
-			"<td class='center aligned ui'><font class='" + buyable + "'>" + price + "</font></td>" +
+			"<td class='center aligned ui'><font class='type3 " + buyable + "'>" + price + "</font></td>" +
 			"<td class='center aligned ui'>" + action + "<td>" +
 			"</tr>"
 		);
