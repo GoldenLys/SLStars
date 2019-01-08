@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v2.56";
+var version = "v3";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,
@@ -30,6 +30,10 @@ var Game = {
     TravelCost: 25,
     Upgrades: [],
     totalinv: 100,
+    CurrSellID: 0,
+    CurrSellQty: 0,
+    UnlockedLocations: 0,
+    EPRequired: [0, 10, 50, 100, 350, 1000, 2500, 5000, 10000, 100000]
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -94,29 +98,35 @@ function sellitem(id, qty) {
         }
         if (id > 6) { if (mult > 0) { mult -= mult * (1 * qty) / 10000; } }
         if (mult < 0) { mult = 0.01; }
-        var r = confirm("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + " for " + fix(Market[id].value * mult * qty, 1) + "$ ?");
-        if (r == true) {
-            Game.cash += Market[id].value * SystemMult[id] * qty;
-            Game.inventory[id] -= qty;
-            Game.totalinv -= qty;
-            SystemMult[id] = mult;
-        } else {
-            UpdateUI();
-        }
+        Game.CurrSellID = id;
+        Game.CurrSellQty = qty;
+        $("#sellconfirm-text").html("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + " for " + fix(Market[id].value * mult * qty, 1) + "$ ?");
+        $('#modal-4').modal('show');
     }
+    UpdateUI();
+}
+
+function confirmsell() {
+    console.log("test");
+    Game.cash += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
+    Game.inventory[Game.CurrSellID] -= Game.CurrSellQty;
+    Game.totalinv -= Game.CurrSellQty;
+    SystemMult[Game.CurrSellID] = mult;
     UpdateUI();
     save();
 }
 
 function changeLocation(id) {
     if (Game.inventory[2] >= Game.TravelCost) {
-        Game.system = id;
-        for (var SID in SystemMult) { SystemMult[SID] = random(0, 150000) / 100000; }
-        if (id != "loading") {
-            Game.inventory[2] -= Game.TravelCost;
-            Game.days++;
-        }
-    } else { if (id != "loading") { alert("Not enough power cell, " + fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; } }
+        if (Game.UnlockedLocations >= id) {
+            Game.system = id;
+            for (var SID in SystemMult) { SystemMult[SID] = random(0, 150000) / 100000; }
+            if (id != "loading") {
+                Game.inventory[2] -= Game.TravelCost;
+                Game.days++;
+            }
+        } else { showmessage("Upgrade your hyperspace", "You hyperspace can't travel there for now, upgrade it!"); }
+    } else { if (id != "loading") { showmessage("Not enough power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; } }
     if (id == "loading") { id = 0; Game.system = id; }
     hidesystems();
     $('#system' + Game.system).show();
@@ -144,9 +154,25 @@ function UPGPOWER(id) {
     if (Game.cash > GetUPGprice(id)) {
         if (Game.Upgrades[id] < 100) {
             Game.cash -= GetUPGprice(id);
-            Game.TravelCost-=Upgrades[id].gain;
+            Game.TravelCost -= Upgrades[id].gain;
             Game.Upgrades[id]++;
         }
     }
     UpdateUI();
+}
+
+function BUYHYPERSPACE(id) {
+    if (Game.cash > GetUPGprice2(id)) {
+        if (Game.UnlockedLocations < 10) {
+            Game.cash -= GetUPGprice2(id);
+            Game.UnlockedLocations++;
+        }
+    }
+    UpdateUI();
+}
+
+function showmessage(title, message) {
+    $("#message-title").html(title);
+    $("#message-text").html(message);
+    $('#modal-5').modal('show');
 }

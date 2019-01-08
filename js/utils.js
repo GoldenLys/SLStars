@@ -57,15 +57,15 @@ function toHHMMSS(id) {
 // Save and load functions
 var canSave = 1;
 
-var save = function () {
+function save() {
 	var date = new Date();
 	if (canSave) {
 		localStorage.setItem("SpaceL2", JSON.stringify(Game));
 	}
 	var tmp = new Date().getTime();
-};
+}
 
-var load = function () {
+function load() {
 	var savegame = JSON.parse(localStorage.getItem("SpaceL2"));
 
 	for (var property in savegame) {
@@ -74,28 +74,28 @@ var load = function () {
 
 	var date = new Date();
 	UpdateUI();
-};
+}
 
-var exportSave = function () {
+function exportSave() {
 	var saveData = btoa(JSON.stringify(Game));
 	window.getSelection().removeAllRanges();
-	alert("Save copied in your clipboard.");
+	showmessage("Save exported", "The save is now copied in your clipboard.");
 	$("#exportBody").html("<textarea id='saveCode'>" + saveData + "</textarea>");
 	var textField = document.getElementById("saveCode");
 	textField.select();
 	document.execCommand("copy");
 	window.getSelection().removeAllRanges();
 	$("#exportBody").html("");
-};
+}
 
-var importSave = function () {
+function importSave() {
 	var save = prompt("Paste the code previously obtained here");
 	if (save) {
 		restoreSave(save);
 	}
-};
+}
 
-var restoreSave = function (save) {
+function restoreSave(save) {
 	try {
 		var decoded = atob(save);
 		JSON.parse(decoded);
@@ -109,13 +109,14 @@ var restoreSave = function (save) {
 	} catch (err) {
 		$("#debugtext").html("ERROR: Invalid Save Data");
 	}
-};
+}
 
-var confirmReset = function () {
-	var r = confirm("Do you really want to reset all your stats ?");
-	if (r == true) {
-		canSave = 0;
-		localStorage.clear();
-		location.reload();
-	}
-};
+function Reset() {
+	$('#modal-6').modal('show');
+}
+
+function confirmReset() {
+	canSave = 0;
+	localStorage.clear();
+	location.reload();
+}

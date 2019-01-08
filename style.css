@@ -161,6 +161,7 @@
     border-color: rgba(255, 255, 255, 0.5);
 }
 
+
 .ui.dropdown .menu {
     background: rgba(0, 0, 0, 0.5);
 }
@@ -186,11 +187,11 @@
 }
 
 body ::-webkit-scrollbar-thumb {
-    background-image: linear-gradient(to bottom, #500101 51%, #230031 100%);
+    background-image: linear-gradient(to bottom, #350000 51%, #230031 100%);
 }
 
 body ::-webkit-scrollbar-thumb:hover {
-    background-image: linear-gradient(to bottom, #500101 51%, #230031 100%);
+    background-image: linear-gradient(to bottom, #350000 51%, #230031 100%);
 }
 
 body ::-webkit-scrollbar-track {
@@ -237,7 +238,7 @@ body ::-webkit-scrollbar-track {
 .ui.spacel.menu {
     transition: 1.5s;
     background-size: 200% auto;
-    background-image: linear-gradient(to left, #230031 0%, #500101 51%, #230031 100%);
+    background-image: linear-gradient(to left, #230031 0%, #350000 51%, #230031 100%);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -250,11 +251,11 @@ body ::-webkit-scrollbar-track {
   .ui.red.button {
     transition: 1.5s;
     background-size: 200% auto;
-    background-image: linear-gradient(to left, #310036 0%, #520004 51%, #310036 100%);
+    background-image: linear-gradient(to left, #310036 0%, #350000 51%, #310036 100%);
   }
 
   .ui.red.button:focus {
-    background-image: linear-gradient(to left, #310036 0%, #520004 51%, #310036 100%);
+    background-image: linear-gradient(to left, #310036 0%, #350000 51%, #310036 100%);
   }
 
   .ui.red.button:hover, .ui.red.buttons:hover {
@@ -268,7 +269,7 @@ body ::-webkit-scrollbar-track {
   }
 
   .ui.green.button:focus {
-    background-image: linear-gradient(to left, #310036 0%, #520004 51%, #310036 100%);
+    background-image: linear-gradient(to left, #310036 0%, #350000 51%, #310036 100%);
   }
 
   .ui.green.button:hover, .ui.green.buttons:hover {
@@ -279,7 +280,7 @@ body ::-webkit-scrollbar-track {
     transition: 1.5s;
     border-radius: 0.1vw;
     background-size: 200% auto;
-    background-image: linear-gradient(to left, #310036 0%, #520004 51%, #310036 100%);
+    background-image: linear-gradient(to left, #310036 0%, #350000 51%, #310036 100%);
   }
 
   .ui.spacel.button, .button {
@@ -287,7 +288,7 @@ body ::-webkit-scrollbar-track {
   }
 
   .ui.button:hover, .button:hover {
-    background-color: #520004;
+    background-color: #350000;
 }
 
   .ui.button {
@@ -297,6 +298,16 @@ body ::-webkit-scrollbar-track {
   .ui.button, .ui.menu .item, .ui.basic.button {
       color: rgba(255, 255, 255, 1.0)!important;
   }
+
+.ui.green.ok.inverted.button:hover {
+    color: #FFF!important;
+}
+
+.ui.green.ok.inverted.button {
+    background-image: none!important;
+    color: #2ecc40!important;
+}
+
 
 .spacelborder {
     background: none!important;
@@ -309,17 +320,18 @@ body ::-webkit-scrollbar-track {
 }
 
 .ui.inverted.menu {
-    background-image: linear-gradient(to bottom, #520004 0%, #310036 50%); 
+    background-image: linear-gradient(to bottom, #350000 0%, #310036 50%); 
 }
 
 .color1 {
-    color: #520004;
+    color: #350000;
 }
 
 .C1 {
     background: linear-gradient(to right, #b30009 0%, #600769 70%, #600769 100%); 
     text-shadow: 0 0 2vh rgba(0, 0, 0, 0.6);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 

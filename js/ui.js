@@ -9,13 +9,15 @@
 	$("#EXT-TITLE").html(texts.items[Game.extId] + "<img class='ui avatar image' src='images/items/" + Game.extId + ".png'>");
 	$("#EXT-DESC").html("The drone extract " + fix(Game.extGain, 1));
 	$("#EXT-DESC2").html("per seconds ");
-	$("#HYPERSPACE-TEXT").html("Travel to another location actually cost " + fix(Game.TravelCost, 3) + "% of power");
+	$("#HYPERDRIVE-TEXT").html("Travel to another location actually cost " + fix(Game.TravelCost, 3) + "% of power");
+	$("#HYPERSPACE-TEXT").html("Your actual maximum destination is: " + texts.systemname[Game.UnlockedLocations]);
 	$("#EXPLO-TITLE").html("Exploration - " + texts.systemname[Game.system]);
 	GenInventory();
 	GenMissions();
 	GenMarket();
 	GenStation();
 	GenUpgrades();
+	GenHyperSpace();
 	AddTravelPoints();
 	GenExtractionMaterials();
 	setTutorial(Game.tutorial);
@@ -202,6 +204,35 @@ function GenUpgrades() {
 	}
 }
 
+function GenHyperSpace() {
+	$('#HYPERSPACE-BOARD').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Access</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
+
+	for (var i in Upgrades2) {
+		var canbuy = "";
+		var level = "";
+		var buyable = "";
+		var price = "";
+		var upg = Upgrades2[i];
+		canbuy = Game.cash < GetUPGprice2(i) ? ' disabled' : '';
+		buyable = Game.cash < GetUPGprice2(i) ? ' rouge' : ' vert';
+		if (i == 0) { if (Game.Upgrades[0] == 9) { canbuy = " disabled"; level = ""; price = ""; action = ""; } else {
+			level = texts.systemname[Game.UnlockedLocations+1];
+			price = "<i class='" + buyable + " dollar sign icon'></i>" + fix(GetUPGprice2(i), 1);
+			action = "<a class='fluid ui " + canbuy + " red button' onClick='BUYHYPERSPACE(" + i + ");'>Upgrade</a>";
+		} }
+
+		var SYSTEMDIV = $(
+			"<tr class=''>" +
+			"<td class='center aligned ui'><span class='Palladium'><font class='type2'>" + upg.name + "</font></span></td>" +
+			"<td class='center aligned ui'>" + level + "</td>" +
+			"<td class='center aligned ui'><font class='type1" + buyable + "'>" + price + "</font></td>" +
+			"<td class='center aligned ui'>" + action + "<td>" +
+			"</tr>"
+		);
+		$('#HYPERSPACE-BOARD').append(SYSTEMDIV);
+	}
+}
+
 function GetUPGprice(id) {
 	var value;
 	if (Game.Upgrades[id] == 0) { value = Upgrades[id].price; }
@@ -212,6 +243,12 @@ function GetUPGprice(id) {
 		if (Game.Upgrades[id] >= 50) { value = Upgrades[id].price * Math.pow(1.5, Game.Upgrades[id]); }
 		if (Game.Upgrades[id] == 100) { value = 42; }
 	}
+	return value;
+}
+
+function GetUPGprice2(id) {
+	var value;
+	value = Upgrades2[id].price * Math.pow(Upgrades2[id].gain, Game.UnlockedLocations);
 	return value;
 }
 
@@ -267,7 +304,7 @@ function GenExtractionMaterials() {
 
 //UI FUNCTIONS
 
-function hideModals() { for (var id = 1; id < 4; id++) { $('#modal-' + id).modal('hide'); } }
+function hideModals() { for (var id = 1; id < 10; id++) { $('#modal-' + id).modal('hide'); } }
 function hidesystems() { for (var id = 0; id < 11; id++) { $("#system" + id).hide(); } }
 function hideTabs() { for (var id = 0; id < 3; id++) { $("#tab" + id).hide(); } }
 function hideMenuTabs() { for (var id = 0; id < 10; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("spacelborder"); } }
@@ -286,18 +323,19 @@ function ClickEvents() {
 
 function AddTravelPoints() {
 	$("#selection-content").html(""); //RESET VIEW
-	$("#selection-content").append("<div class='item' id='V0' data-id='0'>" + texts.systemname[0] + "</div>");
-	if (Game.rank >= 10) { $("#selection-content").append("<div class='item' id='V1' data-id='1'>" + texts.systemname[1] + "</div>"); $("#percentrank").html(fix(50, 0) + " EP"); }
-	if (Game.rank >= 50) { $("#selection-content").append("<div class='item' id='V2' data-id='2'>" + texts.systemname[2] + "</div>"); $("#percentrank").html(fix(100, 0) + " EP"); }
-	if (Game.rank >= 100) { $("#selection-content").append("<div class='item' id='V3' data-id='3'>" + texts.systemname[3] + "</div>"); $("#percentrank").html(fix(350, 0) + " EP"); }
-	if (Game.rank >= 350) { $("#selection-content").append("<div class='item' id='V4' data-id='4'>" + texts.systemname[4] + "</div>"); $("#percentrank").html(fix(1000, 0) + " EP"); }
-	if (Game.rank >= 1000) { $("#selection-content").append("<div class='item' id='V5' data-id='5'>" + texts.systemname[5] + "</div>"); $("#percentrank").html(fix(2500, 0) + " EP"); }
-	if (Game.rank >= 2500) { $("#selection-content").append("<div class='item' id='V6' data-id='6'>" + texts.systemname[6] + "</div>"); $("#percentrank").html(fix(5000, 0) + " EP"); }
-	if (Game.rank >= 5000) { $("#selection-content").append("<div class='item' id='V7' data-id='7'>" + texts.systemname[7] + "</div>"); $("#percentrank").html(fix(10000, 0) + " EP"); }
-	if (Game.rank >= 10000) { $("#selection-content").append("<div class='item' id='V8' data-id='8'>" + texts.systemname[8] + "</div>"); $("#percentrank").html(fix(100000, 0) + " EP"); }
-	if (Game.rank >= 100000) { $("#selection-content").append("<div class='item' id='V9' data-id='9'>" + texts.systemname[9] + "</div>"); $("#percentrank").html("Unlimited EP"); }
+	$("#selection-content").append("<div class='item bold' id='V0' data-id='0'>" + texts.systemname[0] + " (Require<font class='rouge'> " + fix(Game.EPRequired[0], 0) + " EP</font>)</div>");
+	$("#selection-content").append("<div class='item' id='V1' data-id='1'>" + texts.systemname[1] + " (Require<font class='rouge'> " + fix(Game.EPRequired[1], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(50, 0) + " EP");
+	$("#selection-content").append("<div class='item' id='V2' data-id='2'>" + texts.systemname[2] + " (Require<font class='rouge'> " + fix(Game.EPRequired[2], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(100, 0) + " EP");
+	$("#selection-content").append("<div class='item' id='V3' data-id='3'>" + texts.systemname[3] + " (Require<font class='rouge'> " + fix(Game.EPRequired[3], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(350, 0) + " EP");
+	$("#selection-content").append("<div class='item' id='V4' data-id='4'>" + texts.systemname[4] + " (Require<font class='rouge'> " + fix(Game.EPRequired[4], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(1000, 0) + " EP");
+	$("#selection-content").append("<div class='item' id='V5' data-id='5'>" + texts.systemname[5] + " (Require<font class='rouge'> " + fix(Game.EPRequired[5], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(2500, 0) + " EP");
+	$("#selection-content").append("<div class='item' id='V6' data-id='6'>" + texts.systemname[6] + " (Require<font class='rouge'> " + fix(Game.EPRequired[6], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(5000, 0) + " EP");
+	$("#selection-content").append("<div class='item' id='V7' data-id='7'>" + texts.systemname[7] + " (Require<font class='rouge'> " + fix(Game.EPRequired[7], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(10000, 0) + " EP");
+	$("#selection-content").append("<div class='item' id='V8' data-id='8'>" + texts.systemname[8] + " (Require<font class='rouge'> " + fix(Game.EPRequired[8], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(100000, 0) + " EP");
+	$("#selection-content").append("<div class='item' id='V9' data-id='9'>" + texts.systemname[9] + " (Require<font class='rouge'> " + fix(Game.EPRequired[9], 0) + " EP</font>)</div>"); $("#percentrank").html("Unlimited EP");
 	$("#selection-text").html(texts.systemname[Game.system]);
 }
+
 
 function GenInventory() {
 	$("#inventory").html("");

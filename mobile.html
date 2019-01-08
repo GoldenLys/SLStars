@@ -14,12 +14,12 @@
 <script src="dropdown.min.js"></script>
 <script src="sidebar.min.js"></script>
 
-<link href="style.css?v=2.56" rel="stylesheet" type="text/css" />
-<link href="mobile.css?v=2.56" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=2.56"></script>
-<script src="js/data.js?v=2.56"></script>
-<script src="js/core.js?v=2.56"></script>
-<script src="js/ui.js?v=2.56"></script>
+<link href="style.css?v=3" rel="stylesheet" type="text/css" />
+<link href="mobile.css?v=3" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=3"></script>
+<script src="js/data.js?v=3"></script>
+<script src="js/core.js?v=3"></script>
+<script src="js/ui.js?v=3"></script>
 <script src="js/lodash.js"></script>
 <script src="js/numeral.min.js"></script>
 
@@ -150,9 +150,16 @@
                     </div>
                     <div class="column">
                         <div class="ui black message">
+                            <h3 class="ui type4 C1">Hyperdrive</h3>
+                            <p id="HYPERDRIVE-TEXT"></p>
+                            <table id="UPG-BOARD" class="ui inverted table"></table>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui black message">
                             <h3 class="ui type4 C1">Hyperspace</h3>
                             <p id="HYPERSPACE-TEXT"></p>
-                            <table id="UPG-BOARD" class="ui inverted table"></table>
+                            <table id="HYPERSPACE-BOARD" class="ui inverted table"></table>
                         </div>
                     </div>
                 </div>
@@ -172,9 +179,9 @@
                                 <font class='type1'>Lys - SpaceL developer</font>
                             </div>
                             <p>
-                                <i class="large blue discord icon"></i>SUN#0001<br>
+                                <i class="large blue discord icon"></i>RainbowBrain#0001<br>
                                 <i class="large red reddit icon"></i>u/Aizen45<br>
-                                <i class="large blue steam icon"></i>AizenFR
+                                <i class="large blue steam icon"></i>LYS®
                             </p>
                         </div>
                     </div>
@@ -205,7 +212,7 @@
                     <div class="three ui buttons">
                         <button onClick="exportSave();" id="btnExport" class="ui green button">Export</button>
                         <button onClick="importSave();" id="btnImport" class="ui green button">Import</button>
-                        <button onClick="confirmReset();" id="Recommencer" class="ui red button">Reset</button>
+                        <button onClick="Reset();" id="Recommencer" class="ui red button">Reset</button>
                     </div>
                     <br />
                     <br />
@@ -232,6 +239,73 @@
                         <button onClick="NextTuto();" id="tuto-next" class="ui green button">Next</button>
                         <div onclick="closeTutorial();" class="ui red button">
                             <i class="remove icon"></i>Close </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--VENTE-->
+            <div class="ui basic modal" id="modal-4">
+                <div class="ui icon header">
+                    <i class="address book icon"></i>
+                    <font id="confirm-title" class="title blanc">Market confirmation</font>
+                </div>
+                <div class="centrer content">
+                    <div class="ui icon message">
+                        <div class="content">
+                            <p id="sellconfirm-text">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div id="confirmsell-btn" onclick="confirmsell();" class="ui green ok inverted button">
+                            <i class="check icon"></i>Yes </div>
+                        <div onclick="hideModals();" class="ui red basic inverted button">
+                            <i class="remove icon"></i>No </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--GAME MESSAGE-->
+            <div class="ui basic modal" id="modal-5">
+                <div class="ui icon header">
+                    <i class="info circle icon"></i>
+                    <font id="message-title" class="title blanc">Message</font>
+                </div>
+                <div class="centrer content">
+                    <div class="ui icon message">
+                        <div class="content">
+                            <p id="message-text">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div onclick="hideModals();" class="ui red basic inverted button">
+                            <i class="remove icon"></i>Close </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--RESET-->
+            <div class="ui basic modal" id="modal-6">
+                <div class="ui icon header">
+                    <i class="address book icon"></i>
+                    <font id="confirm-title" class="title blanc">Confirm reset</font>
+                </div>
+                <div class="centrer content">
+                    <div class="ui icon message">
+                        <div class="content">
+                            <p id="resetconfirm-text">Do you really want to reset all your stats ?</p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div id="confirmsell-btn" onclick="confirmReset();" class="ui green ok inverted button">
+                            <i class="check icon"></i>Yes </div>
+                        <div onclick="hideModals();" class="ui red basic inverted button">
+                            <i class="remove icon"></i>No </div>
+
                     </div>
                 </div>
             </div>

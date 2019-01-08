@@ -112,7 +112,11 @@ var Technologies = {
 };
 
 var Upgrades = {
-    0: { name: "Hyperspace", price: 100, gain: 0.25, type: 1, need: -1 },
+    0: { name: "Hyperdrive", price: 1000, gain: 0.25, type: 1, need: -1 },
+};
+
+var Upgrades2 = {
+    0: { name: "Hyperspace", price: 100, gain: 10, type: 1, need: -1 },
 };
 
 var SystemMult = { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1 };
