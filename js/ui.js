@@ -20,19 +20,34 @@
 	GenHyperSpace();
 	AddTravelPoints();
 	GenExtractionMaterials();
+	UpdateEP();
 	setTutorial(Game.tutorial);
 };
 
 function SetColor(value) {
-	var color = "";
+	var color;
+	var text;
 	if (value < 1) { color = 'noir'; }
 	if (value == 1) { color = 'jaune'; }
-	if (value > 1) { if (value < 11) { color = 'bleu'; } }
+	if (value > 1) { if (value < 11) { color = 'bleu';} }
 	if (value > 10) { if (value < 50) { color = 'violet'; } }
 	if (value > 49) { if (value < 100) { color = 'rose'; } }
 	if (value > 99) { if (value < 1000) { color = 'rouge'; } }
-	if (value > 999) { color = 'vert'; }
+	if (value > 999) { color = 'vert'; } 
 	return color;
+}
+
+function SetColorText(value) {
+	var color;
+	var text;
+	if (value < 1) { text = 'Tiny'; }
+	if (value == 1) { text = 'Very small'; }
+	if (value > 1) { if (value < 11) { text = 'Small'; } }
+	if (value > 10) { if (value < 50) { text = 'Large'; } }
+	if (value > 49) { if (value < 100) { text = 'Big'; } }
+	if (value > 99) { if (value < 1000) { text = 'Huge'; } }
+	if (value > 999) { text = 'Massive';  } 
+	return text;
 }
 
 function GetSystemType(value) {
@@ -50,7 +65,7 @@ function GetSystemType(value) {
 //GENERATE MISSIONS
 
 function GenMissions() {
-	for (var id = 0; id < 11; id++) { $('#system' + id).html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>"); }
+	for (var id = 0; id < 11; id++) { $('#system' + id).html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Size</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>"); }
 
 	for (var i in Missions) {
 		var offer = Missions[i];
@@ -64,6 +79,7 @@ function GenMissions() {
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
 		var rewardstext = SetColor(rewards);
 		var pricetext = Game.explored[i] < 1 ? fix((Market[offer.type].value * offer.nbr) / 2, 1) : fix(Market[offer.type].value * offer.nbr, 1);
+		recompense = SetColorText(rewards);
 		reward = texts.items[offer.type];
 		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
 		cost = "<i class='green dollar sign icon'></i><font class='vert bold type1'>" + pricetext + "</font>";
@@ -72,7 +88,8 @@ function GenMissions() {
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
 			"<td class='center aligned ui'>" + name + "</td>" +
-			"<td class='center aligned'>" + description + ", <font class='type1'><font class=' " + rewardstext + "'>" + rewards + "</font> " + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></font></td>" +
+			"<td class='center aligned'>" + description + "<br> <font class='type1'>" + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></font></td>" +
+			"<td class='center aligned'>" + "<font class=' " + rewardstext + "'>" + recompense + "</font> " + "</td>" + 
 			"<td class='center aligned'> " + cost + "</td>" +
 			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1, " + offer.type + ");'>" + exploretext + "</button><button class='ui " + canbuy10 + " button' onClick='explore(" + i + ", 10, " + offer.type + ");'>10</button><button class='ui " + canbuy100 + " button' onClick='explore(" + i + ", 100, " + offer.type + ");'>100</button><button class='ui " + canExploreMax + " button' onClick='explore(" + i + ", " + maxexplore + ", " + offer.type + ");'>Max</button></div></td>" +
 			"</tr>"
@@ -186,11 +203,13 @@ function GenUpgrades() {
 		var upg = Upgrades[i];
 		canbuy = Game.cash < GetUPGprice(i) ? ' disabled' : '';
 		buyable = Game.cash < GetUPGprice(i) ? ' rouge' : ' vert';
-		if (i == 0) { if (Game.Upgrades[0] == 100) { canbuy = " disabled"; level = "Maximum"; price = ""; action = ""; } else {
-			level = Game.Upgrades[i];
-			price = "<i class='" + buyable + " dollar sign icon'></i>" + fix(GetUPGprice(i), 1);
-			action = "<a class='fluid ui " + canbuy + " red button' onClick='UPGPOWER(" + i + ");'>Upgrade</a>";
-		} }
+		if (i == 0) {
+			if (Game.Upgrades[0] == 100) { canbuy = " disabled"; level = "Maximum"; price = ""; action = ""; } else {
+				level = Game.Upgrades[i];
+				price = "<i class='" + buyable + " dollar sign icon'></i>" + fix(GetUPGprice(i), 1);
+				action = "<a class='fluid ui " + canbuy + " red button' onClick='UPGPOWER(" + i + ");'>Upgrade</a>";
+			}
+		}
 
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
@@ -205,7 +224,7 @@ function GenUpgrades() {
 }
 
 function GenHyperSpace() {
-	$('#HYPERSPACE-BOARD').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Access</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
+	$('#HYPERSPACE-BOARD').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Current level</th><th class='ui center aligned'>Access</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
 
 	for (var i in Upgrades2) {
 		var canbuy = "";
@@ -215,16 +234,20 @@ function GenHyperSpace() {
 		var upg = Upgrades2[i];
 		canbuy = Game.cash < GetUPGprice2(i) ? ' disabled' : '';
 		buyable = Game.cash < GetUPGprice2(i) ? ' rouge' : ' vert';
-		if (i == 0) { if (Game.Upgrades[0] == 9) { canbuy = " disabled"; level = ""; price = ""; action = ""; } else {
-			level = texts.systemname[Game.UnlockedLocations+1];
-			price = "<i class='" + buyable + " dollar sign icon'></i>" + fix(GetUPGprice2(i), 1);
-			action = "<a class='fluid ui " + canbuy + " red button' onClick='BUYHYPERSPACE(" + i + ");'>Upgrade</a>";
-		} }
+		if (i == 0) {
+			if (Game.Upgrades[i] == 9) { canbuy = " disabled"; access = ""; price = ""; action = ""; } else {
+				access = texts.systemname[Game.UnlockedLocations + 1];
+				level = Game.UnlockedLocations;
+				price = "<i class='" + buyable + " dollar sign icon'></i>" + fix(GetUPGprice2(i), 1);
+				action = "<a class='fluid ui " + canbuy + " red button' onClick='BUYHYPERSPACE(" + i + ");'>Upgrade</a>";
+			}
+		}
 
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
 			"<td class='center aligned ui'><span class='Palladium'><font class='type2'>" + upg.name + "</font></span></td>" +
 			"<td class='center aligned ui'>" + level + "</td>" +
+			"<td class='center aligned ui'>" + access + "</td>" +
 			"<td class='center aligned ui'><font class='type1" + buyable + "'>" + price + "</font></td>" +
 			"<td class='center aligned ui'>" + action + "<td>" +
 			"</tr>"
@@ -324,15 +347,15 @@ function ClickEvents() {
 function AddTravelPoints() {
 	$("#selection-content").html(""); //RESET VIEW
 	$("#selection-content").append("<div class='item bold' id='V0' data-id='0'>" + texts.systemname[0] + " (Require<font class='rouge'> " + fix(Game.EPRequired[0], 0) + " EP</font>)</div>");
-	$("#selection-content").append("<div class='item' id='V1' data-id='1'>" + texts.systemname[1] + " (Require<font class='rouge'> " + fix(Game.EPRequired[1], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(50, 0) + " EP");
-	$("#selection-content").append("<div class='item' id='V2' data-id='2'>" + texts.systemname[2] + " (Require<font class='rouge'> " + fix(Game.EPRequired[2], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(100, 0) + " EP");
-	$("#selection-content").append("<div class='item' id='V3' data-id='3'>" + texts.systemname[3] + " (Require<font class='rouge'> " + fix(Game.EPRequired[3], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(350, 0) + " EP");
-	$("#selection-content").append("<div class='item' id='V4' data-id='4'>" + texts.systemname[4] + " (Require<font class='rouge'> " + fix(Game.EPRequired[4], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(1000, 0) + " EP");
-	$("#selection-content").append("<div class='item' id='V5' data-id='5'>" + texts.systemname[5] + " (Require<font class='rouge'> " + fix(Game.EPRequired[5], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(2500, 0) + " EP");
-	$("#selection-content").append("<div class='item' id='V6' data-id='6'>" + texts.systemname[6] + " (Require<font class='rouge'> " + fix(Game.EPRequired[6], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(5000, 0) + " EP");
-	$("#selection-content").append("<div class='item' id='V7' data-id='7'>" + texts.systemname[7] + " (Require<font class='rouge'> " + fix(Game.EPRequired[7], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(10000, 0) + " EP");
-	$("#selection-content").append("<div class='item' id='V8' data-id='8'>" + texts.systemname[8] + " (Require<font class='rouge'> " + fix(Game.EPRequired[8], 0) + " EP</font>)</div>"); $("#percentrank").html(fix(100000, 0) + " EP");
-	$("#selection-content").append("<div class='item' id='V9' data-id='9'>" + texts.systemname[9] + " (Require<font class='rouge'> " + fix(Game.EPRequired[9], 0) + " EP</font>)</div>"); $("#percentrank").html("Unlimited EP");
+	$("#selection-content").append("<div class='item' id='V1' data-id='1'>" + texts.systemname[1] + " (Require<font class='rouge'> " + fix(Game.EPRequired[1], 0) + " EP</font>)</div>");
+	$("#selection-content").append("<div class='item' id='V2' data-id='2'>" + texts.systemname[2] + " (Require<font class='rouge'> " + fix(Game.EPRequired[2], 0) + " EP</font>)</div>");
+	$("#selection-content").append("<div class='item' id='V3' data-id='3'>" + texts.systemname[3] + " (Require<font class='rouge'> " + fix(Game.EPRequired[3], 0) + " EP</font>)</div>");
+	$("#selection-content").append("<div class='item' id='V4' data-id='4'>" + texts.systemname[4] + " (Require<font class='rouge'> " + fix(Game.EPRequired[4], 0) + " EP</font>)</div>");
+	$("#selection-content").append("<div class='item' id='V5' data-id='5'>" + texts.systemname[5] + " (Require<font class='rouge'> " + fix(Game.EPRequired[5], 0) + " EP</font>)</div>");
+	$("#selection-content").append("<div class='item' id='V6' data-id='6'>" + texts.systemname[6] + " (Require<font class='rouge'> " + fix(Game.EPRequired[6], 0) + " EP</font>)</div>");
+	$("#selection-content").append("<div class='item' id='V7' data-id='7'>" + texts.systemname[7] + " (Require<font class='rouge'> " + fix(Game.EPRequired[7], 0) + " EP</font>)</div>");
+	$("#selection-content").append("<div class='item' id='V8' data-id='8'>" + texts.systemname[8] + " (Require<font class='rouge'> " + fix(Game.EPRequired[8], 0) + " EP</font>)</div>");
+	$("#selection-content").append("<div class='item' id='V9' data-id='9'>" + texts.systemname[9] + " (Require<font class='rouge'> " + fix(Game.EPRequired[9], 0) + " EP</font>)</div>");
 	$("#selection-text").html(texts.systemname[Game.system]);
 }
 
@@ -369,4 +392,19 @@ function NextTuto() {
 
 function PrevTuto() {
 	if (Game.tutorial >= 1) { Game.tutorial--; setTutorial(Game.tutorial); }
+}
+
+function UpdateEP() {
+	for (var s in Game.EPRequired) {
+		if (Game.rank >= Game.EPRequired[0]) { $("#percentrank").html("10 EP"); }
+		if (Game.rank >= Game.EPRequired[1]) { $("#percentrank").html("50 EP"); }
+		if (Game.rank >= Game.EPRequired[2]) { $("#percentrank").html("100 EP"); }
+		if (Game.rank >= Game.EPRequired[3]) { $("#percentrank").html("350 EP"); }
+		if (Game.rank >= Game.EPRequired[4]) { $("#percentrank").html("1000 EP"); }
+		if (Game.rank >= Game.EPRequired[5]) { $("#percentrank").html("2500 EP"); }
+		if (Game.rank >= Game.EPRequired[6]) { $("#percentrank").html("5000 EP"); }
+		if (Game.rank >= Game.EPRequired[7]) { $("#percentrank").html("10000 EP"); }
+		if (Game.rank >= Game.EPRequired[8]) { $("#percentrank").html("100000 EP"); }
+		if (Game.rank >= Game.EPRequired[9]) { $("#percentrank").html("Unlimited EP"); }
+	}
 }

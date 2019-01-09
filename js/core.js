@@ -1,16 +1,16 @@
 //////////////////////////
-//TODO & IDEAS
+//     TODO & IDEAS     //
 //////////////////////////
-//
-// Technology to unlock new systems
-//
+//                      //
+//         W I P        //
+//                      //
 //////////////////////////
 
 
 
 //CONFIG
 
-var version = "v3";
+var version = "v3.2";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,
@@ -32,6 +32,7 @@ var Game = {
     totalinv: 100,
     CurrSellID: 0,
     CurrSellQty: 0,
+    CurrMult: 0,
     UnlockedLocations: 0,
     EPRequired: [0, 10, 50, 100, 350, 1000, 2500, 5000, 10000, 100000]
 };
@@ -59,6 +60,8 @@ function UpdateGame(cashps) {
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
     for (var u in Upgrades) { if (Game.Upgrades[u] == null) { Game.Upgrades[u] = 0; } }
+
+    
     Game.cash += cashps;
     Game.inventory[Game.extId] += Game.extGain;
     Game.totalinv += Game.extGain;
@@ -100,6 +103,7 @@ function sellitem(id, qty) {
         if (mult < 0) { mult = 0.01; }
         Game.CurrSellID = id;
         Game.CurrSellQty = qty;
+        Game.CurrMult = mult;
         $("#sellconfirm-text").html("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + " for " + fix(Market[id].value * mult * qty, 1) + "$ ?");
         $('#modal-4').modal('show');
     }
@@ -107,11 +111,10 @@ function sellitem(id, qty) {
 }
 
 function confirmsell() {
-    console.log("test");
     Game.cash += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
     Game.inventory[Game.CurrSellID] -= Game.CurrSellQty;
     Game.totalinv -= Game.CurrSellQty;
-    SystemMult[Game.CurrSellID] = mult;
+    SystemMult[Game.CurrSellID] = Game.CurrMult;
     UpdateUI();
     save();
 }
