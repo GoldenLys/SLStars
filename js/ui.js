@@ -10,7 +10,7 @@
 	$("#EXT-DESC").html("The drone extract " + fix(Game.extGain, 1));
 	$("#EXT-DESC2").html("per seconds ");
 	$("#HYPERDRIVE-TEXT").html("Travel to another location actually cost " + fix(Game.TravelCost, 3) + "% of power");
-	$("#HYPERSPACE-TEXT").html("Your actual maximum destination is: " + texts.systemname[Game.UnlockedLocations]);
+	$("#HYPERSPACE-TEXT").html("Your actual maximum destination is " + texts.systemname[Game.UnlockedLocations]);
 	$("#EXPLO-TITLE").html("Exploration - " + texts.systemname[Game.system]);
 	GenInventory();
 	GenMissions();
@@ -101,7 +101,7 @@ function GenMissions() {
 //GENERATE MARKET
 
 function GenMarket() {
-	$('#system0sm').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Type</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell</th></tr></thead>");
+	$('#system0sm').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Type</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell</th></tr></thead>");
 
 	for (var i in Market) {
 		var offer = Market[i];
@@ -122,8 +122,8 @@ function GenMarket() {
 		var SYSTEMDIV = $(
 			"<tr class=''>" +
 			"<td class='center aligned ui'>" + name + "</td>" +
-			"<td class='center aligned'>" + description + "</td>" +
 			"<td class='center aligned'> " + cost + "</td>" +
+			"<td class='center aligned'>" + description + "</td>" +
 			"<td class='center aligned'> " + inventory + "</td>" +
 			"<td class='center aligned'><div class='ui spacel buttons'><button class='ui " + canSell + " button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " button' onClick='sellitem(" + i + ",100);'>100</button><button class='ui " + canSellAll + " button' onClick='sellitem(" + i + "," + Game.inventory[i] + ");'>All</button></div></td>" +
 			"</tr>"
@@ -227,21 +227,17 @@ function GenHyperSpace() {
 	$('#HYPERSPACE-BOARD').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Current level</th><th class='ui center aligned'>Access</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
 
 	for (var i in Upgrades2) {
-		var canbuy = "";
-		var level = "";
-		var buyable = "";
-		var price = "";
+		var canbuy;
+		var level;
+		var buyable;
+		var price;
 		var upg = Upgrades2[i];
 		canbuy = Game.cash < GetUPGprice2(i) ? ' disabled' : '';
 		buyable = Game.cash < GetUPGprice2(i) ? ' rouge' : ' vert';
-		if (i == 0) {
-			if (Game.Upgrades[i] == 9) { canbuy = " disabled"; access = ""; price = ""; action = ""; } else {
-				access = texts.systemname[Game.UnlockedLocations + 1];
-				level = Game.UnlockedLocations;
-				price = "<i class='" + buyable + " dollar sign icon'></i>" + fix(GetUPGprice2(i), 1);
-				action = "<a class='fluid ui " + canbuy + " red button' onClick='BUYHYPERSPACE(" + i + ");'>Upgrade</a>";
-			}
-		}
+		action = Game.UnlockedLocations > 8 ? " " : "<a class='fluid ui " + canbuy + " red button' onClick='BUYHYPERSPACE(" + i + ");'>Upgrade</a>";
+		price = Game.UnlockedLocations > 8 ? " " : "<i class='" + buyable + " dollar sign icon'></i>" + fix(GetUPGprice2(i), 1);
+		access = Game.UnlockedLocations > 8 ?  " " : texts.systemname[Game.UnlockedLocations + 1];
+		level = Game.UnlockedLocations;
 
 		var SYSTEMDIV = $(
 			"<tr class=''>" +

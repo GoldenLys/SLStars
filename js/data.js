@@ -86,9 +86,9 @@ var Market = {
     7: { desc: "uncommon neutral element", value: 500 }, //IRIDIUM
     8: { desc: "rare neutral element", value: 750 }, //GOLD
     9: { desc: "uncommon silicate element", value: 1500 }, //PLATINUM
-    10: { desc: "commom isotope element", value: 1000 }, //CARBON
+    10: { desc: "common isotope element", value: 1000 }, //CARBON
     11: { desc: "rare isotope element", value: 5000 }, //PLUTONIUM
-    12: { desc: "commom silicate element", value: 7500 }, //HERIDIUM
+    12: { desc: "common silicate element", value: 7500 }, //HERIDIUM
     13: { desc: "rare neutral element", value: 12500 }, //EMERIL
     14: { desc: "rare oxide element", value: 15000 }, //TITANIUM
     15: { desc: "very rare exotic element", value: 50000 }, //ANTIMATTER

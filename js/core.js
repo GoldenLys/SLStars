@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v3.2";
+var version = "v3.3";
 var sitename = "SpaceL";
 var Game = {
     isLoading: 1,
@@ -166,7 +166,7 @@ function UPGPOWER(id) {
 
 function BUYHYPERSPACE(id) {
     if (Game.cash > GetUPGprice2(id)) {
-        if (Game.UnlockedLocations < 10) {
+        if (Game.UnlockedLocations < 9) {
             Game.cash -= GetUPGprice2(id);
             Game.UnlockedLocations++;
         }
