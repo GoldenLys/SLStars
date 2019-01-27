@@ -1,8 +1,8 @@
 <head>
-    <title>SpaceL is loading..</title>
+    <title>SLStars is loading..</title>
     <meta charset="UTF-8" name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 </head>
-<link rel="shortcut icon" type="image/x-icon" href="../images/spaceL.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="../images/SLStars.ico" />
 <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:900" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" />
@@ -24,13 +24,12 @@
 </script>
 
 
-<link href="style.css?v=33" rel="stylesheet" type="text/css" />
-<link href="mobile.css?v=33" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=33"></script>
-<script src="js/data.js?v=33"></script>
-<script src="js/core.js?v=33"></script>
-<script src="js/ui.js?v=33"></script>
-<script src="js/lodash.js"></script>
+<link href="style.css?v=34" rel="stylesheet" type="text/css" />
+<link href="mobile.css?v=34" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=34"></script>
+<script src="js/data.js?v=34"></script>
+<script src="js/core.js?v=34"></script>
+<script src="js/ui.js?v=34"></script>
 <script src="js/numeral.min.js"></script>
 
 <body id="body" class="noselect" oncontextmenu="return false;">
@@ -46,11 +45,10 @@
         </div>
         <a class="item" target="_blank" href="https://www.paypal.me/Aizen45/1">
             <i class="paypal icon"></i>Send me a coffee ♥</a>
-
+            <p id="copyright"></p>
     </div>
     <div class="pusher">
-        <!--TOP MENU <div id="top-menu" class="ui red secondary inverted menu">-->
-        <div id="top-menu" class="ui spacel menu">
+        <div id="top-menu" class="ui SLStars menu">
             <div class="item">
                 <div class="ui logo shape">
                     <div class="sides">
@@ -60,18 +58,21 @@
                     </div>
                 </div>
             </div>
-            <div class="ui three item menu" style="width:100%;">
-                <button id="sidebar" class="ui button item">
-                    <i class="sidebar icon"></i>Menu</button>
-                <div class="item" id="game-menu">
-                    <button class="ui button item spacelborder" id="t1" data-id="1">
-                        <i class="space shuttle icon"></i></button>
-                    <button class="ui button item" id="t2" data-id="2">
-                        <i class="dollar list icon"></i></button>
-                    <button class="ui button item" id="t3" data-id="3">
-                        <i class="flask icon"></i></button>
-                </div>
-            </div>
+
+            <a class="item" id="sidebar">
+                <i class="sidebar icon"></i>Menu</a>
+
+            <a class="item SLStarsborder" id="t1" data-id="1">
+                <i class="home icon"></i></a>
+
+            <a class="item" id="t2" data-id="2">
+                <i class="flask icon"></i>Technologies</a>
+
+            <a class="item SLStarsborder" id="t3" data-id="3">
+                <i class="flask icon"></i></a>
+            <a class="item SLStarsborder" id="t4" data-id="4">
+                <i class="space shuttle icon"></i></a>
+
         </div>
         <!--COLUMNS-->
         <div class="ui two column very relaxed grid" style="position: relative; z-index: 99;">
@@ -116,7 +117,8 @@
                 <!--EXPLORATION-->
                 <div id="tab1" style="display: block; width: 100%;">
                     <div class="ui black message">
-                        <h3 id="EXPLO-TITLE" class="ui type4 C1">Exploration</h3>
+                        <img class="ui huge avatar image" src="images/exploration.png">
+                        <span class="ui type4 C1">Exploration</span>
                         <table id="system0" class="ui inverted table"></table>
                         <table id="system1" class="ui inverted table" style="display: none;"></table>
                         <table id="system2" class="ui inverted table" style="display: none;"></table>
@@ -134,7 +136,9 @@
                 <!--MARKET-->
                 <div id="tab2" style="display: none; width: 100%;">
                     <div class="ui black message">
-                        <h3 class="ui type4 C1">Market</h3>
+                        <img class="ui huge avatar image" src="images/market.png">
+                        <span class="ui type4 C1">Market</span>
+
                         <table id="system0sm" class="ui inverted table"></table>
                     </div>
                 </div>
@@ -180,6 +184,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="ui equal width grid" id="tab4">
+                    <div class="column">
+                        <div class="ui black message">WORK IN PROGRESS.</div>
+                    </div>
+                </div>
             </div>
 
             <!--CONTACT-->
@@ -193,10 +203,10 @@
                         <img class="ui tiny rounded image" src="images/lys.jpg">
                         <div class="content">
                             <div class="header">
-                                <font class='type1'>Lys - SpaceL developer</font>
+                                <font class='type1'>Lys - SLStars developer</font>
                             </div>
                             <p>
-                                <i class="large blue discord icon"></i>RainbowBrain#0001<br>
+                                <i class="large blue discord icon"></i>LYS®#0001<br>
                                 <i class="large red reddit icon"></i>u/Aizen45<br>
                                 <i class="large blue steam icon"></i>LYS®
                             </p>

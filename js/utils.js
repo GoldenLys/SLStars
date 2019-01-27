@@ -60,13 +60,13 @@ var canSave = 1;
 function save() {
 	var date = new Date();
 	if (canSave) {
-		localStorage.setItem("SpaceL2", JSON.stringify(Game));
+		localStorage.setItem("SLStars2", JSON.stringify(Game));
 	}
 	var tmp = new Date().getTime();
 }
 
 function load() {
-	var savegame = JSON.parse(localStorage.getItem("SpaceL2"));
+	var savegame = JSON.parse(localStorage.getItem("SLStars2"));
 
 	for (var property in savegame) {
 		if (typeof savegame[property] !== 'undefined') Game[property] = savegame[property];
@@ -100,7 +100,7 @@ function restoreSave(save) {
 		var decoded = atob(save);
 		JSON.parse(decoded);
 		if (decoded) {
-			localStorage.setItem("SpaceL2", decoded);
+			localStorage.setItem("SLStars2", decoded);
 			canSave = 0;
 			location.reload();
 		} else {

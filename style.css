@@ -1,21 +1,18 @@
 #body {
-    background-image: url(images/bg.png);
-    background-repeat: repeat;
+    background: #040404;
     text-align: center;
-    background-attachment: fixed;
-    background-size: contain;
     font-size: 100%;
 }
 
 .pusher {
-    background-image: url(images/bg.png);
-    background-attachment: fixed;
-    background-size: contain;
+    background: #040404;
+
 }
 
 #top-menu {
     width: 101%;
     z-index: 998;
+    margin: 0px 0px 5px 0px !important;
 }
 
 #colonne-m {
@@ -141,7 +138,7 @@
 }
 
 .ui.black.message, .ui.inverted.message {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .text {
@@ -235,27 +232,27 @@ body ::-webkit-scrollbar-track {
     text-align: center;
 }
 
-.ui.spacel.menu {
+.ui.SLStars.menu {
     transition: 1.5s;
     background-size: 200% auto;
-    background-image: linear-gradient(to left, #230031 0%, #350000 51%, #230031 100%);
+    background-image: linear-gradient(to left, #0b0019 0%, #24002f 51%, #0b0019 100%);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
 }
 
-.ui.spacel.menu:hover {
+.ui.SLStars.menu:hover {
     background-position: right center; /* change the direction of the change here */
   }
 
   .ui.red.button {
     transition: 1.5s;
     background-size: 200% auto;
-    background-image: linear-gradient(to left, #310036 0%, #350000 51%, #310036 100%);
+    background-image: linear-gradient(to left, #0b0019 0%, #24002f 51%, #0b0019 100%);
   }
 
   .ui.red.button:focus {
-    background-image: linear-gradient(to left, #310036 0%, #350000 51%, #310036 100%);
+    background-image: linear-gradient(to left, #0b0019 0%, #24002f 51%, #0b0019 100%);
   }
 
   .ui.red.button:hover, .ui.red.buttons:hover {
@@ -269,26 +266,26 @@ body ::-webkit-scrollbar-track {
   }
 
   .ui.green.button:focus {
-    background-image: linear-gradient(to left, #310036 0%, #350000 51%, #310036 100%);
+    background-image: linear-gradient(to left, #0b0019 0%, #24002f 51%, #0b0019 100%);
   }
 
   .ui.green.button:hover, .ui.green.buttons:hover {
     background-position: right center; /* change the direction of the change here */
   }
 
- .ui.spacel.buttons {
+ .ui.SLStars.buttons {
     transition: 1.5s;
     border-radius: 0.1vw;
     background-size: 200% auto;
-    background-image: linear-gradient(to left, #310036 0%, #350000 51%, #310036 100%);
+    background-image: linear-gradient(to left, #0b0019 0%, #24002f 51%, #0b0019 100%);
   }
 
-  .ui.spacel.button, .button {
+  .ui.SLStars.button, .button {
       background-color: transparent;
   }
 
   .ui.button:hover, .button:hover {
-    background-color: #350000;
+    background-color: #24002f;
 }
 
   .ui.button {
@@ -309,10 +306,14 @@ body ::-webkit-scrollbar-track {
 }
 
 
-.spacelborder {
-    background: none!important;
+.SLStarsborder {
+    background: rgb(21, 0, 27)!important;
     color: rgba(255, 255, 255, 1.0)!important;
-    border: 0.5px solid #ffffff!important;
+    BORDER-RADIUS: 5%;
+}
+
+.SLStarsborder:hover {
+    background: #0b0019!important;
 }
 
 .ui.button:disabled, .ui.buttons .disabled.button, .ui.disabled.active.button, .ui.disabled.button, .ui.disabled.button:hover {
@@ -320,7 +321,7 @@ body ::-webkit-scrollbar-track {
 }
 
 .ui.inverted.menu {
-    background-image: linear-gradient(to bottom, #350000 0%, #310036 50%); 
+    background-image: linear-gradient(to bottom, #0b0019 0%, #080013 5%, #010008 50%, #070015 100%);
 }
 
 .color1 {
@@ -328,8 +329,8 @@ body ::-webkit-scrollbar-track {
 }
 
 .C1 {
-    background: linear-gradient(to right, #b30009 0%, #600769 70%, #600769 100%); 
-    text-shadow: 0 0 2vh rgba(0, 0, 0, 0.6);
+    background: linear-gradient(to right, #5e0892 0%, #4c0092 70%, #2f016b 100%);
+    text-shadow: 0 0 2vh rgba(255, 255, 255, 0.1);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -354,4 +355,10 @@ body ::-webkit-scrollbar-track {
 i.icon {
     margin: 0;
     width: 1em;
+}
+
+#copyright {
+    position: absolute;
+    bottom: 0;
+    color: white;
 }

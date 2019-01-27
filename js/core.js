@@ -5,13 +5,17 @@
 //         W I P        //
 //                      //
 //////////////////////////
+// - Extraction drone visit a system at each second                      
+// - Prestige system
+// - Random pirates attacks
+//////////////////////////
 
 
 
 //CONFIG
 
-var version = "v3.3";
-var sitename = "SpaceL";
+var version = "v3.4";
+var sitename = "SLStars";
 var Game = {
     isLoading: 1,
     DateStarted: getDate(),
@@ -34,17 +38,21 @@ var Game = {
     CurrSellQty: 0,
     CurrMult: 0,
     UnlockedLocations: 0,
-    EPRequired: [0, 10, 50, 100, 350, 1000, 2500, 5000, 10000, 100000]
+    EPRequired: [0, 10, 50, 100, 350, 1000, 2500, 5000, 10000, 100000],
+    PirateAttacks: 0,
+    PirateBaseLife: 100,
+    PirateCurrentLife: 100,
+    Galaxy: 0,
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
 
 $(document).ready(function () {
     changeLocation("loading");
-    if (localStorage.getItem("SpaceL2") != null) { load(); }
+    if (localStorage.getItem("SLStars2") != null) { load(); }
     setInterval(function () { UpdateGame(Game.cashps); }, 1000);
     ClickEvents();
-    $(".pusher").css("background-image", "url(images/bg.png)");
+    $(".pusher").css("background", "#040404");
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
     hidesystems();
@@ -104,7 +112,7 @@ function sellitem(id, qty) {
         Game.CurrSellID = id;
         Game.CurrSellQty = qty;
         Game.CurrMult = mult;
-        $("#sellconfirm-text").html("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + " for " + fix(Market[id].value * mult * qty, 1) + "$ ?");
+        $("#sellconfirm-text").html("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + "<img class='ui avatar image' src='images/items/" + id + ".png'> for <font color='green'>" + fix(Market[id].value * mult * qty, 1) + "$</font> ?");
         $('#modal-4').modal('show');
     }
     UpdateUI();
