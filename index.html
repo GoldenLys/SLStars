@@ -9,11 +9,12 @@
 <link rel="stylesheet" type="text/css" href="semantic.min.css" />
 <link rel="stylesheet" type="text/css" href="dropdown.min.css" />
 <link rel="stylesheet" type="text/css" href="sidebar.min.css" />
+<link rel="stylesheet" type="text/css" href="progress.min.css" />
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="semantic.min.js"></script>
 <script src="dropdown.min.js"></script>
 <script src="sidebar.min.js"></script>
-
+<script src="progress.min.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132217801-1"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
@@ -22,13 +23,11 @@
 
     gtag('config', 'UA-132217801-1');
 </script>
-
-
-<link href="style.css?v=4" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=4"></script>
-<script src="js/data.js?v=4"></script>
-<script src="js/core.js?v=4"></script>
-<script src="js/ui.js?v=4"></script>
+<link href="style.css?v=41" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=41"></script>
+<script src="js/data.js?v=41"></script>
+<script src="js/core.js?v=41"></script>
+<script src="js/ui.js?v=41"></script>
 <script src="js/numeral.min.js"></script>
 
 <script type="text/javascript"> if (screen.width <= 1280) { location.href = './mobile.html'; } </script>
@@ -184,7 +183,7 @@
                 </div>
 
 
-                <div class="ui equal width grid" id="tab3">
+                <div class="ui equal width grid" id="tab3" style="display: none;">
                     <div class="column">
                         <div class="ui black message">
                             <img class="ui huge avatar image" src="images/galaxy.png">
@@ -198,12 +197,16 @@
                                     <div id="Galaxy-content2"></div>
                                 </div>
                                 <div class="ui segment">
-                                    <button id='GalaxyBuy' class='fluid ui red button' onClick='changegalaxy();'>Enter in the Black Hole</button>
+                                    <button id='GalaxyBuy' class='fluid ui red button' onClick='changegalaxy();'>Enter
+                                        in the Black Hole</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
             </div>
         </div>
 
@@ -358,17 +361,43 @@
             </div>
             <div class="centrer content">
                 <div class="ui message fight">
-                    <div class="ui left icon">
-                        <i class="big green user circle icon"></i>
-                        <font id="PlayerLifeText" class="left blanc"></font>
-                    </div>
-                    <div class="ui right icon">
-                        <i class="big red user circle icon"></i>
-                        <font id="PirateLifeText" class="right blanc"></font>
-                    </div>
-                    <br>
+                    <div class="ui horizontal segments">
+                        <div class="ui left aligned clearing segment">
+                            <div class="ui left icon">
+                                <i class="big green flag outline icon"></i>
+                                <font id="PlayerLifeTitle" class="left blanc"></font>
 
+                                <div id="PlayerHP" class="ui green inverted progress success">
+                                    <div class="bar">
+                                        <div class="progress"></div>
+                                    </div>
+                                    <div class="label" id="PlayerLifeText"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui clearing segment">
+                            <br>
+                        </div>
+                    </div>
+                    <div class="ui horizontal segments">
+                        <div class="ui clearing segment">
+                            <br>
+                        </div>
+                        <div class="ui right aligned basic segment">
+                            <div class="ui right icon">
+                                <i class="big red flag outline icon"></i>
+                                <font id="PirateLifeTitle" class="right blanc"></font>
+                                <div id="PirateHP" class="ui inverted progress error"">
+                                    <div class="bar">
+                                        <div class="progress"></div>
+                                    </div>
+                                    <div class="label" id="PirateLifeText"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <font id="PirateAttackDesc" class="blanc"></font>
                 <div class="actions">
                     <div id="attack-btn" onclick="PirateFightAttack();" class="ui huge red basic inverted button">
@@ -381,6 +410,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
 

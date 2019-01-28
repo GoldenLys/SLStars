@@ -14,9 +14,9 @@
 	$("#Galaxy-content").html("Galaxy number <br><h1 class='type4 or'>" + Game.Galaxy + "</h1>");
 	$("#Galaxy-content2").html("- You must reach reach <span class='rouge'>Gaia</span>.<br>- Have <i class='green dollar sign icon'></i><span class='vert'>" + fix(GetGalaxyPrice(), 2) + "</span> to travel to another galaxy.");
 	$("#EXPLO-TITLE").html("Exploration - " + texts.systemname[Game.system]);
-	if(Game.isInFight==1) { $("#modal-7").modal('setting', 'closable', false).modal('show'); }
+	if (Game.isInFight == 1) { $("#modal-7").modal('setting', 'closable', false).modal('show'); }
 	if (Game.cash < GetGalaxyPrice()) { $("#GalaxyBuy").addClass("disabled"); }
-	else { if(Game.system == 9) $("#GalaxyBuy").removeClass("disabled"); }
+	else { if (Game.system == 9) $("#GalaxyBuy").removeClass("disabled"); }
 	GenInventory();
 	GenMissions();
 	GenMarket();
@@ -30,31 +30,7 @@
 	UpdatePirateView();
 };
 
-function SetColor(value) {
-	var color;
-	var text;
-	if (value < 1) { color = 'noir'; }
-	if (value == 1) { color = 'jaune'; }
-	if (value > 1) { if (value < 11) { color = 'bleu'; } }
-	if (value > 10) { if (value < 50) { color = 'violet'; } }
-	if (value > 49) { if (value < 100) { color = 'rose'; } }
-	if (value > 99) { if (value < 1000) { color = 'rouge'; } }
-	if (value > 999) { color = 'vert'; }
-	return color;
-}
 
-function SetColorText(value) {
-	var color;
-	var text;
-	if (value < 1) { text = 'Tiny'; }
-	if (value == 1) { text = 'Very small'; }
-	if (value > 1) { if (value < 11) { text = 'Small'; } }
-	if (value > 10) { if (value < 50) { text = 'Large'; } }
-	if (value > 49) { if (value < 100) { text = 'Big'; } }
-	if (value > 99) { if (value < 1000) { text = 'Huge'; } }
-	if (value > 999) { text = 'Massive'; }
-	return text;
-}
 
 function GetSystemType(value) {
 	if (value == 0) { type = "Planet"; }
@@ -392,7 +368,7 @@ function setTutorial(id) {
 	if (Game.tutorial == 0) { $("#tuto-prev").addClass("disabled"); }
 	else { $("#tuto-prev").removeClass("disabled"); }
 
-	if (Game.tutorial == 3) { $("#tuto-next").addClass("disabled"); }
+	if (Game.tutorial == 5) { $("#tuto-next").addClass("disabled"); }
 	else { $("#tuto-next").removeClass("disabled"); }
 }
 
@@ -400,7 +376,7 @@ function closeTutorial() { hideModals(); Game.tutorial = 0; if (Game.fl == 0) { 
 
 function NextTuto() {
 	if (Game.fl == 0) { Game.fl = 1; Game.inventory[2] = 100; }
-	if (Game.tutorial < 3) { Game.tutorial++; setTutorial(Game.tutorial); }
+	if (Game.tutorial < 5) { Game.tutorial++; setTutorial(Game.tutorial); }
 }
 
 function PrevTuto() {
@@ -423,11 +399,17 @@ function UpdateEP() {
 }
 
 function UpdatePirateView() {
-    lifetext = Game.PlayerLife < 51 ? ' rouge' : ' vert';
-    PirateLifeText = Game.PirateCurrentLife < 51 ? ' rouge' : ' ';
+	lifetext = Game.PlayerLife < 51 ? ' rouge' : ' vert';
+	PirateLifeText = Game.PirateCurrentLife < 51 ? ' rouge' : ' ';
 
-    $("#PirateAttackTitle").html("<span class='rouge'>ALERT ! PIRATE IN THE AREA.</span>");
-    $("#PirateAttackTitleDesc").html("A pirate want to fight with you.");
-    $("#PirateLifeText").html("<span class='bold rouge'>Pirate ship</span><br><span class='bold" + PirateLifeText + "'>" + fix(Game.PirateCurrentLife, 0) + "</span> <i class='red heart icon'></i>");
-    $("#PlayerLifeText").html("<span class='bold vert'>Your ship</span><br><span class='" + lifetext + " bold'>" + fix(Game.PlayerLife, 0) + "</span>/" + Game.PlayerBaseLife + " <i class='red heart icon'></i>");
+	$("#PirateAttackTitle").html("<span class='rouge'>ALERT ! PIRATE IN THE AREA.</span>");
+	$("#PirateAttackTitleDesc").html("A pirate wants to fight with you.");
+	$("#PirateLifeTitle").html("<span class='type4 bold rouge'>Pirate</span>");
+	$("#PlayerLifeTitle").html("<span class='type4 bold vert'>You</span>");
+	$("#PirateLifeText").html("<span class='bold" + PirateLifeText + "'>" + fix(Game.PirateCurrentLife, 0) + "</span> <i class='red heart icon'></i>");
+	$("#PlayerLifeText").html("<span class='" + lifetext + " bold'>" + fix(Game.PlayerLife, 0) + "</span><span class='blanc'>/" + Game.PlayerBaseLife + "</span> <i class='red heart icon'></i>");
+	$('#PirateHP').progress({ className: { active: '', error: '', success: '', warning: '' } });
+	$('#PirateHP').progress({ percent: GetPirateHPPercent() });
+	$('#PlayerHP').progress({ percent: GetPlayerHPPercent() });
+
 }

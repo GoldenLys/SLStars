@@ -128,10 +128,38 @@ var texts = {
 
 var tutorials = {
     0: { title: "How to play ?", text: "You can start by making money with an exploration mission,<br> then sell your merchandise to the space market.", },
-    1: { title: "Exploration", text: "The exploration is a first objective in the game,<br> by exploring you will be able to discover new locations & technologies.", },
-    2: { title: "Market", text: "The space market is THE place to be rich,<br> the prices are differents on every system & change every days.", },
-    3: { title: "Technologies", text: "Technologies can enable an auto-extraction of ressources and unlock new locations.", },
+    1: { title: "Exploration", text: "The exploration is a first objective in the game,<br> by exploring you will be able to discover new locations and materials .", },
+    2: { title: "Market", text: "The market is THE place to be rich,<br> the prices are differents on every system & change every days.<br><br>There is a color code to indicate the values of every material:<br>- <span class='rouge'>Low</span><br>- <span class='argent'>Normal</span><br>- <span class='vert'>High</span>", },
+    3: { title: "Technologies", text: "3 Technologies are unlockables<br>- An auto-extraction drone of ressources<br> - An hyperspace module that can unlock new locations.<br>- An hyperdrive module that can reduce the cost to travel to another location.", },
+    4: { title: "Game menu", text: "There is also a menu where you can export/import or reset your savegame or re-open this guide.", },
+    5: { title: "The sizes(quantity) in the exploration missions", text: "- <span class='noir'>Tiny</span> inferior to 1.<br>- <span class='jaune'>Very small</span> Equal to 1.<br>- <span class='bleu'>Small</span> Inferior to 11<br>- <span class='violet'>Large</span> Inferior to 50<br>- <span class='rose'>Big</span> Inferior to 100<br>- <span class='rouge'>Huge</span> Inferior to 1000<br>- <span class='vert'>Massive</span> Upper than 999.<br>", },
 };
+
+function SetColor(value) {
+    var color;
+    var text;
+    if (value < 1) { color = 'noir'; }
+    if (value == 1) { color = 'jaune'; }
+    if (value > 1) { if (value < 11) { color = 'bleu'; } }
+    if (value > 10) { if (value < 50) { color = 'violet'; } }
+    if (value > 49) { if (value < 100) { color = 'rose'; } }
+    if (value > 99) { if (value < 1000) { color = 'rouge'; } }
+    if (value > 999) { color = 'vert'; }
+    return color;
+}
+
+function SetColorText(value) {
+    var color;
+    var text;
+    if (value < 1) { text = 'Tiny'; }
+    if (value == 1) { text = 'Very small'; }
+    if (value > 1) { if (value < 11) { text = 'Small'; } }
+    if (value > 10) { if (value < 50) { text = 'Large'; } }
+    if (value > 49) { if (value < 100) { text = 'Big'; } }
+    if (value > 99) { if (value < 1000) { text = 'Huge'; } }
+    if (value > 999) { text = 'Massive'; }
+    return text;
+}
 
 var fr = {
 

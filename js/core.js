@@ -13,7 +13,7 @@
 
 //CONFIG
 
-var version = "v4";
+var version = "v4.1";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -60,6 +60,7 @@ $(document).ready(function () {
     setInterval(function () { LookForPirates(); }, 60000);
     ClickEvents();
     $(".pusher").css("background", "#040404");
+    $(".pusher").css("background-image", "url(images/bg.png)");
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
     hidesystems();
@@ -210,7 +211,7 @@ function PirateFightProctect() {
     if (Game.PlayerLife <= 0) { LosePirateFight(); }
     if (Game.PirateCurrentLife <= 0) { NewPirateStats(); }
     if (Game.PlayerLife > 100) { Game.PlayerLife = 100; }
-    $("#PirateAttackDesc").html("The pirate ship weapon does <span class='rouge bold'>-" + Game.PiratePower / 2.5 + "</span><i class='red heart icon'></i> damage to the hull !<br>You repaired of the hull <span class='vert'>+5</span><i class='red heart icon'></i>");
+    $("#PirateAttackDesc").html("The pirate ship weapon does <span class='rouge bold'>-" + Game.PiratePower / 2.5 + "</span><i class='red heart icon'></i> damage to the hull !<br>You repaired <span class='vert'>+5</span><i class='red heart icon'></i> of the hull");
     UpdatePirateView();
 }
 
@@ -232,10 +233,18 @@ function PirateFightFlee() {
     hideModals();
 }
 
+function GetPirateHPPercent() {
+    return (100 / Game.PirateBaseLife) * Game.PirateCurrentLife;
+}
+
+function GetPlayerHPPercent() {
+    return (100 / Game.PlayerBaseLife) * Game.PlayerLife;
+}
+
 //CHECK IF THERE IS A CHANCE TO ENCOUNTER A PIRATE
 
 function LookForPirates() {
-    var PirateChance = random(0, 5);
+    PirateChance = random(0, 5);
 
     if (PirateChance == 5) {
         $("#modal-7").modal('setting', 'closable', false).modal('show');
@@ -258,7 +267,7 @@ function NewPirateStats() {
 
 function LosePirateFight() {
     Game.inventory = [];
-    var random = random(10000, 100000);
+    random = random(10000, 100000);
     if (Game.cash > 100000) {
         Game.cash -= random;
         Game.cashSpent += random;
