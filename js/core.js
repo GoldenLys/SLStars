@@ -111,9 +111,9 @@ function sellitem(id, qty) {
     var mult = SystemMult[id];
     if (Game.inventory[id] >= qty) {
         if (id < 2) {
-            if (mult > 0) { mult -= mult * (1 * qty) / 100; }
+            if (mult > 0) { mult -= mult * (1 * qty) / 250; }
         } else {
-            if (id < 7) { if (mult > 0) { mult -= mult * (1 * qty) / 1000; } }
+            if (id < 7) { if (mult > 0) { mult -= mult * (1 * qty) / 2000; } }
         }
         if (id > 6) { if (mult > 0) { mult -= mult * (1 * qty) / 10000; } }
         if (mult < 0) { mult = 0.01; }
@@ -146,7 +146,7 @@ function changeLocation(id) {
                 Game.days++;
             }
         } else { showmessage("Upgrade your hyperspace", "You hyperspace can't travel there for now, upgrade it!"); }
-    } else { if (id != "loading") { showmessage("Not enough power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; } }
+    } else { if (id != "loading") { showmessage("You are out of power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; } }
     if (id == "loading") { id = 0; Game.system = id; }
     hidesystems();
     $('#system' + Game.system).show();
@@ -240,7 +240,7 @@ function LookForPirates() {
     if (PirateChance == 5) {
         $("#modal-7").modal('setting', 'closable', false).modal('show');
         Game.isInFight = 1;
-        PirateChance=0;
+        PirateChance = 0;
     }
 }
 
@@ -262,8 +262,8 @@ function LosePirateFight() {
     if (Game.cash > 100000) {
         Game.cash -= random;
         Game.cashSpent += random;
-    } else if (Game.cash > 10000) { random=random(1000, 10000); Game.cash -= random; Game.cashSpent+=random; }
-    else if (Game.cash > 1000) { random=random(100, 1000); Game.cash -= random; Game.cashSpent+=random; }
+    } else if (Game.cash > 10000) { random = random(1000, 10000); Game.cash -= random; Game.cashSpent += random; }
+    else if (Game.cash > 1000) { random = random(100, 1000); Game.cash -= random; Game.cashSpent += random; }
     Game.isInFight = 0;
     Game.PlayerLife = Game.PlayerBaseLife;
     hideModals();
@@ -277,24 +277,26 @@ function GetGalaxyPrice() {
 
 function changegalaxy() {
     if (Game.cash >= GetGalaxyPrice()) {
-        Game.Galaxy++;
-        for (var EP in Game.EPRequired) { Game.EPRequired[EP] = Game.EPRequired[EP] + (1.25 * Game.Galaxy); }
-        Game.cash = 50 + (1.25 * Game.Galaxy) * 10;
-        Game.cashGained +=50 + (1.25 * Game.Galaxy) * 10;
-        Game.inventory = [];
-        Game.system = 0;
-        Game.technologies = [];
-        Game.explored = [];
-        Game.Upgrades = [];
-        Game.TravelCost = 25;
-        Game.UnlockedLocations = 0;
-        Game.PiratePower = 55;
-        Game.PirateBaseLife = 100;
-        Game.PirateAttacks = 0;
-        Game.PirateCurrentLife = 100;
-        Game.PlayerLife = 100;
-        Game.PlayerBaseLife = 100;
-        Game.PlayerAttack = 10;
-        Game.rank = 0;
+        if (Game.system == 9) {
+            Game.Galaxy++;
+            for (var EP in Game.EPRequired) { Game.EPRequired[EP] = Game.EPRequired[EP] + (1.25 * Game.Galaxy); }
+            Game.cash = 50 + (1.25 * Game.Galaxy) * 10;
+            Game.cashGained += 50 + (1.25 * Game.Galaxy) * 10;
+            Game.inventory = [];
+            Game.system = 0;
+            Game.technologies = [];
+            Game.explored = [];
+            Game.Upgrades = [];
+            Game.TravelCost = 25;
+            Game.UnlockedLocations = 0;
+            Game.PiratePower = 55;
+            Game.PirateBaseLife = 100;
+            Game.PirateAttacks = 0;
+            Game.PirateCurrentLife = 100;
+            Game.PlayerLife = 100;
+            Game.PlayerBaseLife = 100;
+            Game.PlayerAttack = 10;
+            Game.rank = 0;
+        }
     }
 }
