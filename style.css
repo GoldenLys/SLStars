@@ -167,11 +167,11 @@
     color: rgba(255, 255, 255, 1);
 }
 .ui.dropdown .menu>.item:hover {
-    color: rgb(219, 40, 40);
+    background: rgba(255, 255, 255, 0.5);
 }
 
 .ui.dropdown .menu>.item.active {
-    color: rgb(219, 40, 40);
+    color: rgb(255, 255, 255);
 }
 
 .ui.dropdown .menu>.item {
@@ -307,7 +307,7 @@ body ::-webkit-scrollbar-track {
 
 
 .SLStarsborder {
-    background: rgb(21, 0, 27)!important;
+    background: #24002f!important;
     color: rgba(255, 255, 255, 1.0)!important;
     BORDER-RADIUS: 5%;
 }
@@ -361,4 +361,28 @@ i.icon {
     position: absolute;
     bottom: 0;
     color: white;
+}
+
+.left {
+    text-align: left!important;
+}
+
+.right {
+    text-align: right!important;
+}
+
+.fight {
+        font-size: 1.5em!important;
+}
+
+.ui.horizontal.segments {
+    background-color: transparent;
+}
+
+.ui.vertical.segments {
+    background-color: transparent;
+}
+
+.ui.segment {
+    background-color: transparent;
 }

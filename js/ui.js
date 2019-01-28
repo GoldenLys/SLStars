@@ -1,5 +1,4 @@
 ﻿var UpdateUI = function () {
-	//$("#modal-7").modal('show');
 	if (Game.fl == 0) { $("#modal-2").modal('show'); }
 	document.title = sitename;
 	$("#money").html("" + fix(Game.cash, 1));
@@ -12,7 +11,12 @@
 	$("#EXT-DESC2").html("per seconds ");
 	$("#HYPERDRIVE-TEXT").html("Travel to another location actually cost " + fix(Game.TravelCost, 3) + "% of power");
 	$("#HYPERSPACE-TEXT").html("Your actual maximum destination is " + texts.systemname[Game.UnlockedLocations]);
+	$("#Galaxy-content").html("Galaxy number <br><h1 class='type4 or'>" + Game.Galaxy + "</h1>");
+	$("#Galaxy-content2").html("- You must reach reach <span class='rouge'>Gaia</span>.<br>- Have <i class='green dollar sign icon'></i><span class='vert'>" + fix(GetGalaxyPrice(), 2) + "</span> to travel to another galaxy.");
 	$("#EXPLO-TITLE").html("Exploration - " + texts.systemname[Game.system]);
+	if(Game.isInFight==1) { $("#modal-7").modal('setting', 'closable', false).modal('show'); }
+	if (Game.cash < GetGalaxyPrice()) { $("#GalaxyBuy").addClass("disabled"); }
+	else { if(Game.system == 9) $("#GalaxyBuy").removeClass("disabled"); }
 	GenInventory();
 	GenMissions();
 	GenMarket();
@@ -23,6 +27,7 @@
 	GenExtractionMaterials();
 	UpdateEP();
 	setTutorial(Game.tutorial);
+	UpdatePirateView();
 };
 
 function SetColor(value) {
@@ -70,9 +75,9 @@ function GenMissions() {
 
 	for (var i in Missions) {
 		var offer = Missions[i];
-		var canbuy = Game.cash < Market[offer.type].value ? ' disabled' : '';
-		var canbuy10 = Game.cash < Market[offer.type].value * 10 ? ' disabled' : '';
-		var canbuy100 = Game.cash < Market[offer.type].value * 100 ? ' disabled' : '';
+		var canbuy = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
+		var canbuy10 = Game.cash < (Market[offer.type].value * offer.nbr) * 10 ? ' disabled' : '';
+		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * 100 ? ' disabled' : '';
 		var canExploreMax = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
 		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * offer.nbr));
 		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; }
@@ -368,7 +373,6 @@ function AddTravelPoints() {
 	}
 }
 
-
 function GenInventory() {
 	$("#inventory").html("");
 	for (var id in texts.items) {
@@ -416,4 +420,14 @@ function UpdateEP() {
 		if (Game.rank >= Game.EPRequired[8]) { $("#percentrank").html("100000 EP"); }
 		if (Game.rank >= Game.EPRequired[9]) { $("#percentrank").html("Unlimited EP"); }
 	}
+}
+
+function UpdatePirateView() {
+    lifetext = Game.PlayerLife < 51 ? ' rouge' : ' vert';
+    PirateLifeText = Game.PirateCurrentLife < 51 ? ' rouge' : ' ';
+
+    $("#PirateAttackTitle").html("<span class='rouge'>ALERT ! PIRATE IN THE AREA.</span>");
+    $("#PirateAttackTitleDesc").html("A pirate want to fight with you.");
+    $("#PirateLifeText").html("<span class='bold rouge'>Pirate ship</span><br><span class='bold" + PirateLifeText + "'>" + fix(Game.PirateCurrentLife, 0) + "</span> <i class='red heart icon'></i>");
+    $("#PlayerLifeText").html("<span class='bold vert'>Your ship</span><br><span class='" + lifetext + " bold'>" + fix(Game.PlayerLife, 0) + "</span>/" + Game.PlayerBaseLife + " <i class='red heart icon'></i>");
 }

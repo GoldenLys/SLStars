@@ -24,11 +24,11 @@
 </script>
 
 
-<link href="style.css?v=34" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=34"></script>
-<script src="js/data.js?v=34"></script>
-<script src="js/core.js?v=34"></script>
-<script src="js/ui.js?v=34"></script>
+<link href="style.css?v=4" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=4"></script>
+<script src="js/data.js?v=4"></script>
+<script src="js/core.js?v=4"></script>
+<script src="js/ui.js?v=4"></script>
 <script src="js/numeral.min.js"></script>
 
 <script type="text/javascript"> if (screen.width <= 1280) { location.href = './mobile.html'; } </script>
@@ -69,8 +69,8 @@
             <a class="item" id="t2" data-id="2">
                 <i class="flask icon"></i>Technologies</a>
 
-                <a class="item" id="t3" data-id="3">
-                    <i class="space shuttle icon"></i>Galaxy</a>
+            <a class="item" id="t3" data-id="3">
+                <i class="space shuttle icon"></i>Galaxy</a>
 
         </div>
         <!--COLUMNS-->
@@ -186,7 +186,22 @@
 
                 <div class="ui equal width grid" id="tab3">
                     <div class="column">
-                        <div class="ui black message">WORK IN PROGRESS.</div>
+                        <div class="ui black message">
+                            <img class="ui huge avatar image" src="images/galaxy.png">
+                            <span class="ui type4 C1">Galaxy</span>
+                            <p class="ui type3">There is a black hole here!</p>
+                            <div class="ui horizontal segments">
+                                <div class="ui segment">
+                                    <div id="Galaxy-content"></div>
+                                </div>
+                                <div class="ui segment">
+                                    <div id="Galaxy-content2"></div>
+                                </div>
+                                <div class="ui segment">
+                                    <button id='GalaxyBuy' class='fluid ui red button' onClick='changegalaxy();'>Enter in the Black Hole</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -206,9 +221,9 @@
             </div>
             <div class="actions">
                 <div class="three ui buttons">
-                    <button onClick="exportSave();" id="btnExport" class="ui green button">Export</button>
-                    <button onClick="importSave();" id="btnImport" class="ui green button">Import</button>
-                    <button onClick="Reset();" id="Recommencer" class="ui red button">Reset</button>
+                    <button onClick="exportSave();" id="btnExport" class="ui basic blue button">Export</button>
+                    <button onClick="importSave();" id="btnImport" class="ui basic blue button">Import</button>
+                    <button onClick="Reset();" id="Recommencer" class="ui basic red button">Reset</button>
                 </div>
                 <br />
                 <br />
@@ -337,20 +352,31 @@
         <!--ATTACK-->
         <div class="ui basic modal" id="modal-7">
             <div class="ui icon header">
-                <i class="chess rook icon"></i>
-                <font id="attack-title" class="title blanc">TITLE</font>
+                <i class="red chess rook icon"></i>
+                <font id="PirateAttackTitle" class="blanc"></font><br>
+                <font id="PirateAttackTitleDesc" class="blanc"></font>
             </div>
             <div class="centrer content">
-                <div class="ui icon message">
-                    <div class="content">
-                        <p id="attack-text">MESSAGE</p>
+                <div class="ui message fight">
+                    <div class="ui left icon">
+                        <i class="big green user circle icon"></i>
+                        <font id="PlayerLifeText" class="left blanc"></font>
                     </div>
+                    <div class="ui right icon">
+                        <i class="big red user circle icon"></i>
+                        <font id="PirateLifeText" class="right blanc"></font>
+                    </div>
+                    <br>
+
                 </div>
+                <font id="PirateAttackDesc" class="blanc"></font>
                 <div class="actions">
-                    <div id="attack-btn" onclick="attackaction1();" class="ui green ok inverted button">
-                        <i class="check icon"></i>Yes </div>
-                    <div onclick="hideModals();" class="ui red basic inverted button">
-                        <i class="remove icon"></i>No </div>
+                    <div id="attack-btn" onclick="PirateFightAttack();" class="ui huge red basic inverted button">
+                        <i class="crosshairs icon"></i>Fight </div>
+                    <div id="attack-btn" onclick="PirateFightProctect();" class="ui huge green basic inverted button">
+                        <i class="shield alternate icon"></i>Protect </div>
+                    <div onclick="PirateFightFlee();" class="ui blue basic inverted button">
+                        <i class="remove icon"></i>Flee </div>
 
                 </div>
             </div>

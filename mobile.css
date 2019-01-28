@@ -21,3 +21,8 @@
 .pushable>.pusher {
     overflow-y: hidden;
 }
+
+thead {
+    visibility: hidden;
+    height:0;
+}

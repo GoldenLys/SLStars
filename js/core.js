@@ -6,25 +6,27 @@
 //                      //
 //////////////////////////
 // - Extraction drone visit a system at each second                      
-// - Prestige system
-// - Random pirates attacks
+// - Add the sizes to the guide
 //////////////////////////
 
 
 
 //CONFIG
 
-var version = "v3.4";
+var version = "v4";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
     DateStarted: getDate(),
     rank: 0,
     system: 0,
+    Galaxy: 1,
     explored: [],
     inventory: [],
     cash: 50,
     cashps: 0,
+    cashSpent: 0,
+    cashGained: 0,
     technologies: [],
     tutorial: 0,
     fl: 0,
@@ -40,9 +42,13 @@ var Game = {
     UnlockedLocations: 0,
     EPRequired: [0, 10, 50, 100, 350, 1000, 2500, 5000, 10000, 100000],
     PirateAttacks: 0,
+    PiratePower: 5,
     PirateBaseLife: 100,
     PirateCurrentLife: 100,
-    Galaxy: 0,
+    PlayerLife: 100,
+    PlayerBaseLife: 100,
+    PlayerAttack: 10,
+    isInFight: 0,
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -51,6 +57,7 @@ $(document).ready(function () {
     changeLocation("loading");
     if (localStorage.getItem("SLStars2") != null) { load(); }
     setInterval(function () { UpdateGame(Game.cashps); }, 1000);
+    setInterval(function () { LookForPirates(); }, 60000);
     ClickEvents();
     $(".pusher").css("background", "#040404");
     $('.ui.sidebar').sidebar('hide');
@@ -68,9 +75,8 @@ function UpdateGame(cashps) {
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
     for (var u in Upgrades) { if (Game.Upgrades[u] == null) { Game.Upgrades[u] = 0; } }
-
-    
     Game.cash += cashps;
+    Game.cashGained += cashps;
     Game.inventory[Game.extId] += Game.extGain;
     Game.totalinv += Game.extGain;
     UpdateUI();
@@ -81,6 +87,7 @@ function explore(id, nbr, obj) {
     if (Game.explored[id] > 0) {
         if (Game.cash >= (Market[obj].value * Missions[id].nbr) * nbr) {
             Game.cash -= (Market[obj].value * Missions[id].nbr) * nbr;
+            Game.cashSpent += (Market[obj].value * Missions[id].nbr) * nbr;
             Game.inventory[obj] += Missions[id].nbr * nbr;
             Game.totalinv += Missions[id].nbr * nbr;
             Game.rank += nbr + (1 * Game.system);
@@ -89,6 +96,7 @@ function explore(id, nbr, obj) {
     if (Game.explored[id] < 1) {
         if (Game.cash >= Market[obj].value * Missions[id].nbr / 2) {
             Game.cash -= Market[obj].value * Missions[id].nbr / 2;
+            Game.cashSpent += Market[obj].value * Missions[id].nbr / 2;
             Game.inventory[obj] += Missions[id].nbr * 2;
             Game.totalinv += Missions[id].nbr * 2;
             Game.explored[id] = 1;
@@ -120,6 +128,7 @@ function sellitem(id, qty) {
 
 function confirmsell() {
     Game.cash += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
+    Game.cashGained += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
     Game.inventory[Game.CurrSellID] -= Game.CurrSellQty;
     Game.totalinv -= Game.CurrSellQty;
     SystemMult[Game.CurrSellID] = Game.CurrMult;
@@ -151,6 +160,7 @@ function buyupgrade(id, buyable, type, req1, nbr1, req2, nbr2) {
                     Game.inventory[req1] -= nbr1;
                     Game.inventory[req2] -= nbr2;
                     Game.cash -= Technologies[id].cost;
+                    Game.cashSpent += Technologies[id].cost;
                     Game.extGain = Technologies[id].gain;
                     Game.technologies[id] = 1;
                 }
@@ -165,6 +175,7 @@ function UPGPOWER(id) {
     if (Game.cash > GetUPGprice(id)) {
         if (Game.Upgrades[id] < 100) {
             Game.cash -= GetUPGprice(id);
+            Game.cashSpent += GetUPGprice(id);
             Game.TravelCost -= Upgrades[id].gain;
             Game.Upgrades[id]++;
         }
@@ -176,6 +187,7 @@ function BUYHYPERSPACE(id) {
     if (Game.cash > GetUPGprice2(id)) {
         if (Game.UnlockedLocations < 9) {
             Game.cash -= GetUPGprice2(id);
+            Game.cashSpent += GetUPGprice2(id);
             Game.UnlockedLocations++;
         }
     }
@@ -186,4 +198,103 @@ function showmessage(title, message) {
     $("#message-title").html(title);
     $("#message-text").html(message);
     $('#modal-5').modal('show');
+}
+
+//PIRATE FIGHT ACTIONS
+
+function PirateFightProctect() {
+    if (Game.PlayerLife < 100) {
+        Game.PlayerLife += 5;
+    }
+    Game.PlayerLife -= Game.PiratePower / 2.5;
+    if (Game.PlayerLife <= 0) { LosePirateFight(); }
+    if (Game.PirateCurrentLife <= 0) { NewPirateStats(); }
+    if (Game.PlayerLife > 100) { Game.PlayerLife = 100; }
+    $("#PirateAttackDesc").html("The pirate ship weapon does <span class='rouge bold'>-" + Game.PiratePower / 2.5 + "</span><i class='red heart icon'></i> damage to the hull !<br>You repaired of the hull <span class='vert'>+5</span><i class='red heart icon'></i>");
+    UpdatePirateView();
+}
+
+function PirateFightAttack() {
+    Game.PirateCurrentLife -= Game.PlayerAttack;
+    if (Game.PirateCurrentLife <= 0) { NewPirateStats(); }
+    Game.PlayerLife -= Game.PiratePower;
+    if (Game.PlayerLife <= 0) { LosePirateFight(); }
+    $("#PirateAttackDesc").html("You did <span class='rouge'>-" + Game.PlayerAttack + "</span><i class='red heart icon'></i> damage to the pirate ship.<br>The pirate weapon does <span class='rouge bold'>-" + Game.PiratePower + "</span><i class='red heart icon'></i> damage to the hull !");
+    UpdatePirateView();
+}
+
+function PirateFightFlee() {
+    Game.PirateCurrentLife = Game.PirateBaseLife;
+    Game.PlayerLife = Game.PlayerBaseLife;
+    if (Game.PlayerLife <= 0) { LosePirateFight(); }
+    if (Game.PirateCurrentLife <= 0) { NewPirateStats(); }
+    Game.isInFight = 0;
+    hideModals();
+}
+
+//CHECK IF THERE IS A CHANCE TO ENCOUNTER A PIRATE
+
+function LookForPirates() {
+    var PirateChance = random(0, 5);
+
+    if (PirateChance == 5) {
+        $("#modal-7").modal('setting', 'closable', false).modal('show');
+        Game.isInFight = 1;
+        PirateChance=0;
+    }
+}
+
+//WIN OR LOSE PIRATE FIGHT
+
+function NewPirateStats() {
+    hideModals();
+    Game.isInFight = 0;
+    Game.PirateAttacks++;
+    Game.PirateBaseLife += 10;
+    Game.PirateCurrentLife = Game.PirateBaseLife;
+    Game.PiratePower = 5 + (Game.PirateAttacks * 0.5);
+    Game.PlayerLife = Game.PlayerBaseLife;
+}
+
+function LosePirateFight() {
+    Game.inventory = [];
+    var random = random(10000, 100000);
+    if (Game.cash > 100000) {
+        Game.cash -= random;
+        Game.cashSpent += random;
+    } else if (Game.cash > 10000) { random=random(1000, 10000); Game.cash -= random; Game.cashSpent+=random; }
+    else if (Game.cash > 1000) { random=random(100, 1000); Game.cash -= random; Game.cashSpent+=random; }
+    Game.isInFight = 0;
+    Game.PlayerLife = Game.PlayerBaseLife;
+    hideModals();
+}
+
+//PRESTIGE FUNCTIONS
+
+function GetGalaxyPrice() {
+    return ((1000000 * Game.Galaxy) * 5) * 1.25;
+}
+
+function changegalaxy() {
+    if (Game.cash >= GetGalaxyPrice()) {
+        Game.Galaxy++;
+        for (var EP in Game.EPRequired) { Game.EPRequired[EP] = Game.EPRequired[EP] + (1.25 * Game.Galaxy); }
+        Game.cash = 50 + (1.25 * Game.Galaxy) * 10;
+        Game.cashGained +=50 + (1.25 * Game.Galaxy) * 10;
+        Game.inventory = [];
+        Game.system = 0;
+        Game.technologies = [];
+        Game.explored = [];
+        Game.Upgrades = [];
+        Game.TravelCost = 25;
+        Game.UnlockedLocations = 0;
+        Game.PiratePower = 55;
+        Game.PirateBaseLife = 100;
+        Game.PirateAttacks = 0;
+        Game.PirateCurrentLife = 100;
+        Game.PlayerLife = 100;
+        Game.PlayerBaseLife = 100;
+        Game.PlayerAttack = 10;
+        Game.rank = 0;
+    }
 }
