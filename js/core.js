@@ -81,9 +81,9 @@ function UpdateGame(cashps) {
     Game.cashGained += cashps;
     Game.inventory[Game.extId] += Game.extGain;
     Game.totalinv += Game.extGain;
+    if (Game.CurrInv<=0) { if (Game.cash<=3) { rand=random(10, 100); Game.cash+=rand; showmessage("Distress signal", "You found an old distress signal!<br> You have joined the signal transmission source and have found a dead body with an abandoned vessel and <i class='green dollar sign icon'></i>" + rand); }}
     UpdateUI();
     save();
-    console.log(Game.CurrInv);
 }
 
 function explore(id, nbr, obj) {
@@ -92,7 +92,6 @@ function explore(id, nbr, obj) {
             Game.cash -= (Market[obj].value * Missions[id].nbr) * nbr;
             Game.cashSpent += (Market[obj].value * Missions[id].nbr) * nbr;
             Game.inventory[obj] += Missions[id].nbr * nbr;
-            console.log("MISSIONS NBR:" + Missions[id].nbr * nbr);
             Game.CurrInv+=Missions[id].nbr * nbr;
             Game.totalinv += Missions[id].nbr * nbr;
             Game.rank += nbr + (1 * Game.system);
@@ -105,7 +104,6 @@ function explore(id, nbr, obj) {
             Game.inventory[obj] += Missions[id].nbr * 2;
             Game.CurrInv+=Missions[id].nbr * nbr * 2;
             Game.totalinv += Missions[id].nbr * nbr * 2;
-            console.log("MISSIONS NBR:" + Missions[id].nbr * nbr * 2);
             Game.explored[id] = 1;
             Game.rank = Game.rank + 1 + (1 * Game.system);
         }
