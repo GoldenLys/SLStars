@@ -26,7 +26,7 @@ var Missions = {
     20: { name: '2', desc: 3, type: 6, nbr: 10, system: 3 },
     21: { name: '3', desc: 3, type: 3, nbr: 25, system: 3 },
     22: { name: '4', desc: 3, type: 4, nbr: 10, system: 3 },
-    23: { name: '5', desc: 3, type: 12, nbr: 1, system: 6 },
+    23: { name: '5', desc: 3, type: 12, nbr: 1, system: 3 },
     //SYSTEM 5
     24: { name: 'Station ', desc: 0, type: 2, nbr: 0.1, system: 4 },
     25: { name: '1', desc: 0, type: 10, nbr: 25, system: 4 },

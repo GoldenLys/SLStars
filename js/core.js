@@ -5,15 +5,15 @@
 //         W I P        //
 //                      //
 //////////////////////////
-// - Extraction drone visit a system at each second                      
-// - Add the sizes to the guide
+// - Extraction drone visit a system at each second     
+// - Add a gameover modal                 
 //////////////////////////
 
 
 
 //CONFIG
 
-var version = "v4.1";
+var version = "v4.2";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -36,6 +36,7 @@ var Game = {
     TravelCost: 25,
     Upgrades: [],
     totalinv: 100,
+    CurrInv: 100,
     CurrSellID: 0,
     CurrSellQty: 0,
     CurrMult: 0,
@@ -82,6 +83,7 @@ function UpdateGame(cashps) {
     Game.totalinv += Game.extGain;
     UpdateUI();
     save();
+    console.log(Game.CurrInv);
 }
 
 function explore(id, nbr, obj) {
@@ -90,16 +92,20 @@ function explore(id, nbr, obj) {
             Game.cash -= (Market[obj].value * Missions[id].nbr) * nbr;
             Game.cashSpent += (Market[obj].value * Missions[id].nbr) * nbr;
             Game.inventory[obj] += Missions[id].nbr * nbr;
+            console.log("MISSIONS NBR:" + Missions[id].nbr * nbr);
+            Game.CurrInv+=Missions[id].nbr * nbr;
             Game.totalinv += Missions[id].nbr * nbr;
             Game.rank += nbr + (1 * Game.system);
         }
     }
     if (Game.explored[id] < 1) {
-        if (Game.cash >= Market[obj].value * Missions[id].nbr / 2) {
-            Game.cash -= Market[obj].value * Missions[id].nbr / 2;
-            Game.cashSpent += Market[obj].value * Missions[id].nbr / 2;
+        if (Game.cash >= Market[obj].value * Missions[id].nbr * nbr / 2) {
+            Game.cash -= Market[obj].value * Missions[id].nbr * nbr / 2;
+            Game.cashSpent += Market[obj].value * Missions[id].nbr * nbr / 2;
             Game.inventory[obj] += Missions[id].nbr * 2;
-            Game.totalinv += Missions[id].nbr * 2;
+            Game.CurrInv+=Missions[id].nbr * nbr * 2;
+            Game.totalinv += Missions[id].nbr * nbr * 2;
+            console.log("MISSIONS NBR:" + Missions[id].nbr * nbr * 2);
             Game.explored[id] = 1;
             Game.rank = Game.rank + 1 + (1 * Game.system);
         }
@@ -110,20 +116,11 @@ function explore(id, nbr, obj) {
 
 function sellitem(id, qty) {
     var mult = SystemMult[id];
-    if (Game.inventory[id] >= qty) {
-        if (id < 2) {
-            if (mult > 0) { mult -= mult * (1 * qty) / 250; }
-        } else {
-            if (id < 7) { if (mult > 0) { mult -= mult * (1 * qty) / 2000; } }
-        }
-        if (id > 6) { if (mult > 0) { mult -= mult * (1 * qty) / 10000; } }
-        if (mult < 0) { mult = 0.01; }
         Game.CurrSellID = id;
         Game.CurrSellQty = qty;
         Game.CurrMult = mult;
         $("#sellconfirm-text").html("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + "<img class='ui avatar image' src='images/items/" + id + ".png'> for <font color='green'>" + fix(Market[id].value * mult * qty, 1) + "$</font> ?");
         $('#modal-4').modal('show');
-    }
     UpdateUI();
 }
 
@@ -131,8 +128,19 @@ function confirmsell() {
     Game.cash += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
     Game.cashGained += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
     Game.inventory[Game.CurrSellID] -= Game.CurrSellQty;
+    Game.CurrInv-= Game.CurrSellQty;
     Game.totalinv -= Game.CurrSellQty;
     SystemMult[Game.CurrSellID] = Game.CurrMult;
+    var mult = SystemMult[Game.CurrSellI];
+    if (Game.inventory[Game.CurrSellI] >= qty) {
+        if (Game.CurrSellI < 2) {
+            if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 250; }
+        } else {
+            if (Game.CurrSellI < 7) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 2000; } }
+        }
+        if (Game.CurrSellI > 6) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 10000; } }
+        if (mult < 0) { mult = 0.01; }
+    }
     UpdateUI();
     save();
 }
@@ -146,7 +154,7 @@ function changeLocation(id) {
                 Game.inventory[2] -= Game.TravelCost;
                 Game.days++;
             }
-        } else { showmessage("Upgrade your hyperspace", "You hyperspace can't travel there for now, upgrade it!"); }
+        } else { showmessage("Upgrade your hyperspshowace", "You hyperspace can't travel there for now, upgrade it!"); }
     } else { if (id != "loading") { showmessage("You are out of power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; } }
     if (id == "loading") { id = 0; Game.system = id; }
     hidesystems();
@@ -160,6 +168,7 @@ function buyupgrade(id, buyable, type, req1, nbr1, req2, nbr2) {
                 if (Game.cash >= Technologies[id].cost) {
                     Game.inventory[req1] -= nbr1;
                     Game.inventory[req2] -= nbr2;
+                    Game.CurrInv -= nbr1+nbr2;
                     Game.cash -= Technologies[id].cost;
                     Game.cashSpent += Technologies[id].cost;
                     Game.extGain = Technologies[id].gain;
@@ -263,19 +272,23 @@ function NewPirateStats() {
     Game.PirateCurrentLife = Game.PirateBaseLife;
     Game.PiratePower = 5 + (Game.PirateAttacks * 0.5);
     Game.PlayerLife = Game.PlayerBaseLife;
+    rand = random(100, 100000);
+    showmessage("You won the fight !", "You found <i class='green dollar sign icon'></i>" + fix(rand, 0));
+    Game.cash+=rand;
+    Game.cashGained+=rand;
 }
 
 function LosePirateFight() {
     Game.inventory = [];
-    random = random(10000, 100000);
-    if (Game.cash > 100000) {
-        Game.cash -= random;
-        Game.cashSpent += random;
-    } else if (Game.cash > 10000) { random = random(1000, 10000); Game.cash -= random; Game.cashSpent += random; }
-    else if (Game.cash > 1000) { random = random(100, 1000); Game.cash -= random; Game.cashSpent += random; }
+    rand = random(0, (Game.cash-1000));
+    if (Game.cash > 1000) {
+        Game.cash -= rand;
+        Game.cashSpent += rand;
+    }
     Game.isInFight = 0;
     Game.PlayerLife = Game.PlayerBaseLife;
     hideModals();
+    showmessage("You lose this fight !", "He took all your merchandises and <i class='green dollar sign icon'></i>" + fix(rand, 0));
 }
 
 //PRESTIGE FUNCTIONS
@@ -292,6 +305,7 @@ function changegalaxy() {
             Game.cash = 50 + (1.25 * Game.Galaxy) * 10;
             Game.cashGained += 50 + (1.25 * Game.Galaxy) * 10;
             Game.inventory = [];
+            Game.CurrInv= 0;
             Game.system = 0;
             Game.technologies = [];
             Game.explored = [];

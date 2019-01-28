@@ -57,7 +57,7 @@ function GenMissions() {
 		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * 100 ? ' disabled' : '';
 		var canExploreMax = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
 		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * offer.nbr));
-		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; }
+		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; canbuy10 = "disabled"; canbuy100 = "disabled"; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
 		var rewardstext = SetColor(rewards);
@@ -112,7 +112,13 @@ function GenMarket() {
 			"</tr>"
 		);
 		if (Game.inventory[i] > 0) {
-			$('#system0sm').append(SYSTEMDIV);
+			if (i != 2) {
+				$('#system0sm').append(SYSTEMDIV);
+			} else {
+				if (Game.inventory[i] > 100) {
+					$('#system0sm').append(SYSTEMDIV);
+				}
+			}
 		}
 	}
 }
@@ -271,7 +277,6 @@ function GenExtractionMaterials() {
 			if (inv == 1) { $("#EXT-CONTENT").append(content); }
 		}
 		if (Game.technologies[2] == 1) {
-			if (inv == 3) { $("#EXT-CONTENT").append(content); }
 			if (inv == 4) { $("#EXT-CONTENT").append(content); }
 		}
 		if (Game.technologies[3] == 1) {
@@ -402,6 +407,8 @@ function UpdateEP() {
 function UpdatePirateView() {
 	lifetext = Game.PlayerLife < 51 ? ' rouge' : ' vert';
 	PirateLifeText = Game.PirateCurrentLife < 51 ? ' rouge' : ' ';
+	if (Game.PlayerLife <= 0) { LosePirateFight(); }
+	if (Game.PirateCurrentLife <= 0) { NewPirateStats(); }
 
 	$("#PirateAttackTitle").html("<span class='rouge'>ALERT ! PIRATE IN THE AREA.</span>");
 	$("#PirateAttackTitleDesc").html("A pirate wants to fight with you.");

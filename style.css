@@ -405,3 +405,7 @@ i.icon {
 .ui.red.inverted.progress .bar {
 background-color: #db2828;
 }
+
+.disabled {
+    visibility: hidden;
+}
