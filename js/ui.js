@@ -11,9 +11,10 @@
 	$("#EXT-DESC2").html("per seconds ");
 	$("#HYPERDRIVE-TEXT").html("Travel to another location actually cost " + fix(Game.TravelCost, 3) + "% of power");
 	$("#HYPERSPACE-TEXT").html("Your actual maximum destination is " + texts.systemname[Game.UnlockedLocations]);
-	$("#Galaxy-content").html("Galaxy number <br><h1 class='type4 or'>" + Game.Galaxy + "</h1>");
-	$("#Galaxy-content2").html("- You must reach reach <span class='rouge'>Gaia</span>.<br>- Have <i class='green dollar sign icon'></i><span class='vert'>" + fix(GetGalaxyPrice(), 2) + "</span> to travel to another galaxy.");
+	$("#Galaxy-content").html("<span class='bold'>GALAXY NUMBER</span><br><h1 class='type4 or'>" + Game.Galaxy + "</h1>");
+	$("#Galaxy-content2").html("<span class='bold'>REQUIREMENTS<br></span>- You must reach reach <span class='rouge'>Gaia</span>.<br>- Have <i class='green dollar sign icon'></i><span class='vert'>" + fix(GetGalaxyPrice(), 2) + "</span> to travel to another galaxy.");
 	$("#EXPLO-TITLE").html("Exploration - " + texts.systemname[Game.system]);
+	$("#galaxydesc").html("There is a black hole here. It seems to be able to absorb everything, including my past, is it time to start all over again?")
 	if (Game.isInFight == 1) { $("#modal-7").modal('setting', 'closable', false).modal('show'); }
 	if (Game.cash < GetGalaxyPrice()) { $("#GalaxyBuy").addClass("disabled"); }
 	else { if (Game.system == 9) $("#GalaxyBuy").removeClass("disabled"); }
