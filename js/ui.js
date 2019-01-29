@@ -51,6 +51,7 @@ function GenMissions() {
 	for (var id = 0; id < 11; id++) { $('#system' + id).html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Size</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>"); }
 
 	for (var i in Missions) {
+		var pricecolor;
 		var offer = Missions[i];
 		var canbuy = Game.cash < Market[offer.type].value * SystemMult[offer.type] * offer.nbr ? ' disabled' : '';
 		var canbuy10 = Game.cash < (Market[offer.type].value * offer.nbr) * SystemMult[offer.type] * 10 ? ' disabled' : '';
