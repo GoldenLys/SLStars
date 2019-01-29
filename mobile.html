@@ -21,14 +21,15 @@
 
     gtag('config', 'UA-132217801-1');
 </script>
-<link href="style.css?v=44" rel="stylesheet" type="text/css" />
-<link href="theme1.css?v=44" id="theme1" rel="" type="text/css" />
-<link href="theme2.css?v=44" id="theme2" rel="" type="text/css" />
-<link href="mobile.css?v=44" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=44"></script>
-<script src="js/data.js?v=44"></script>
-<script src="js/core.js?v=44"></script>
-<script src="js/ui.js?v=44"></script>
+<link href="style.css?v=442" rel="stylesheet" type="text/css" />
+<link href="theme1.css?v=442" id="theme1" rel="" type="text/css" />
+<link href="theme2.css?v=442" id="theme2" rel="" type="text/css" />
+<link href="theme3.css?v=442" id="theme3" rel="" type="text/css" />
+<link href="mobile.css?v=442" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=442"></script>
+<script src="js/data.js?v=442"></script>
+<script src="js/core.js?v=442"></script>
+<script src="js/ui.js?v=442"></script>
 <script src="js/numeral.min.js"></script>
 
 <body id="body" class="noselect" oncontextmenu="return false;">
@@ -211,7 +212,7 @@
             <div class="ui basic modal" id="modal-3">
                 <div class="ui icon header">
                     <i class="address book icon"></i>
-                    <font id="contact-title" class="title blanc">Contact</font>
+                    <font id="contact-title" class="title ">Contact</font>
                 </div>
                 <div class="centrer content">
                     <div class="ui icon message">
@@ -248,20 +249,21 @@
                         <br> You can also reset your save to start a new game.</p>
                     <span id="exportBody"></span>
                     <span id='debugtext' class='copytext'></span>
-                </div>
-                <div class="actions">
-                    <div class="three ui buttons">
-                        <button onClick="exportSave();" id="btnExport" class="ui basic blue button">Export</button>
-                        <button onClick="importSave();" id="btnImport" class="ui basic blue button">Import</button>
-                        <button onClick="Reset();" id="Recommencer" class="ui basic red button">Reset</button>
+                    <div class="actions">
+                        <div class="ui vertical buttons">
+                            <button onClick="exportSave();" id="btnExport" class="ui basic blue button">Export</button>
+                            <button onClick="importSave();" id="btnImport" class="ui basic blue button">Import</button>
+                            <button onClick="Reset();" id="Recommencer" class="ui basic red button">Reset</button>
+                        </div>
                     </div><br><br>
                     <div class="centrer content">
                         <h4 class="ui horizontal divider header"><i class="eye icon"></i>Theme</h4>
                         <p>Theme selection menu</p>
-                        <div class="ui buttons">>
+                        <div class="ui vertical buttons">>
                             <button onClick="Theme(0);" id="btnExport" class="ui basic blue button">Purple space</button>
                             <button onClick="Theme(1);" id="btnExport" class="ui basic blue button">Dark blue & Grey</button>
                             <button onClick="Theme(2);" id="btnExport" class="ui basic blue button">Blue & White</button>
+                            <button onClick="Theme(3);" id="btnExport" class="ui basic blue button">Bumbleblee</button>
                         </div </div> <br />
                         <br />
                         <div class="fluid ui buttons">
@@ -276,7 +278,7 @@
 
                     <div class="ui icon header">
                         <i class="info icon"></i>
-                        <font id="tutorial-title" class="title blanc"></font>
+                        <font id="tutorial-title" class="title "></font>
                     </div>
                     <div class="centrer content">
                         <p id="tutorial-text"></p>
@@ -296,7 +298,7 @@
                 <div class="ui basic modal" id="modal-4">
                     <div class="ui icon header">
                         <i class="address book icon"></i>
-                        <font id="confirm-title" class="title blanc">Market confirmation</font>
+                        <font id="confirm-title" class="title ">Market confirmation</font>
                     </div>
                     <div class="centrer content">
                         <div class="ui icon message">
@@ -319,7 +321,7 @@
                 <div class="ui basic modal" id="modal-5">
                     <div class="ui icon header">
                         <i class="info circle icon"></i>
-                        <font id="message-title" class="title blanc">Message</font>
+                        <font id="message-title" class="title ">Message</font>
                     </div>
                     <div class="centrer content">
                         <div class="ui icon message">
@@ -340,7 +342,7 @@
                 <div class="ui basic modal" id="modal-6">
                     <div class="ui icon header">
                         <i class="address book icon"></i>
-                        <font id="confirm-title" class="title blanc">Confirm reset</font>
+                        <font id="confirm-title" class="title ">Confirm reset</font>
                     </div>
                     <div class="centrer content">
                         <div class="ui icon message">
@@ -362,8 +364,8 @@
                 <div class="ui basic modal" id="modal-7">
                     <div class="ui icon header">
                         <i class="red chess rook icon"></i>
-                        <font id="PirateAttackTitle" class="blanc"></font><br>
-                        <font id="PirateAttackTitleDesc" class="blanc"></font>
+                        <font id="PirateAttackTitle" class=""></font><br>
+                        <font id="PirateAttackTitleDesc" class=""></font>
                     </div>
                     <div class="centrer content">
                         <div class="ui message fight">
@@ -371,9 +373,9 @@
                                 <div class="ui left aligned clearing segment">
                                     <div class="ui left icon">
                                         <i class="big green flag outline icon"></i>
-                                        <font id="PlayerLifeTitle" class="left blanc"></font>
+                                        <font id="PlayerLifeTitle" class="left "></font>
 
-                                        <div id="PlayerHP" class="ui green inverted progress success">
+                                        <div id="PlayerHP" class="ui inverted indicating progress">
                                             <div class="bar">
                                                 <div class="progress"></div>
                                             </div>
@@ -392,8 +394,8 @@
                                 <div class="ui right aligned basic segment">
                                     <div class="ui right icon">
                                         <i class="big red flag outline icon"></i>
-                                        <font id="PirateLifeTitle" class="right blanc"></font>
-                                        <div id="PirateHP" class="ui red inverted progress error">
+                                        <font id="PirateLifeTitle" class="right "></font>
+                                        <div id="PirateHP" class="ui inverted indicating progress">
                                             <div class="bar">
                                                 <div class="progress"></div>
                                             </div>
@@ -403,7 +405,7 @@
                                 </div>
                             </div>
                         </div>
-                        <font id="PirateAttackDesc" class="blanc"></font>
+                        <font id="PirateAttackDesc" class=""></font>
                         <div class="actions">
                             <div id="attack-btn" onclick="PirateFightAttack();" class="ui huge red basic inverted button">
                                 <i class="crosshairs icon"></i>Fight </div>

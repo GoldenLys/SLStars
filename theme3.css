@@ -11,7 +11,8 @@
 }
 
 .argent {
-	color: rgb(148, 148, 148);
+    color: rgb(148, 148, 148);
+    text-shadow: 0px 0px 2vh rgb(148, 148, 148);
 }
 
 .or {
@@ -40,7 +41,8 @@
 }
 
 .gris {
-	color: rgb(150, 150, 150);
+    color: rgb(150, 150, 150);
+    text-shadow: 0px 0px 2vh rgb(148, 148, 148);
 }
 
 .rouge {
@@ -48,11 +50,12 @@
 }
 
 .jaune {
-	color: #FFF000;
+    color: #FFF000;
+    text-shadow: 0 0 1vw rgba(0, 0, 0, 1);
 }
 
 .blanc {
-    color: #FFF;
+    color: rgb(0, 0, 0);
     text-shadow: 0 0 0 rgba(255, 255, 255, 0);
 }
 
@@ -70,12 +73,12 @@
 }
 
 .type3 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Titillium Web', sans-serif;
     font-size: 90%;
 }
 
 .type4 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Titillium Web', sans-serif;
     font-size: 120%;
 }
 
@@ -90,7 +93,7 @@
 }
 
 .Palladium {
-    color: rgb(221, 219, 217);
+    color: rgb(0, 0, 0);
 }
 
 .Platinum {
@@ -98,17 +101,13 @@
     text-shadow: 0 0 3vh rgb(13, 220, 235);
 }
 
-.ui.inverted.table {
-    background: rgba(0, 0, 0, 0.0);
-}
-
 .ui.black.message, .ui.inverted.message {
-    background-color: #020508;
-    color: #FFFFFF;
+    background-color: rgba(255, 193, 7, .5);
+    color: #000000;
 }
 
 .text {
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
 }
 
 .ui.selection.active.dropdown {
@@ -117,7 +116,7 @@
 
 .ui.selection.dropdown {
     background: rgba(0, 0, 0, 0.3);
-    color: rgba(255, 255, 255, 1);
+    color: rgb(255, 255, 255);
 }
 
 .ui.selection.active.dropdown .menu {
@@ -163,24 +162,18 @@ body ::-webkit-scrollbar-track {
 
 .ui.inverted.table th {
     background-color: rgba(0,0,0,0.0);
+    color: rgba(0, 0, 0, 1);
 }
 
-.shadow {
-    background-color: rgba(0,0,0,0.15);
-}
-
-.azn {
-    background-color: rgba(70, 255, 70, 0.10);
-}
-
-.azn-active {
-    background-color: rgba(70, 255, 70, 0.25);
+.ui.inverted.table {
+    color: rgba(0, 0, 0, 1);
 }
 
 .ui.SLStars.menu {
+    background: rgba(255, 193, 7, .5);
+    color: #000000;
     transition: 1.5s;
     background-size: 200% auto;
-    background: #020508;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -189,8 +182,8 @@ body ::-webkit-scrollbar-track {
 .ui.red.button {
     transition: 1.5s;
     background-size: 200% auto;
-    background: #ffffff;
-    color: #ffffff;
+    background: rgba(218, 161, 0, 1);
+    color: #000000;
 }
 
 .ui.red.button:focus {
@@ -212,9 +205,10 @@ body ::-webkit-scrollbar-track {
 
 .ui.SLStars.buttons {
     transition: 1.5s;
-    border-radius: 0.1vw;
+    border-radius: 0.2vw;
+    border: 1px black solid;
     background-size: 200% auto;
-    background: #ffffff;
+    background: rgba(218, 161, 0, 1);
     color: #000000;
 }
 
@@ -241,11 +235,11 @@ body ::-webkit-scrollbar-track {
 }
 
 .ui.menu .item {
-    color: rgb(255, 255, 255)!important;
+    color: rgb(0, 0, 0)!important;
 }
 
 .ui.green.ok.inverted.button:hover {
-    color: #FFF!important;
+    color: rgb(255, 255, 255)!important;
 }
 
 .ui.green.ok.inverted.button {
@@ -254,34 +248,28 @@ body ::-webkit-scrollbar-track {
 }
 
 .SLStarsborder {
-    background: rgb(21, 26, 29)!important;
+    background: rgb(218, 161, 0)!important;
 }
 
 .SLStarsborder:hover {
-    background: rgb(21, 26, 29)!important;
+    background: rgb(218, 161, 0)!important;
+}
+
+
+#t1.item, #t2.item, #t3.item, #t4.item {
+    color: #000000!important;
+}
+
+.item.SLStarsborder {
+    color:#FFFFFF!important;
 }
 
 .ui.button:disabled, .ui.buttons .disabled.button, .ui.disabled.active.button, .ui.disabled.button, .ui.disabled.button:hover {
     background: rgb(0, 0, 0);
 }
 
-.C1 {
-    background: linear-gradient(to right, #ffffff 0%, #ffffff 70%, #ffffff 100%);
-    text-shadow: 0 0 2vh rgba(255, 255, 255, 0.1);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-  .ui.message {
-    background: #0000ff00;
-    color: #ffffff;
-    -webkit-box-shadow: 0 0 0 0px rgba(34,36,38,.22) inset, 0 0 0 0 transparent;
-    box-shadow: 0 0 0 0px rgba(34,36,38,.22) inset, 0 0 0 0 transparent;
-}
-
 #copyright {
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
 }
 
 .ui.segment {
@@ -294,5 +282,17 @@ background-color: #db2828;
 }
 
 .ui.inverted.menu {
-    background: rgb(21, 26, 29);
+    background: rgb(218, 161, 0);
+}
+
+.C1 {
+    background: linear-gradient(to right, #000000 0%, #000000 70%, #000000 100%);
+    text-shadow: 0 0 2vh rgba(255, 255, 255, 0.1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#selection {
+    border: 1px black solid;
 }

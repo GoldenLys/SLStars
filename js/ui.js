@@ -52,20 +52,25 @@ function GenMissions() {
 
 	for (var i in Missions) {
 		var offer = Missions[i];
-		var canbuy = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
-		var canbuy10 = Game.cash < (Market[offer.type].value * offer.nbr) * 10 ? ' disabled' : '';
-		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * 100 ? ' disabled' : '';
-		var canExploreMax = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
-		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * offer.nbr));
+		var canbuy = Game.cash < Market[offer.type].value * SystemMult[offer.type] * offer.nbr ? ' disabled' : '';
+		var canbuy10 = Game.cash < (Market[offer.type].value * offer.nbr) * SystemMult[offer.type] * 10 ? ' disabled' : '';
+		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * SystemMult[offer.type] * 100 ? ' disabled' : '';
+		var canExploreMax = Game.cash < Market[offer.type].value * SystemMult[offer.type] * offer.nbr ? ' disabled' : '';
+		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * SystemMult[offer.type] * offer.nbr));
 		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; canbuy10 = "disabled"; canbuy100 = "disabled"; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
 		var rewardstext = SetColor(rewards);
-		var pricetext = Game.explored[i] < 1 ? fix((Market[offer.type].value * offer.nbr) / 2, 1) : fix(Market[offer.type].value * offer.nbr, 1);
+		var pricetext = Game.explored[i] < 1 ? fix(((Market[offer.type].value * offer.nbr) / 2) * SystemMult[offer.type], 1) : fix((Market[offer.type].value * offer.nbr) * SystemMult[offer.type], 1)
 		recompense = SetColorText(rewards);
 		reward = texts.items[offer.type];
 		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
-		cost = "<i class='green dollar sign icon'></i><font class='vert bold type1'>" + pricetext + "</font>";
+		if (SystemMult[offer.type] < 1) { pricecolor = 'vert'; }
+		if (SystemMult[offer.type] > 1.25) { if (SystemMult[i] <= 2) { pricecolor = 'bronze'; } }
+		if (SystemMult[offer.type] > 2) { if (SystemMult[i] > 2) { pricecolor = 'rouge'; } }
+		if (SystemMult[offer.type] > 0.9) { if (SystemMult[i] < 1.26) { pricecolor = ''; } }
+		if (SystemMult[offer.type] > 0.5) { if (SystemMult[i] < 0.91) { pricecolor = 'jaune'; } }
+		cost = "<i class='" + pricecolor + " dollar sign icon'></i><font class='" + pricecolor + " type1'>" + pricetext + "</font>";
 		description = GetSystemType(offer.desc);
 
 		var SYSTEMDIV = $(
@@ -310,7 +315,7 @@ function AddTravelPoints() {
 		isUnlockedColor = Game.UnlockedLocations < i ? ' rouge' : ' vert';
 		if (Game.UnlockedLocations < i) { isUnlockedText = " (Require<font class='" + isUnlockedColor + "'> " + fix(Game.EPRequired[i], 0) + " EP</font>)" } else { isUnlockedText = ""; }
 		isUnlockedSymbol = Game.UnlockedLocations < i ? '<i class="red circle outline icon"></i>' : '<i class="green circle outline icon"></i>';
-		if (Game.system == i) { isUnlockedSymbol='<i class="green check circle outline icon"></i>'; }
+		if (Game.system == i) { isUnlockedSymbol = '<i class="green check circle outline icon"></i>'; }
 		var TRAVELCONTENT = $(
 			"<div class='item' id='V" + i + "' data-id='" + i + "'>" +
 			isUnlockedSymbol +
@@ -383,7 +388,7 @@ function UpdatePirateView() {
 	$("#PirateLifeTitle").html("<span class='type4 bold rouge'>Pirate</span>");
 	$("#PlayerLifeTitle").html("<span class='type4 bold vert'>You</span>");
 	$("#PirateLifeText").html("<span class='bold" + PirateLifeText + "'>" + fix(Game.PirateCurrentLife, 0) + "</span> <i class='red heart icon'></i>");
-	$("#PlayerLifeText").html("<span class='" + lifetext + " bold'>" + fix(Game.PlayerLife, 0) + "</span><span class='blanc'>/" + Game.PlayerBaseLife + "</span> <i class='red heart icon'></i>");
+	$("#PlayerLifeText").html("<span class='" + lifetext + " bold'>" + fix(Game.PlayerLife, 0) + "</span><span class=''>/" + Game.PlayerBaseLife + "</span> <i class='red heart icon'></i>");
 	$('#PirateHP').progress({ className: { active: '', error: '', success: '', warning: '' } });
 	$('#PirateHP').progress({ percent: GetPirateHPPercent() });
 	$('#PlayerHP').progress({ percent: GetPlayerHPPercent() });

@@ -12,7 +12,7 @@
 
 //CONFIG
 
-var version = "v4.4";
+var version = "v4.42";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -87,9 +87,9 @@ function UpdateGame(cashps) {
 
 function explore(id, nbr, obj) {
     if (Game.explored[id] > 0) {
-        if (Game.cash >= (Market[obj].value * Missions[id].nbr) * nbr) {
-            Game.cash -= (Market[obj].value * Missions[id].nbr) * nbr;
-            Game.cashSpent += (Market[obj].value * Missions[id].nbr) * nbr;
+        if (Game.cash >= ((Market[obj].value * Missions[id].nbr) * SystemMult[obj]) * nbr) {
+            Game.cash -= ((Market[obj].value * Missions[id].nbr) * SystemMult[obj]) * nbr;
+            Game.cashSpent += ((Market[obj].value * Missions[id].nbr) * SystemMult[obj]) * nbr;
             Game.inventory[obj] += Missions[id].nbr * nbr;
             Game.CurrInv += Missions[id].nbr * nbr;
             Game.totalinv += Missions[id].nbr * nbr;
@@ -97,15 +97,16 @@ function explore(id, nbr, obj) {
         }
     }
     if (Game.explored[id] < 1) {
-        if (Game.cash >= Market[obj].value * Missions[id].nbr * nbr / 2) {
-            Game.cash -= Market[obj].value * Missions[id].nbr * nbr / 2;
-            Game.cashSpent += Market[obj].value * Missions[id].nbr * nbr / 2;
+        if (Game.cash >= (Market[obj].value * Missions[id].nbr * SystemMult[obj]) * nbr / 2) {
+            Game.cash -= (Market[obj].value * Missions[id].nbr * SystemMult[obj]) * nbr / 2;
+            Game.cashSpent += (Market[obj].value * Missions[id].nbr * SystemMult[obj]) * nbr / 2;
             Game.inventory[obj] += Missions[id].nbr * 2;
             Game.CurrInv += Missions[id].nbr * nbr * 2;
             Game.totalinv += Missions[id].nbr * nbr * 2;
             Game.explored[id] = 1;
             Game.rank = Game.rank + 1 + (1 * Game.system);
         }
+
     }
     UpdateUI();
     save();
@@ -147,13 +148,13 @@ function changeLocation(id) {
     if (Game.inventory[2] >= Game.TravelCost) {
         if (Game.UnlockedLocations >= id) {
             Game.system = id;
-            for (var SID in SystemMult) { SystemMult[SID] = random(0, 2200) / 1000; }
+            for (var SID in SystemMult) { if (SID == 2) { SystemMult[SID] = random(1000, 5000) / 1000; } else { SystemMult[SID] = random(0, 2200) / 1000; } }
             if (id != "loading") {
                 Game.inventory[2] -= Game.TravelCost;
                 Game.days++;
             }
         } else { showmessage("Upgrade your hyperspshowace", "You hyperspace can't travel there for now, upgrade it!"); }
-    } else { if (id != "loading") { showmessage("You are out of power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { SystemMult[SID2] = random(0, 150000) / 100000; } }
+    } else { if (id != "loading") { showmessage("You are out of power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { if (SID2 == 2) { SystemMult[SID2] = random(1000, 5000) / 1000; } else { SystemMult[SID2] = random(0, 2200) / 1000; } } }
     if (id == "loading") { id = 0; Game.system = id; }
     hidesystems();
     $('#system' + Game.system).show();
@@ -324,25 +325,36 @@ function changegalaxy() {
 
 function Theme(selection) {
     if (selection == 0) {
-        Game.theme=0;
+        Game.theme = 0;
         save();
         $('#theme1').attr('rel', '');
         $('#theme2').attr('rel', '');
+        $('#theme3').attr('rel', '');
         $(".pusher").css("background", "rgba(0, 0, 0, 0.2)");
         $(".pusher").css("background-image", "url(images/newbg.png)");
     }
     if (selection == 1) {
-        Game.theme=1;
+        Game.theme = 1;
         save();
         $('#theme1').attr('rel', 'stylesheet');
         $('#theme2').attr('rel', '');
+        $('#theme3').attr('rel', '');
         $(".pusher").css("background", "rgb(21, 26, 29)");
     }
     if (selection == 2) {
-        Game.theme=2;
+        Game.theme = 2;
         save();
-        $('#theme2').attr('rel', '');
+        $('#theme1').attr('rel', '');
         $('#theme2').attr('rel', 'stylesheet');
+        $('#theme3').attr('rel', '');
         $(".pusher").css("background", "rgb(56, 178, 253)");
+    }
+    if (selection == 3) {
+        Game.theme = 3;
+        save();
+        $('#theme1').attr('rel', '');
+        $('#theme2').attr('rel', '');
+        $('#theme3').attr('rel', 'stylesheet');
+        $(".pusher").css("background", "rgb(218, 161, 0)");
     }
 }

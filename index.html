@@ -23,13 +23,14 @@
 
     gtag('config', 'UA-132217801-1');
 </script>
-<link href="style.css?v=44" rel="stylesheet" type="text/css" />
-<link href="theme1.css?v=44" id="theme1" rel="" type="text/css" />
-<link href="theme2.css?v=44" id="theme2" rel="" type="text/css" />
-<script src="js/utils.js?v=44"></script>
-<script src="js/data.js?v=44"></script>
-<script src="js/core.js?v=44"></script>
-<script src="js/ui.js?v=44"></script>
+<link href="style.css?v=442" rel="stylesheet" type="text/css" />
+<link href="theme1.css?v=442" id="theme1" rel="" type="text/css" />
+<link href="theme2.css?v=442" id="theme2" rel="" type="text/css" />
+<link href="theme3.css?v=442" id="theme3" rel="" type="text/css" />
+<script src="js/utils.js?v=442"></script>
+<script src="js/data.js?v=442"></script>
+<script src="js/core.js?v=442"></script>
+<script src="js/ui.js?v=442"></script>
 <script src="js/numeral.min.js"></script>
 
 <script type="text/javascript"> if (screen.width <= 1280) { location.href = './mobile.html'; } </script>
@@ -196,8 +197,7 @@
                                     <div id="Galaxy-content2"></div>
                                 </div>
                                 <div class="ui segment">
-                                    <button id='GalaxyBuy' class='fluid ui red button' onClick='changegalaxy();'>Enter
-                                        in the Black Hole</button>
+                                    <button id='GalaxyBuy' class='fluid ui red button' onClick='changegalaxy();'>Enter in the Black Hole</button>
                                 </div>
                             </div>
                         </div>
@@ -234,6 +234,7 @@
                         <button onClick="Theme(0);" id="btnExport" class="ui basic blue button">Purple space</button>
                         <button onClick="Theme(1);" id="btnExport" class="ui basic blue button">Dark blue & Grey</button>
                         <button onClick="Theme(2);" id="btnExport" class="ui basic blue button">Blue & White</button>
+                        <button onClick="Theme(3);" id="btnExport" class="ui basic blue button">Bumbleblee</button>
                     </div </div> <br />
                     <br />
                     <div class="fluid ui buttons">
@@ -248,7 +249,7 @@
 
                 <div class="ui icon header">
                     <i class="info icon"></i>
-                    <font id="tutorial-title" class="title blanc"></font>
+                    <font id="tutorial-title" class="title"></font>
                 </div>
                 <div class="centrer content">
                     <p id="tutorial-text"></p>
@@ -267,7 +268,7 @@
             <div class="ui basic modal" id="modal-3">
                 <div class="ui icon header">
                     <i class="address book icon"></i>
-                    <font id="contact-title" class="title blanc">Contact</font>
+                    <font id="contact-title" class="title">Contact</font>
                 </div>
                 <div class="centrer content">
                     <div class="ui icon message">
@@ -296,7 +297,7 @@
             <div class="ui basic modal" id="modal-4">
                 <div class="ui icon header">
                     <i class="address book icon"></i>
-                    <font id="confirm-title" class="title blanc">Market confirmation</font>
+                    <font id="confirm-title" class="title">Market confirmation</font>
                 </div>
                 <div class="centrer content">
                     <div class="ui icon message">
@@ -319,7 +320,7 @@
             <div class="ui basic modal" id="modal-5">
                 <div class="ui icon header">
                     <i class="info circle icon"></i>
-                    <font id="message-title" class="title blanc">Message</font>
+                    <font id="message-title" class="title">Message</font>
                 </div>
                 <div class="centrer content">
                     <div class="ui icon message">
@@ -340,7 +341,7 @@
             <div class="ui basic modal" id="modal-6">
                 <div class="ui icon header">
                     <i class="address book icon"></i>
-                    <font id="confirm-title" class="title blanc">Confirm reset</font>
+                    <font id="confirm-title" class="title">Confirm reset</font>
                 </div>
                 <div class="centrer content">
                     <div class="ui icon message">
@@ -362,8 +363,8 @@
             <div class="ui basic modal" id="modal-7">
                 <div class="ui icon header">
                     <i class="red chess rook icon"></i>
-                    <font id="PirateAttackTitle" class="blanc"></font><br>
-                    <font id="PirateAttackTitleDesc" class="blanc"></font>
+                    <font id="PirateAttackTitle" class=""></font><br>
+                    <font id="PirateAttackTitleDesc" class=""></font>
                 </div>
                 <div class="centrer content">
                     <div class="ui message fight">
@@ -371,9 +372,9 @@
                             <div class="ui left aligned clearing segment">
                                 <div class="ui left icon">
                                     <i class="big green flag outline icon"></i>
-                                    <font id="PlayerLifeTitle" class="left blanc"></font>
+                                    <font id="PlayerLifeTitle" class="left "></font>
 
-                                    <div id="PlayerHP" class="ui green inverted progress success">
+                                    <div id="PlayerHP" class="ui inverted indicating progress">
                                         <div class="bar">
                                             <div class="progress"></div>
                                         </div>
@@ -392,10 +393,9 @@
                             <div class="ui right aligned basic segment">
                                 <div class="ui right icon">
                                     <i class="big red flag outline icon"></i>
-                                    <font id="PirateLifeTitle" class="right blanc"></font>
-                                    <div id="PirateHP" class="red ui inverted progress error"">
-                                    <div class="
-                                        bar">
+                                    <font id="PirateLifeTitle" class="right"></font>
+                                    <div id="PirateHP" class="ui inverted indicating progress">
+                                    <div class="bar">
                                         <div class="progress"></div>
                                     </div>
                                     <div class="label" id="PirateLifeText"></div>
@@ -405,7 +405,7 @@
                     </div>
                 </div>
 
-                <font id="PirateAttackDesc" class="blanc"></font>
+                <font id="PirateAttackDesc" class=""></font>
                 <div class="actions">
                     <div id="attack-btn" onclick="PirateFightAttack();" class="ui huge red basic inverted button">
                         <i class="crosshairs icon"></i>Fight </div>

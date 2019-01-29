@@ -10,10 +10,6 @@
     background: #040404;
 }
 
-.bronze {
-	color: rgb(148, 124, 52);
-}
-
 .argent {
 	color: rgb(148, 148, 148);
 }
@@ -52,7 +48,8 @@
 }
 
 .jaune {
-	color: #FFF000;
+    color: #FFF000;
+    text-shadow: 0 0 1vw rgba(0, 0, 0, 1);
 }
 
 .blanc {
@@ -81,11 +78,6 @@
 .type4 {
     font-family: 'Titillium Web', sans-serif;
     font-size: 120%;
-}
-
-.Bronze {
-    color: #B87833;
-    text-shadow: 0 0 3vh rgb(119, 69, 4);
 }
 
 .Silver {
@@ -211,7 +203,8 @@ body ::-webkit-scrollbar-track {
 
 .ui.SLStars.buttons {
     transition: 1.5s;
-    border-radius: 0.1vw;
+    border-radius: 0.2vw;
+    border: 1px black solid;
     background-size: 200% auto;
     background: #ffffff;
     color: #000000;
