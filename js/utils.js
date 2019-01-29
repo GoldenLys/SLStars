@@ -73,6 +73,7 @@ function load() {
 	}
 
 	var date = new Date();
+	Theme(Game.theme);
 	UpdateUI();
 }
 

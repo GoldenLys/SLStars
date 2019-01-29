@@ -250,10 +250,10 @@ function GetUPGprice(id) {
 	var value;
 	if (Game.Upgrades[id] == 0) { value = Upgrades[id].price; }
 	if (Game.Upgrades[id] > 0) {
-		if (Game.Upgrades[id] > 0) { value = Upgrades[id].price * Math.pow(1.10, Game.Upgrades[id]); }
-		if (Game.Upgrades[id] >= 10) { value = Upgrades[id].price * Math.pow(1.15, Game.Upgrades[id]); }
-		if (Game.Upgrades[id] >= 25) { value = Upgrades[id].price * Math.pow(1.25, Game.Upgrades[id]); }
-		if (Game.Upgrades[id] >= 50) { value = Upgrades[id].price * Math.pow(1.5, Game.Upgrades[id]); }
+		if (Game.Upgrades[id] > 0) { value = Upgrades[id].price * Math.pow(1.025, Game.Upgrades[id]); }
+		if (Game.Upgrades[id] >= 10) { value = Upgrades[id].price * Math.pow(1.05, Game.Upgrades[id]); }
+		if (Game.Upgrades[id] >= 25) { value = Upgrades[id].price * Math.pow(1.1, Game.Upgrades[id]); }
+		if (Game.Upgrades[id] >= 50) { value = Upgrades[id].price * Math.pow(1.25, Game.Upgrades[id]); }
 		if (Game.Upgrades[id] == 100) { value = 42; }
 	}
 	return value;

@@ -12,7 +12,7 @@
 
 //CONFIG
 
-var version = "v4.3";
+var version = "v4.4";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -49,6 +49,7 @@ var Game = {
     PlayerBaseLife: 100,
     PlayerAttack: 10,
     isInFight: 0,
+    theme: 2,
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -59,13 +60,12 @@ $(document).ready(function () {
     setInterval(function () { UpdateGame(Game.cashps); }, 1000);
     setInterval(function () { LookForPirates(); }, 60000);
     ClickEvents();
-    $(".pusher").css("background", "#040404");
-    $(".pusher").css("background-image", "url(images/bg.png)");
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
     hidesystems();
     $('#system' + Game.system).show();
     GenExtractionMaterials();
+    Theme(Game.theme);
 });
 
 //GAME FUNCTIONS
@@ -80,7 +80,7 @@ function UpdateGame(cashps) {
     Game.cashGained += cashps;
     Game.inventory[Missions[Game.extId].type] += Game.extGain;
     Game.totalinv += Game.extGain;
-    if (Game.CurrInv<=0) { if (Game.cash<=3) { rand=random(10, 100); Game.cash+=rand; showmessage("Distress signal", "You found an old distress signal!<br> You have joined the signal transmission source and have found a dead body with an abandoned vessel and <i class='green dollar sign icon'></i>" + rand); }}
+    if (Game.CurrInv <= 0) { if (Game.cash <= 3) { rand = random(10, 100); Game.cash += rand; showmessage("Distress signal", "You found an old distress signal!<br> You have joined the signal transmission source and have found a dead body with an abandoned vessel and <i class='green dollar sign icon'></i>" + rand); } }
     UpdateUI();
     save();
 }
@@ -91,7 +91,7 @@ function explore(id, nbr, obj) {
             Game.cash -= (Market[obj].value * Missions[id].nbr) * nbr;
             Game.cashSpent += (Market[obj].value * Missions[id].nbr) * nbr;
             Game.inventory[obj] += Missions[id].nbr * nbr;
-            Game.CurrInv+=Missions[id].nbr * nbr;
+            Game.CurrInv += Missions[id].nbr * nbr;
             Game.totalinv += Missions[id].nbr * nbr;
             Game.rank += nbr + (1 * Game.system);
         }
@@ -101,7 +101,7 @@ function explore(id, nbr, obj) {
             Game.cash -= Market[obj].value * Missions[id].nbr * nbr / 2;
             Game.cashSpent += Market[obj].value * Missions[id].nbr * nbr / 2;
             Game.inventory[obj] += Missions[id].nbr * 2;
-            Game.CurrInv+=Missions[id].nbr * nbr * 2;
+            Game.CurrInv += Missions[id].nbr * nbr * 2;
             Game.totalinv += Missions[id].nbr * nbr * 2;
             Game.explored[id] = 1;
             Game.rank = Game.rank + 1 + (1 * Game.system);
@@ -113,11 +113,12 @@ function explore(id, nbr, obj) {
 
 function sellitem(id, qty) {
     var mult = SystemMult[id];
-        Game.CurrSellID = id;
-        Game.CurrSellQty = qty;
-        Game.CurrMult = mult;
-        $("#sellconfirm-text").html("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + "<img class='ui avatar image' src='images/items/" + id + ".png'> for <font color='green'>" + fix(Market[id].value * mult * qty, 1) + "$</font> ?");
-        $('#modal-4').modal('show');
+    Game.CurrSellID = id;
+    Game.CurrSellQty = qty;
+    Game.CurrMult = mult;
+    if (id == 2) { mult = 0.01; }
+    $("#sellconfirm-text").html("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + "<img class='ui avatar image' src='images/items/" + id + ".png'> for <font color='green'>" + fix(Market[id].value * mult * qty, 1) + "$</font> ?");
+    $('#modal-4').modal('show');
     UpdateUI();
 }
 
@@ -135,7 +136,7 @@ function confirmsell() {
     Game.cash += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
     Game.cashGained += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
     Game.inventory[Game.CurrSellID] -= Game.CurrSellQty;
-    Game.CurrInv-= Game.CurrSellQty;
+    Game.CurrInv -= Game.CurrSellQty;
     Game.totalinv -= Game.CurrSellQty;
     SystemMult[Game.CurrSellID] = Game.CurrMult;
     UpdateUI();
@@ -165,7 +166,7 @@ function buyupgrade(id, buyable, type, req1, nbr1, req2, nbr2) {
                 if (Game.cash >= Technologies[id].cost) {
                     Game.inventory[req1] -= nbr1;
                     Game.inventory[req2] -= nbr2;
-                    Game.CurrInv -= nbr1+nbr2;
+                    Game.CurrInv -= nbr1 + nbr2;
                     Game.cash -= Technologies[id].cost;
                     Game.cashSpent += Technologies[id].cost;
                     Game.extGain = Technologies[id].gain;
@@ -271,13 +272,13 @@ function NewPirateStats() {
     Game.PlayerLife = Game.PlayerBaseLife;
     rand = random(100, 100000);
     showmessage("You won the fight !", "You found <i class='green dollar sign icon'></i>" + fix(rand, 0));
-    Game.cash+=rand;
-    Game.cashGained+=rand;
+    Game.cash += rand;
+    Game.cashGained += rand;
 }
 
 function LosePirateFight() {
     Game.inventory = [];
-    rand = random(0, (Game.cash-1000));
+    rand = random(0, (Game.cash - 1000));
     if (Game.cash > 1000) {
         Game.cash -= rand;
         Game.cashSpent += rand;
@@ -291,7 +292,7 @@ function LosePirateFight() {
 //PRESTIGE FUNCTIONS
 
 function GetGalaxyPrice() {
-    return ((1000000 * Game.Galaxy) * 5) * 1.25;
+    return ((1000000000 * Game.Galaxy) * 5);
 }
 
 function changegalaxy() {
@@ -302,7 +303,7 @@ function changegalaxy() {
             Game.cash = 50 + (1.25 * Game.Galaxy) * 10;
             Game.cashGained += 50 + (1.25 * Game.Galaxy) * 10;
             Game.inventory = [];
-            Game.CurrInv= 0;
+            Game.CurrInv = 0;
             Game.system = 0;
             Game.technologies = [];
             Game.explored = [];
@@ -318,5 +319,30 @@ function changegalaxy() {
             Game.PlayerAttack = 10;
             Game.rank = 0;
         }
+    }
+}
+
+function Theme(selection) {
+    if (selection == 0) {
+        Game.theme=0;
+        save();
+        $('#theme1').attr('rel', '');
+        $('#theme2').attr('rel', '');
+        $(".pusher").css("background", "rgba(0, 0, 0, 0.2)");
+        $(".pusher").css("background-image", "url(images/newbg.png)");
+    }
+    if (selection == 1) {
+        Game.theme=1;
+        save();
+        $('#theme1').attr('rel', 'stylesheet');
+        $('#theme2').attr('rel', '');
+        $(".pusher").css("background", "rgb(21, 26, 29)");
+    }
+    if (selection == 2) {
+        Game.theme=2;
+        save();
+        $('#theme2').attr('rel', '');
+        $('#theme2').attr('rel', 'stylesheet');
+        $(".pusher").css("background", "rgb(56, 178, 253)");
     }
 }
