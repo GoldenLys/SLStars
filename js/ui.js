@@ -6,9 +6,9 @@
 	$("#rank").html("" + fix(Game.rank, 2) + " EP");
 	$("#dayscount").html("" + Game.days + " days passed.");
 	$("#fuel").html("" + fix(Game.inventory[2], 3) + "% power.");
-	$("#EXT-TITLE").html(texts.items[Game.extId] + "<img class='ui avatar image' src='images/items/" + Game.extId + ".png'>");
+	$("#EXT-TITLE").html(texts.items[Missions[Game.extId].type] + "<img class='ui avatar image' src='images/items/" + Missions[Game.extId].type + ".png'>");
 	$("#EXT-DESC").html("The drone extract " + fix(Game.extGain, 1));
-	$("#EXT-DESC2").html("per seconds ");
+	$("#EXT-DESC2").html("per second ");
 	$("#HYPERDRIVE-TEXT").html("Travel to another location actually cost " + fix(Game.TravelCost, 3) + "% of power");
 	$("#HYPERSPACE-TEXT").html("Your actual maximum destination is " + texts.systemname[Game.UnlockedLocations]);
 	$("#Galaxy-content").html("<span class='bold'>GALAXY NUMBER</span><br><h1 class='type4 or'>" + Game.Galaxy + "</h1>");
@@ -93,9 +93,10 @@ function GenMarket() {
 		var canSell100 = Game.inventory[i] < 100 ? ' disabled' : '';
 		var canSellAll = Game.inventory[i] < 1 ? ' disabled' : '';
 		if (SystemMult[i] < 1) { pricecolor = 'rouge'; }
-		if (SystemMult[i] > 1) { pricecolor = 'vert'; }
-		if (SystemMult[i] > 0.95) { if (SystemMult[i] < 1.1) { pricecolor = ''; } }
-		if (SystemMult[i] > 0.5) { if (SystemMult[i] < 0.96) { pricecolor = 'argent'; } }
+		if (SystemMult[i] > 1.25) { if (SystemMult[i] <= 2) { pricecolor = 'vert'; } }
+		if (SystemMult[i] > 2) { if (SystemMult[i] > 2) { pricecolor = 'Gold'; } }
+		if (SystemMult[i] > 0.9) { if (SystemMult[i] < 1.26) { pricecolor = ''; } }
+		if (SystemMult[i] > 0.5) { if (SystemMult[i] < 0.91) { pricecolor = 'argent'; } }
 
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
 		cost = "<font class='type1 " + pricecolor + " bold'><i class='dollar sign icon'></i>" + fix(offer.value * SystemMult[i], 1) + "</font>";
@@ -267,49 +268,15 @@ function GetUPGprice2(id) {
 function GenExtractionMaterials() {
 	var content;
 	$("#EXT-CONTENT").html(""); //RESET VIEW
-	for (var inv in texts.items) {
-		content = "<div class='item' data-id='" + inv + "'>" + texts.items[inv] + "<img class='ui avatar image' src='images/items/" + inv + ".png'></div>";
-		if (Game.technologies[0] == 1) {
-			if (inv == 3) { $("#EXT-CONTENT").append(content); }
+	for (var D in Missions) {
+
+		var content = $(
+			"<div class='item' data-id='" + D + "'>" + texts.systemname[Game.system] + "-" + Missions[D].name + " | " + texts.items[Missions[D].type] + "<img class='ui avatar image' src='images/items/" + Missions[D].type + ".png'></div>"
+		);
+
+		if (Missions[D].system == Game.system) {
+			$("#EXT-CONTENT").append(content);
 		}
-		if (Game.technologies[1] == 1) {
-			if (inv == 0) { $("#EXT-CONTENT").append(content); }
-			if (inv == 1) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[2] == 1) {
-			if (inv == 4) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[3] == 1) {
-			if (inv == 5) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[4] == 1) {
-			if (inv == 6) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[5] == 1) {
-			if (inv == 7) { $("#EXT-CONTENT").append(content); }
-			if (inv == 8) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[6] == 1) {
-			if (inv == 9) { $("#EXT-CONTENT").append(content); }
-			if (inv == 10) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[7] == 1) {
-			if (inv == 11) { $("#EXT-CONTENT").append(content); }
-			if (inv == 12) { $("#EXT-CONTENT").append(content); }
-			if (inv == 13) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[8] == 1) {
-			if (inv == 14) { $("#EXT-CONTENT").append(content); }
-			if (inv == 15) { $("#EXT-CONTENT").append(content); }
-			if (inv == 16) { $("#EXT-CONTENT").append(content); }
-		}
-		if (Game.technologies[9] == 1) {
-			if (inv == 17) { $("#EXT-CONTENT").append(content); }
-			if (inv == 18) { $("#EXT-CONTENT").append(content); }
-			if (inv == 19) { $("#EXT-CONTENT").append(content); }
-			if (inv == 2) { $("#EXT-CONTENT").append(content); }
-		}
-		$("#EXT-TITLE").html(texts.items[Game.extId] + "<img class='ui avatar image' src='images/items/" + Game.extId + ".png'>");
 	}
 }
 
@@ -342,7 +309,8 @@ function AddTravelPoints() {
 
 		isUnlockedColor = Game.UnlockedLocations < i ? ' rouge' : ' vert';
 		if (Game.UnlockedLocations < i) { isUnlockedText = " (Require<font class='" + isUnlockedColor + "'> " + fix(Game.EPRequired[i], 0) + " EP</font>)" } else { isUnlockedText = ""; }
-		isUnlockedSymbol = Game.UnlockedLocations < i ? '<i class="red circle outline icon"></i>' : '<i class="green check circle outline icon"></i>';
+		isUnlockedSymbol = Game.UnlockedLocations < i ? '<i class="red circle outline icon"></i>' : '<i class="green circle outline icon"></i>';
+		if (Game.system == i) { isUnlockedSymbol='<i class="green check circle outline icon"></i>'; }
 		var TRAVELCONTENT = $(
 			"<div class='item' id='V" + i + "' data-id='" + i + "'>" +
 			isUnlockedSymbol +
@@ -374,7 +342,7 @@ function setTutorial(id) {
 	if (Game.tutorial == 0) { $("#tuto-prev").addClass("disabled"); }
 	else { $("#tuto-prev").removeClass("disabled"); }
 
-	if (Game.tutorial == 5) { $("#tuto-next").addClass("disabled"); }
+	if (Game.tutorial == 4) { $("#tuto-next").addClass("disabled"); }
 	else { $("#tuto-next").removeClass("disabled"); }
 }
 
@@ -382,7 +350,7 @@ function closeTutorial() { hideModals(); Game.tutorial = 0; if (Game.fl == 0) { 
 
 function NextTuto() {
 	if (Game.fl == 0) { Game.fl = 1; Game.inventory[2] = 100; }
-	if (Game.tutorial < 5) { Game.tutorial++; setTutorial(Game.tutorial); }
+	if (Game.tutorial < 4) { Game.tutorial++; setTutorial(Game.tutorial); }
 }
 
 function PrevTuto() {

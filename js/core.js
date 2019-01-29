@@ -3,17 +3,16 @@
 //////////////////////////
 //                      //
 //         W I P        //
-//                      //
+// PLEASE BE INDULGENT  //
 //////////////////////////
-// - Extraction drone visit a system at each second     
-// - Add a gameover modal                 
+//            
 //////////////////////////
 
 
 
 //CONFIG
 
-var version = "v4.2";
+var version = "v4.3";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -79,7 +78,7 @@ function UpdateGame(cashps) {
     for (var u in Upgrades) { if (Game.Upgrades[u] == null) { Game.Upgrades[u] = 0; } }
     Game.cash += cashps;
     Game.cashGained += cashps;
-    Game.inventory[Game.extId] += Game.extGain;
+    Game.inventory[Missions[Game.extId].type] += Game.extGain;
     Game.totalinv += Game.extGain;
     if (Game.CurrInv<=0) { if (Game.cash<=3) { rand=random(10, 100); Game.cash+=rand; showmessage("Distress signal", "You found an old distress signal!<br> You have joined the signal transmission source and have found a dead body with an abandoned vessel and <i class='green dollar sign icon'></i>" + rand); }}
     UpdateUI();
@@ -123,22 +122,22 @@ function sellitem(id, qty) {
 }
 
 function confirmsell() {
+    var mult = SystemMult[Game.CurrSellI];
+    if (Game.inventory[Game.CurrSellID] >= Game.CurrSellQty) {
+        if (Game.CurrSellID < 2) {
+            if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 250; }
+        } else {
+            if (Game.CurrSellID < 7) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 2000; } }
+        }
+        if (Game.CurrSellID > 6) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 10000; } }
+        if (mult < 0) { mult = 0.01; }
+    }
     Game.cash += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
     Game.cashGained += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
     Game.inventory[Game.CurrSellID] -= Game.CurrSellQty;
     Game.CurrInv-= Game.CurrSellQty;
     Game.totalinv -= Game.CurrSellQty;
     SystemMult[Game.CurrSellID] = Game.CurrMult;
-    var mult = SystemMult[Game.CurrSellI];
-    if (Game.inventory[Game.CurrSellI] >= qty) {
-        if (Game.CurrSellI < 2) {
-            if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 250; }
-        } else {
-            if (Game.CurrSellI < 7) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 2000; } }
-        }
-        if (Game.CurrSellI > 6) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 10000; } }
-        if (mult < 0) { mult = 0.01; }
-    }
     UpdateUI();
     save();
 }
@@ -147,7 +146,7 @@ function changeLocation(id) {
     if (Game.inventory[2] >= Game.TravelCost) {
         if (Game.UnlockedLocations >= id) {
             Game.system = id;
-            for (var SID in SystemMult) { SystemMult[SID] = random(0, 150000) / 100000; }
+            for (var SID in SystemMult) { SystemMult[SID] = random(0, 2200) / 1000; }
             if (id != "loading") {
                 Game.inventory[2] -= Game.TravelCost;
                 Game.days++;
@@ -310,7 +309,7 @@ function changegalaxy() {
             Game.Upgrades = [];
             Game.TravelCost = 25;
             Game.UnlockedLocations = 0;
-            Game.PiratePower = 55;
+            Game.PiratePower = 5;
             Game.PirateBaseLife = 100;
             Game.PirateAttacks = 0;
             Game.PirateCurrentLife = 100;

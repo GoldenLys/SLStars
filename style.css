@@ -124,7 +124,7 @@
 
 .Gold {
     color: #FDD017;
-    text-shadow: 0 0 3vh rgb(219, 255, 14);
+    text-shadow: 0 0 0.2vh rgb(219, 255, 14);
 }
 
 .Palladium {
@@ -187,11 +187,11 @@
 }
 
 body ::-webkit-scrollbar-thumb {
-    background-image: linear-gradient(to bottom, #350000 51%, #230031 100%);
+    background-image: linear-gradient(to bottom, #24002f 0%, #24002f 51%, #0b0019 100%);
 }
 
 body ::-webkit-scrollbar-thumb:hover {
-    background-image: linear-gradient(to bottom, #350000 51%, #230031 100%);
+    background-image: linear-gradient(to bottom, #24002f 0%, #24002f 51%, #0b0019 100%);
 }
 
 body ::-webkit-scrollbar-track {
@@ -243,6 +243,7 @@ body ::-webkit-scrollbar-track {
     display: -ms-flexbox;
     display: flex;
 }
+
 
 .ui.SLStars.menu:hover {
     background-position: right center; /* change the direction of the change here */
