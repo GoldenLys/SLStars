@@ -412,7 +412,7 @@ function StatsGeneration() {
 		"<br>Pirate exp : " + Game.PirateExp + "/" + Game.PirateMaxExp +
 		" | Pirate level : " + Game.PirateRank + " | Pirate life : " + Game.PirateBaseLife + "<i class='red heart icon'></i> | Pirate power : " + Game.PiratePower + " DMG" + 
 		"<br>Your life : " + Game.PlayerBaseLife + "<i class='red heart icon'></i> | Your power : " + Game.PlayerAttack + " DMG" + 
-		"<br>"
+		"<div class='ui divider'></div>Started " + Game.DateStarted + " on " + sitename + " " + Game.startedVersion
 	);
 	$('#modal-5').modal('show');
 }

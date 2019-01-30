@@ -259,6 +259,7 @@ function GetPlayerHPPercent() {
 
 function LookForPirates() {
     PirateChance = random(0, 3);
+    Game.PlayerLife = Game.PlayerBaseLife;
 
     if (PirateChance == 3) {
         $("#modal-7").modal('setting', 'closable', false).modal('show');
