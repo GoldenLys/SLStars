@@ -1,18 +1,18 @@
 var Missions = {
     //SYSTEM 1    
-    0: { name: 'Station', desc: 0, type: 2, nbr: 0.1, system: 0 },
+    0: { name: 'Station', desc: 0, type: 2, nbr: 0.25, system: 0 },
     1: { name: '1', desc: 0, type: 4, nbr: 1, system: 0 },
     2: { name: '2', desc: 1, type: 1, nbr: 1, system: 0 },
     3: { name: '3', desc: 3, type: 0, nbr: 1, system: 0 },
     //SYSTEM 2
-    4: { name: 'Station', desc: 0, type: 2, nbr: 0.1, system: 1 },
+    4: { name: 'Station', desc: 0, type: 2, nbr: 0.25, system: 1 },
     5: { name: '1', desc: 0, type: 3, nbr: 10, system: 1 },
     6: { name: '2', desc: 1, type: 5, nbr: 5, system: 1 },
     7: { name: '3', desc: 1, type: 8, nbr: 1, system: 1 },
     8: { name: '4', desc: 2, type: 6, nbr: 1, system: 1 },
     9: { name: '5', desc: 1, type: 14, nbr: 1, system: 1 },
     //SYSTEM 3
-    10: { name: 'Station ', desc: 0, type: 2, nbr: 0.1, system: 2 },
+    10: { name: 'Station ', desc: 0, type: 2, nbr: 0.25, system: 2 },
     11: { name: '1', desc: 3, type: 11, nbr: 1, system: 2 },
     12: { name: '2', desc: 3, type: 9, nbr: 1, system: 2 },
     13: { name: '3', desc: 3, type: 7, nbr: 2, system: 2 },
@@ -21,14 +21,14 @@ var Missions = {
     16: { name: '6', desc: 3, type: 0, nbr: 10, system: 2 },
     17: { name: '7', desc: 3, type: 8, nbr: 5, system: 2 },
     //SYSTEM 4
-    18: { name: 'Station ', desc: 0, type: 2, nbr: 0.1, system: 3 },
+    18: { name: 'Station ', desc: 0, type: 2, nbr: 0.25, system: 3 },
     19: { name: '1', desc: 4, type: 15, nbr: 1, system: 3 },
     20: { name: '2', desc: 3, type: 6, nbr: 10, system: 3 },
     21: { name: '3', desc: 3, type: 3, nbr: 25, system: 3 },
     22: { name: '4', desc: 3, type: 4, nbr: 10, system: 3 },
     23: { name: '5', desc: 3, type: 12, nbr: 1, system: 3 },
     //SYSTEM 5
-    24: { name: 'Station ', desc: 0, type: 2, nbr: 0.1, system: 4 },
+    24: { name: 'Station ', desc: 0, type: 2, nbr: 0.25, system: 4 },
     25: { name: '1', desc: 0, type: 10, nbr: 25, system: 4 },
     26: { name: '2', desc: 1, type: 11, nbr: 10, system: 4 },
     27: { name: '3', desc: 2, type: 8, nbr: 10, system: 4 },
@@ -36,14 +36,14 @@ var Missions = {
     29: { name: '5', desc: 3, type: 0, nbr: 50, system: 4 },
     30: { name: '6', desc: 3, type: 1, nbr: 100, system: 4 },
     //SYSTEM 6
-    31: { name: 'Station ', desc: 0, type: 2, nbr: 0.1, system: 5 },
+    31: { name: 'Station ', desc: 0, type: 2, nbr: 0.25, system: 5 },
     32: { name: '1', desc: 0, type: 9, nbr: 100, system: 5 },
     33: { name: '2', desc: 1, type: 16, nbr: 2, system: 5 },
     34: { name: '3', desc: 1, type: 12, nbr: 10, system: 5 },
     35: { name: '4', desc: 1, type: 8, nbr: 50, system: 5 },
     36: { name: '5', desc: 2, type: 17, nbr: 25, system: 5 },
     //SYSTEM 7
-    37: { name: 'Station ', desc: 0, type: 2, nbr: 0.1, system: 6 },
+    37: { name: 'Station ', desc: 0, type: 2, nbr: 0.5, system: 6 },
     38: { name: '1', desc: 4, type: 15, nbr: 10, system: 6 },
     39: { name: '2', desc: 2, type: 17, nbr: 50, system: 6 },
     40: { name: '3', desc: 3, type: 16, nbr: 10, system: 6 },
@@ -51,7 +51,7 @@ var Missions = {
     42: { name: '5', desc: 3, type: 6, nbr: 50, system: 6 },
     43: { name: '6', desc: 3, type: 12, nbr: 25, system: 6 },
     //SYSTEM 8
-    44: { name: 'Station ', desc: 0, type: 2, nbr: 0.1, system: 7 },
+    44: { name: 'Station ', desc: 0, type: 2, nbr: 0.5, system: 7 },
     45: { name: '1', desc: 0, type: 8, nbr: 100, system: 7 },
     46: { name: '2', desc: 0, type: 7, nbr: 100, system: 7 },
     47: { name: '3', desc: 1, type: 16, nbr: 50, system: 7 },
@@ -59,7 +59,7 @@ var Missions = {
     49: { name: '5', desc: 3, type: 13, nbr: 50, system: 7 },
     50: { name: '6', desc: 3, type: 12, nbr: 50, system: 7 },
     //SYSTEM 9
-    51: { name: 'Station ', desc: 0, type: 2, nbr: 0.1, system: 8 },
+    51: { name: 'Station ', desc: 0, type: 2, nbr: 1, system: 8 },
     52: { name: '1', desc: 6, type: 19, nbr: 1, system: 8 },
     53: { name: '2', desc: 5, type: 18, nbr: 1, system: 8 },
     54: { name: '3', desc: 5, type: 17, nbr: 100, system: 8 },
@@ -67,7 +67,7 @@ var Missions = {
     56: { name: '5', desc: 5, type: 11, nbr: 100, system: 8 },
     57: { name: '6', desc: 5, type: 8, nbr: 200, system: 8 },
     //SYSTEM 10
-    58: { name: 'Station ', desc: 0, type: 2, nbr: 0.1, system: 9 },
+    58: { name: 'Station ', desc: 0, type: 2, nbr: 1, system: 9 },
     59: { name: '1', desc: 7, type: 10, nbr: 1000, system: 9 },
     60: { name: '2', desc: 6, type: 19, nbr: 10, system: 9 },
     61: { name: '3', desc: 6, type: 18, nbr: 10, system: 9 },

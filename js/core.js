@@ -160,12 +160,12 @@ function changeLocation(id) {
         } else {
             if (Game.UnlockedLocations >= id) {
                 if (Game.inventory[2] >= Game.TravelCost) {
+                    Game.inventory[2] -= Game.TravelCost;
+                    Game.system = id;
+                    Game.days++;
                 } else { showmessage("You are out of power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); }
-            } else { showmessage("Upgrade your hyperspshowace", "You hyperspace can't travel there for now, upgrade it!"); } for (var SID2 in Game.SystemMult) { if (SID2 == 2) { Game.SystemMult[SID2] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID2] = random(0, 2200) / 1000; } }
+            } else { showmessage("Upgrade the hyperspace", "Your hyperspace can't travel there for now, upgrade it!"); } for (var SID2 in Game.SystemMult) { if (SID2 == 2) { Game.SystemMult[SID2] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID2] = random(0, 2200) / 1000; } }
             for (var SID in Game.SystemMult) { if (SID == 2) { Game.SystemMult[SID] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID] = random(0, 2200) / 1000; } }
-            Game.inventory[2] -= Game.TravelCost;
-            Game.system = id;
-            Game.days++;
         }
     }
     hidesystems();
@@ -314,7 +314,7 @@ function changegalaxy() {
         if (Game.system == 9) {
             Game.Galaxy++;
             for (var EP in Game.EPRequired) { Game.EPRequired[EP] = Game.EPRequired[EP] + (1.25 * Game.Galaxy); }
-            Game.cashSpent+=Game.cash;
+            Game.cashSpent += Game.cash;
             Game.cash = 50 + (1.25 * Game.Galaxy) * 10;
             Game.cashGained += 50 + (1.25 * Game.Galaxy) * 10;
             Game.inventory = [];
