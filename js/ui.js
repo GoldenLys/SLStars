@@ -1,5 +1,4 @@
 ﻿var UpdateUI = function () {
-	if (Game.fl == 0) { $("#modal-2").modal('show'); }
 	document.title = sitename;
 	$("#money").html("" + fix(Game.cash, 1));
 	$("#copyright").html(sitename + " " + version)
@@ -22,7 +21,7 @@
 	GenMissions();
 	GenMarket();
 	GenStation();
-	GenUpgrades();
+	GenHyperdrive();
 	GenHyperSpace();
 	AddTravelPoints();
 	GenExtractionMaterials();
@@ -53,25 +52,25 @@ function GenMissions() {
 	for (var i in Missions) {
 		var pricecolor;
 		var offer = Missions[i];
-		var canbuy = Game.cash < Market[offer.type].value * SystemMult[offer.type] * offer.nbr ? ' disabled' : '';
-		var canbuy10 = Game.cash < (Market[offer.type].value * offer.nbr) * SystemMult[offer.type] * 10 ? ' disabled' : '';
-		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * SystemMult[offer.type] * 100 ? ' disabled' : '';
-		var canExploreMax = Game.cash < Market[offer.type].value * SystemMult[offer.type] * offer.nbr ? ' disabled' : '';
-		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * SystemMult[offer.type] * offer.nbr));
+		var canbuy = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
+		var canbuy10 = Game.cash < (Market[offer.type].value * offer.nbr) * 10 ? ' disabled' : '';
+		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * 100 ? ' disabled' : '';
+		var canExploreMax = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
+		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * offer.nbr));
 		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; canbuy10 = "disabled"; canbuy100 = "disabled"; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
 		var rewardstext = SetColor(rewards);
-		var pricetext = Game.explored[i] < 1 ? fix(((Market[offer.type].value * offer.nbr) / 2) * SystemMult[offer.type], 1) : fix((Market[offer.type].value * offer.nbr) * SystemMult[offer.type], 1)
+		var pricetext = Game.explored[i] < 1 ? fix(((Market[offer.type].value * offer.nbr) / 2), 1) : fix((Market[offer.type].value * offer.nbr), 1)
 		recompense = SetColorText(rewards);
 		reward = texts.items[offer.type];
 		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
-		if (SystemMult[offer.type] < 1) { pricecolor = 'vert'; }
-		if (SystemMult[offer.type] > 1.25) { if (SystemMult[i] <= 2) { pricecolor = 'bronze'; } }
-		if (SystemMult[offer.type] > 2) { if (SystemMult[i] > 2) { pricecolor = 'rouge'; } }
-		if (SystemMult[offer.type] > 0.9) { if (SystemMult[i] < 1.26) { pricecolor = ''; } }
-		if (SystemMult[offer.type] > 0.5) { if (SystemMult[i] < 0.91) { pricecolor = 'jaune'; } }
-		cost = "<i class='" + pricecolor + " dollar sign icon'></i><font class='" + pricecolor + " type1'>" + pricetext + "</font>";
+		if (Game.SystemMult[offer.type] < 1) { pricecolor = 'vert'; }
+		if (Game.SystemMult[offer.type] > 1.25) { if (Game.SystemMult[i] <= 2) { pricecolor = 'bronze'; } }
+		if (Game.SystemMult[offer.type] > 2) { if (Game.SystemMult[i] > 2) { pricecolor = 'rouge'; } }
+		if (Game.SystemMult[offer.type] > 0.9) { if (Game.SystemMult[i] < 1.26) { pricecolor = ''; } }
+		if (Game.SystemMult[offer.type] > 0.5) { if (Game.SystemMult[i] < 0.91) { pricecolor = 'jaune'; } }
+		cost = "<i class='dollar sign icon'></i><font class='type1'>" + pricetext + "</font>";
 		description = GetSystemType(offer.desc);
 
 		var SYSTEMDIV = $(
@@ -86,7 +85,6 @@ function GenMissions() {
 		$('#system' + offer.system).append(SYSTEMDIV);
 	}
 }
-
 //GENERATE MARKET
 
 function GenMarket() {
@@ -98,14 +96,14 @@ function GenMarket() {
 		var canSell10 = Game.inventory[i] < 10 ? ' disabled' : '';
 		var canSell100 = Game.inventory[i] < 100 ? ' disabled' : '';
 		var canSellAll = Game.inventory[i] < 1 ? ' disabled' : '';
-		if (SystemMult[i] < 1) { pricecolor = 'rouge'; }
-		if (SystemMult[i] > 1.25) { if (SystemMult[i] <= 2) { pricecolor = 'vert'; } }
-		if (SystemMult[i] > 2) { if (SystemMult[i] > 2) { pricecolor = 'Gold'; } }
-		if (SystemMult[i] > 0.9) { if (SystemMult[i] < 1.26) { pricecolor = ''; } }
-		if (SystemMult[i] > 0.5) { if (SystemMult[i] < 0.91) { pricecolor = 'argent'; } }
+		if (Game.SystemMult[i] < 1) { pricecolor = 'rouge'; }
+		if (Game.SystemMult[i] > 1.25) { if (Game.SystemMult[i] <= 2) { pricecolor = 'vert'; } }
+		if (Game.SystemMult[i] > 2) { if (Game.SystemMult[i] > 2) { pricecolor = 'Gold'; } }
+		if (Game.SystemMult[i] > 0.9) { if (Game.SystemMult[i] < 1.26) { pricecolor = ''; } }
+		if (Game.SystemMult[i] > 0.5) { if (Game.SystemMult[i] < 0.91) { pricecolor = 'argent'; } }
 
 		name = "<img class='ui avatar image' src='images/items/" + i + ".png'><span class='Palladium'><font class='type2'>" + texts.items[i] + "</font></span>";
-		cost = "<font class='type1 " + pricecolor + " bold'><i class='dollar sign icon'></i>" + fix(offer.value * SystemMult[i], 1) + "</font>";
+		cost = "<font class='type1 " + pricecolor + " bold'><i class='dollar sign icon'></i>" + fix(offer.value * Game.SystemMult[i], 1) + "</font>";
 		description = offer.desc;
 		var inventory = Game.inventory[i] < 1 ? '<font class="rouge">' + fix(Game.inventory[i], 0) + '</font>' : '<font class="vert">' + fix(Game.inventory[i], 0) + '</font>';
 
@@ -188,21 +186,21 @@ function GenStation() {
 	}
 }
 
-function GenUpgrades() {
-	if (Game.Upgrades[0] < 100) {
+function GenHyperdrive() {
+	if (Game.Hyperdrive < 100) {
 		$('#UPG-BOARD').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Level</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
 
-		for (var i in Upgrades) {
+		for (var i in Hyperdrive) {
 			var canbuy = "";
 			var level = "";
 			var buyable = "";
 			var price = "";
-			var upg = Upgrades[i];
+			var upg = Hyperdrive[i];
 			canbuy = Game.cash < GetUPGprice(i) ? ' disabled' : '';
 			buyable = Game.cash < GetUPGprice(i) ? ' rouge' : ' vert';
 			if (i == 0) {
-				if (Game.Upgrades[0] == 100) { canbuy = " disabled"; level = "Maximum"; price = ""; action = ""; } else {
-					level = Game.Upgrades[i];
+				if (Game.Hyperdrive == 100) { canbuy = " disabled"; level = "Maximum"; price = ""; action = ""; } else {
+					level = Game.Hyperdrive;
 					price = "<i class='" + buyable + " dollar sign icon'></i>" + fix(GetUPGprice(i), 1);
 					action = "<a class='fluid ui " + canbuy + " red button' onClick='UPGPOWER(" + i + ");'>Upgrade</a>";
 				}
@@ -225,12 +223,12 @@ function GenHyperSpace() {
 	if (Game.UnlockedLocations < 9) {
 		$('#HYPERSPACE-BOARD').html("<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Current level</th><th class='ui center aligned'>Access</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>");
 
-		for (var i in Upgrades2) {
+		for (var i in Hyperspace) {
 			var canbuy;
 			var level;
 			var buyable;
 			var price;
-			var upg = Upgrades2[i];
+			var upg = Hyperspace[i];
 			canbuy = Game.cash < GetUPGprice2(i) ? ' disabled' : '';
 			buyable = Game.cash < GetUPGprice2(i) ? ' rouge' : ' vert';
 			action = Game.UnlockedLocations > 8 ? " " : "<a class='fluid ui " + canbuy + " red button' onClick='BUYHYPERSPACE(" + i + ");'>Upgrade</a>";
@@ -254,20 +252,20 @@ function GenHyperSpace() {
 
 function GetUPGprice(id) {
 	var value;
-	if (Game.Upgrades[id] == 0) { value = Upgrades[id].price; }
-	if (Game.Upgrades[id] > 0) {
-		if (Game.Upgrades[id] > 0) { value = Upgrades[id].price * Math.pow(1.025, Game.Upgrades[id]); }
-		if (Game.Upgrades[id] >= 10) { value = Upgrades[id].price * Math.pow(1.05, Game.Upgrades[id]); }
-		if (Game.Upgrades[id] >= 25) { value = Upgrades[id].price * Math.pow(1.1, Game.Upgrades[id]); }
-		if (Game.Upgrades[id] >= 50) { value = Upgrades[id].price * Math.pow(1.25, Game.Upgrades[id]); }
-		if (Game.Upgrades[id] == 100) { value = 42; }
+	if (Game.Hyperdrive == 0) { value = Hyperdrive[id].price; }
+	if (Game.Hyperdrive > 0) {
+		if (Game.Hyperdrive > 0) { value = Hyperdrive[id].price * Math.pow(1.025, Game.Hyperdrive); }
+		if (Game.Hyperdrive >= 10) { value = Hyperdrive[id].price * Math.pow(1.05, Game.Hyperdrive); }
+		if (Game.Hyperdrive >= 25) { value = Hyperdrive[id].price * Math.pow(1.1, Game.Hyperdrive); }
+		if (Game.Hyperdrive >= 50) { value = Hyperdrive[id].price * Math.pow(1.25, Game.Hyperdrive); }
+		if (Game.Hyperdrive == 100) { value = 42; }
 	}
 	return value;
 }
 
 function GetUPGprice2(id) {
 	var value;
-	value = Upgrades2[id].price * Math.pow(Upgrades2[id].gain, Game.UnlockedLocations);
+	value = Hyperspace[id].price * Math.pow(Hyperspace[id].gain, Game.UnlockedLocations);
 	return value;
 }
 
@@ -378,6 +376,12 @@ function UpdateEP() {
 	}
 }
 
+function showmessage(title, message) {
+    $("#message-title").html(title);
+    $("#message-text").html(message);
+    $('#modal-5').modal('show');
+}
+
 function UpdatePirateView() {
 	lifetext = Game.PlayerLife < 51 ? ' rouge' : ' vert';
 	PirateLifeText = Game.PirateCurrentLife < 51 ? ' rouge' : ' ';
@@ -394,4 +398,57 @@ function UpdatePirateView() {
 	$('#PirateHP').progress({ percent: GetPirateHPPercent() });
 	$('#PlayerHP').progress({ percent: GetPlayerHPPercent() });
 
+}
+
+function StatsGeneration() {
+	$("#message-title").html("Statistics");
+	$("#message-text").html(
+		"Current money : <i class='green dollar sign icon'></i>" + fix(Game.cash, 1) +
+		" (<span class='vert'>" + fix(Game.cashGained, 1) +
+		"</span>-<span class='rouge'>" + fix(Game.cashSpent, 1) +
+		"</span>)<div class='ui divider'></div>" + 
+		"Fights won : " + Game.Wins + 
+		" | Fights loses : " + Game.Loses +
+		"<br>Pirate exp : " + Game.PirateExp + "/" + Game.PirateMaxExp +
+		" | Pirate level : " + Game.PirateRank + " | Pirate life : " + Game.PirateBaseLife + "<i class='red heart icon'></i> | Pirate power : " + Game.PiratePower + " DMG" + 
+		"<br>Your life : " + Game.PlayerBaseLife + "<i class='red heart icon'></i> | Your power : " + Game.PlayerAttack + " DMG" + 
+		"<br>"
+	);
+	$('#modal-5').modal('show');
+}
+
+function Theme(selection) {
+    if (selection == 0) {
+        Game.theme = 0;
+        save();
+        $('#theme1').attr('rel', '');
+        $('#theme2').attr('rel', '');
+        $('#theme3').attr('rel', '');
+        $(".pusher").css("background", "rgba(0, 0, 0, 0.2)");
+        $(".pusher").css("background-image", "url(images/newbg.png)");
+    }
+    if (selection == 1) {
+        Game.theme = 1;
+        save();
+        $('#theme1').attr('rel', 'stylesheet');
+        $('#theme2').attr('rel', '');
+        $('#theme3').attr('rel', '');
+        $(".pusher").css("background", "rgb(21, 26, 29)");
+    }
+    if (selection == 2) {
+        Game.theme = 2;
+        save();
+        $('#theme1').attr('rel', '');
+        $('#theme2').attr('rel', 'stylesheet');
+        $('#theme3').attr('rel', '');
+        $(".pusher").css("background", "rgb(56, 178, 253)");
+    }
+    if (selection == 3) {
+        Game.theme = 3;
+        save();
+        $('#theme1').attr('rel', '');
+        $('#theme2').attr('rel', '');
+        $('#theme3').attr('rel', 'stylesheet');
+        $(".pusher").css("background", "rgb(218, 161, 0)");
+    }
 }

@@ -12,10 +12,11 @@
 
 //CONFIG
 
-var version = "v4.42";
+var version = "v4.43";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
+    startedVersion: getVersion(),
     DateStarted: getDate(),
     rank: 0,
     system: 0,
@@ -25,7 +26,7 @@ var Game = {
     cash: 50,
     cashps: 0,
     cashSpent: 0,
-    cashGained: 0,
+    cashGained: 50,
     technologies: [],
     tutorial: 0,
     fl: 0,
@@ -33,7 +34,7 @@ var Game = {
     extId: 0,
     extGain: 0,
     TravelCost: 25,
-    Upgrades: [],
+    Hyperdrive: 0,
     totalinv: 100,
     CurrInv: 100,
     CurrSellID: 0,
@@ -41,15 +42,20 @@ var Game = {
     CurrMult: 0,
     UnlockedLocations: 0,
     EPRequired: [0, 10, 50, 100, 350, 1000, 2500, 5000, 10000, 100000],
-    PirateAttacks: 0,
     PiratePower: 5,
     PirateBaseLife: 100,
     PirateCurrentLife: 100,
     PlayerLife: 100,
     PlayerBaseLife: 100,
     PlayerAttack: 10,
+    PirateRank: 0,
+    PirateExp: 0,
+    PirateMaxExp: 20,
     isInFight: 0,
-    theme: 2,
+    theme: 0,
+    Wins: 0,
+    Loses: 0,
+    SystemMult: { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1 }
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -59,13 +65,14 @@ $(document).ready(function () {
     if (localStorage.getItem("SLStars2") != null) { load(); }
     setInterval(function () { UpdateGame(Game.cashps); }, 1000);
     setInterval(function () { LookForPirates(); }, 60000);
+    Theme(Game.theme);
+    GenExtractionMaterials();
     ClickEvents();
+    hidesystems();
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
-    hidesystems();
     $('#system' + Game.system).show();
-    GenExtractionMaterials();
-    Theme(Game.theme);
+    if (Game.fl == 0) { $("#modal-2").modal('show'); changeLocation("fl"); }
 });
 
 //GAME FUNCTIONS
@@ -75,7 +82,6 @@ function UpdateGame(cashps) {
     for (var inv in texts.items) { if (Game.inventory[inv] == null) { Game.inventory[inv] = 0; } }
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
-    for (var u in Upgrades) { if (Game.Upgrades[u] == null) { Game.Upgrades[u] = 0; } }
     Game.cash += cashps;
     Game.cashGained += cashps;
     Game.inventory[Missions[Game.extId].type] += Game.extGain;
@@ -87,9 +93,9 @@ function UpdateGame(cashps) {
 
 function explore(id, nbr, obj) {
     if (Game.explored[id] > 0) {
-        if (Game.cash >= ((Market[obj].value * Missions[id].nbr) * SystemMult[obj]) * nbr) {
-            Game.cash -= ((Market[obj].value * Missions[id].nbr) * SystemMult[obj]) * nbr;
-            Game.cashSpent += ((Market[obj].value * Missions[id].nbr) * SystemMult[obj]) * nbr;
+        if (Game.cash >= ((Market[obj].value * Missions[id].nbr)) * nbr) {
+            Game.cash -= ((Market[obj].value * Missions[id].nbr)) * nbr;
+            Game.cashSpent += ((Market[obj].value * Missions[id].nbr)) * nbr;
             Game.inventory[obj] += Missions[id].nbr * nbr;
             Game.CurrInv += Missions[id].nbr * nbr;
             Game.totalinv += Missions[id].nbr * nbr;
@@ -97,9 +103,9 @@ function explore(id, nbr, obj) {
         }
     }
     if (Game.explored[id] < 1) {
-        if (Game.cash >= (Market[obj].value * Missions[id].nbr * SystemMult[obj]) * nbr / 2) {
-            Game.cash -= (Market[obj].value * Missions[id].nbr * SystemMult[obj]) * nbr / 2;
-            Game.cashSpent += (Market[obj].value * Missions[id].nbr * SystemMult[obj]) * nbr / 2;
+        if (Game.cash >= (Market[obj].value * Missions[id].nbr) * nbr / 2) {
+            Game.cash -= (Market[obj].value * Missions[id].nbr) * nbr / 2;
+            Game.cashSpent += (Market[obj].value * Missions[id].nbr) * nbr / 2;
             Game.inventory[obj] += Missions[id].nbr * 2;
             Game.CurrInv += Missions[id].nbr * nbr * 2;
             Game.totalinv += Missions[id].nbr * nbr * 2;
@@ -113,7 +119,7 @@ function explore(id, nbr, obj) {
 }
 
 function sellitem(id, qty) {
-    var mult = SystemMult[id];
+    var mult = Game.SystemMult[id];
     Game.CurrSellID = id;
     Game.CurrSellQty = qty;
     Game.CurrMult = mult;
@@ -124,7 +130,7 @@ function sellitem(id, qty) {
 }
 
 function confirmsell() {
-    var mult = SystemMult[Game.CurrSellI];
+    var mult = Game.SystemMult[Game.CurrSellI];
     if (Game.inventory[Game.CurrSellID] >= Game.CurrSellQty) {
         if (Game.CurrSellID < 2) {
             if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 250; }
@@ -134,28 +140,34 @@ function confirmsell() {
         if (Game.CurrSellID > 6) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 10000; } }
         if (mult < 0) { mult = 0.01; }
     }
-    Game.cash += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
-    Game.cashGained += Market[Game.CurrSellID].value * SystemMult[Game.CurrSellID] * Game.CurrSellQty;
+    Game.cash += Market[Game.CurrSellID].value * Game.SystemMult[Game.CurrSellID] * Game.CurrSellQty;
+    Game.cashGained += Market[Game.CurrSellID].value * Game.SystemMult[Game.CurrSellID] * Game.CurrSellQty;
     Game.inventory[Game.CurrSellID] -= Game.CurrSellQty;
     Game.CurrInv -= Game.CurrSellQty;
     Game.totalinv -= Game.CurrSellQty;
-    SystemMult[Game.CurrSellID] = Game.CurrMult;
+    Game.SystemMult[Game.CurrSellID] = Game.CurrMult;
     UpdateUI();
     save();
 }
 
 function changeLocation(id) {
-    if (Game.inventory[2] >= Game.TravelCost) {
-        if (Game.UnlockedLocations >= id) {
+    if (id == "fl") {
+        for (var SID in Game.SystemMult) { if (SID == 2) { Game.SystemMult[SID] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID] = random(0, 2200) / 1000; } }
+        Game.system = 0;
+    } else {
+        if (id == "loading") {
+            UpdateUI();
+        } else {
+            if (Game.UnlockedLocations >= id) {
+                if (Game.inventory[2] >= Game.TravelCost) {
+                } else { showmessage("You are out of power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); }
+            } else { showmessage("Upgrade your hyperspshowace", "You hyperspace can't travel there for now, upgrade it!"); } for (var SID2 in Game.SystemMult) { if (SID2 == 2) { Game.SystemMult[SID2] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID2] = random(0, 2200) / 1000; } }
+            for (var SID in Game.SystemMult) { if (SID == 2) { Game.SystemMult[SID] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID] = random(0, 2200) / 1000; } }
+            Game.inventory[2] -= Game.TravelCost;
             Game.system = id;
-            for (var SID in SystemMult) { if (SID == 2) { SystemMult[SID] = random(1000, 5000) / 1000; } else { SystemMult[SID] = random(0, 2200) / 1000; } }
-            if (id != "loading") {
-                Game.inventory[2] -= Game.TravelCost;
-                Game.days++;
-            }
-        } else { showmessage("Upgrade your hyperspshowace", "You hyperspace can't travel there for now, upgrade it!"); }
-    } else { if (id != "loading") { showmessage("You are out of power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); } for (var SID2 in SystemMult) { if (SID2 == 2) { SystemMult[SID2] = random(1000, 5000) / 1000; } else { SystemMult[SID2] = random(0, 2200) / 1000; } } }
-    if (id == "loading") { id = 0; Game.system = id; }
+            Game.days++;
+        }
+    }
     hidesystems();
     $('#system' + Game.system).show();
 }
@@ -182,11 +194,11 @@ function buyupgrade(id, buyable, type, req1, nbr1, req2, nbr2) {
 
 function UPGPOWER(id) {
     if (Game.cash > GetUPGprice(id)) {
-        if (Game.Upgrades[id] < 100) {
+        if (Game.Hyperdrive < 100) {
             Game.cash -= GetUPGprice(id);
             Game.cashSpent += GetUPGprice(id);
-            Game.TravelCost -= Upgrades[id].gain;
-            Game.Upgrades[id]++;
+            Game.TravelCost -= Hyperdrive[id].gain;
+            Game.Hyperdrive++;
         }
     }
     UpdateUI();
@@ -201,12 +213,6 @@ function BUYHYPERSPACE(id) {
         }
     }
     UpdateUI();
-}
-
-function showmessage(title, message) {
-    $("#message-title").html(title);
-    $("#message-text").html(message);
-    $('#modal-5').modal('show');
 }
 
 //PIRATE FIGHT ACTIONS
@@ -252,9 +258,9 @@ function GetPlayerHPPercent() {
 //CHECK IF THERE IS A CHANCE TO ENCOUNTER A PIRATE
 
 function LookForPirates() {
-    PirateChance = random(0, 5);
+    PirateChance = random(0, 3);
 
-    if (PirateChance == 5) {
+    if (PirateChance == 3) {
         $("#modal-7").modal('setting', 'closable', false).modal('show');
         Game.isInFight = 1;
         PirateChance = 0;
@@ -266,12 +272,17 @@ function LookForPirates() {
 function NewPirateStats() {
     hideModals();
     Game.isInFight = 0;
-    Game.PirateAttacks++;
-    Game.PirateBaseLife += 10;
+    Game.Wins++;
     Game.PirateCurrentLife = Game.PirateBaseLife;
-    Game.PiratePower = 5 + (Game.PirateAttacks * 0.5);
     Game.PlayerLife = Game.PlayerBaseLife;
-    rand = random(100, 100000);
+    Game.PirateExp++;
+    if (Game.PirateExp >= Game.PirateMaxExp) {
+        Game.PirateBaseLife += 10;
+        Game.PiratePower = 5 + (Game.PirateAttacks * 0.5);
+        Game.PirateExp = 0;
+        Game.PirateRank++;
+    }
+    rand = random(0, Game.cashGained);
     showmessage("You won the fight !", "You found <i class='green dollar sign icon'></i>" + fix(rand, 0));
     Game.cash += rand;
     Game.cashGained += rand;
@@ -285,6 +296,7 @@ function LosePirateFight() {
         Game.cashSpent += rand;
     }
     Game.isInFight = 0;
+    Game.Loses++;
     Game.PlayerLife = Game.PlayerBaseLife;
     hideModals();
     showmessage("You lose this fight !", "He took all your merchandises and <i class='green dollar sign icon'></i>" + fix(rand, 0));
@@ -301,6 +313,7 @@ function changegalaxy() {
         if (Game.system == 9) {
             Game.Galaxy++;
             for (var EP in Game.EPRequired) { Game.EPRequired[EP] = Game.EPRequired[EP] + (1.25 * Game.Galaxy); }
+            Game.cashSpent+=Game.cash;
             Game.cash = 50 + (1.25 * Game.Galaxy) * 10;
             Game.cashGained += 50 + (1.25 * Game.Galaxy) * 10;
             Game.inventory = [];
@@ -308,7 +321,7 @@ function changegalaxy() {
             Game.system = 0;
             Game.technologies = [];
             Game.explored = [];
-            Game.Upgrades = [];
+            Game.Upgrades = 0;
             Game.TravelCost = 25;
             Game.UnlockedLocations = 0;
             Game.PiratePower = 5;
@@ -319,42 +332,9 @@ function changegalaxy() {
             Game.PlayerBaseLife = 100;
             Game.PlayerAttack = 10;
             Game.rank = 0;
+            Game.PirateRank = 0;
+            Game.PirateExp = 0;
+            changeLocation("fl");
         }
-    }
-}
-
-function Theme(selection) {
-    if (selection == 0) {
-        Game.theme = 0;
-        save();
-        $('#theme1').attr('rel', '');
-        $('#theme2').attr('rel', '');
-        $('#theme3').attr('rel', '');
-        $(".pusher").css("background", "rgba(0, 0, 0, 0.2)");
-        $(".pusher").css("background-image", "url(images/newbg.png)");
-    }
-    if (selection == 1) {
-        Game.theme = 1;
-        save();
-        $('#theme1').attr('rel', 'stylesheet');
-        $('#theme2').attr('rel', '');
-        $('#theme3').attr('rel', '');
-        $(".pusher").css("background", "rgb(21, 26, 29)");
-    }
-    if (selection == 2) {
-        Game.theme = 2;
-        save();
-        $('#theme1').attr('rel', '');
-        $('#theme2').attr('rel', 'stylesheet');
-        $('#theme3').attr('rel', '');
-        $(".pusher").css("background", "rgb(56, 178, 253)");
-    }
-    if (selection == 3) {
-        Game.theme = 3;
-        save();
-        $('#theme1').attr('rel', '');
-        $('#theme2').attr('rel', '');
-        $('#theme3').attr('rel', 'stylesheet');
-        $(".pusher").css("background", "rgb(218, 161, 0)");
     }
 }

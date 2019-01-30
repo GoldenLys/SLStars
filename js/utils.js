@@ -121,3 +121,7 @@ function confirmReset() {
 	localStorage.clear();
 	location.reload();
 }
+
+function getVersion() {
+	return version;
+}

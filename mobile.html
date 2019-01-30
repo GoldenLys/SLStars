@@ -21,15 +21,15 @@
 
     gtag('config', 'UA-132217801-1');
 </script>
-<link href="style.css?v=442" rel="stylesheet" type="text/css" />
-<link href="theme1.css?v=442" id="theme1" rel="" type="text/css" />
-<link href="theme2.css?v=442" id="theme2" rel="" type="text/css" />
-<link href="theme3.css?v=442" id="theme3" rel="" type="text/css" />
-<link href="mobile.css?v=442" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=442"></script>
-<script src="js/data.js?v=442"></script>
-<script src="js/core.js?v=442"></script>
-<script src="js/ui.js?v=442"></script>
+<link href="style.css?v=443" rel="stylesheet" type="text/css" />
+<link href="theme1.css?v=443" id="theme1" rel="" type="text/css" />
+<link href="theme2.css?v=443" id="theme2" rel="" type="text/css" />
+<link href="theme3.css?v=443" id="theme3" rel="" type="text/css" />
+<link href="mobile.css?v=443" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=443"></script>
+<script src="js/data.js?v=443"></script>
+<script src="js/core.js?v=443"></script>
+<script src="js/ui.js?v=443"></script>
 <script src="js/numeral.min.js"></script>
 
 <body id="body" class="noselect" oncontextmenu="return false;">
@@ -37,7 +37,7 @@
     <div id="sidebar" class="ui left vertical visible inverted sidebar labeled icon menu">
         <div id="modalmenu">
             <a class="item" id="modal1" data-id="1">
-                <i class="cog icon"></i>Options</a>
+                <i class="cog icon"></i>Options & Statistics</a>
             <a class="item" id="modal2" data-id="2">
                 <i class="info icon"></i>Guide</a>
             <a class="item" id="modal3" data-id="3">
@@ -238,6 +238,7 @@
             </div>
 
 
+
             <!--OPTIONS-->
             <div class="ui basic modal" id="modal-1">
                 <div class="ui icon header">
@@ -250,176 +251,179 @@
                     <span id="exportBody"></span>
                     <span id='debugtext' class='copytext'></span>
                     <div class="actions">
-                        <div class="ui vertical buttons">
+                        <div class="ui buttons">
+                            <button onClick="StatsGeneration();" id="btnStats" class="ui basic green button">Statistics</button>
                             <button onClick="exportSave();" id="btnExport" class="ui basic blue button">Export</button>
                             <button onClick="importSave();" id="btnImport" class="ui basic blue button">Import</button>
                             <button onClick="Reset();" id="Recommencer" class="ui basic red button">Reset</button>
                         </div>
-                    </div><br><br>
-                    <div class="centrer content">
-                        <h4 class="ui horizontal divider header"><i class="eye icon"></i>Theme</h4>
-                        <p>Theme selection menu</p>
-                        <div class="ui vertical buttons">>
-                            <button onClick="Theme(0);" id="btnExport" class="ui basic blue button">Purple space</button>
-                            <button onClick="Theme(1);" id="btnExport" class="ui basic blue button">Dark blue & Grey</button>
-                            <button onClick="Theme(2);" id="btnExport" class="ui basic blue button">Blue & White</button>
-                            <button onClick="Theme(3);" id="btnExport" class="ui basic blue button">Bumbleblee</button>
-                        </div </div> <br />
-                        <br />
-                        <div class="fluid ui buttons">
-                            <div onclick="hideModals();" class="ui red button">
-                                <i class="remove icon"></i>Close </div>
-                        </div>
+                    </div>
+                </div><br><br>
+                <div class="centrer content">
+                    <h4 class="ui horizontal divider header"><i class="eye icon"></i>Theme</h4>
+                    <p>Theme selection menu</p>
+                    <div class="ui buttons">>
+                        <button onClick="Theme(0);" id="btnExport" class="ui basic purple button">Purple space</button>
+                        <button onClick="Theme(1);" id="btnExport" class="ui basic secondary button">Dark blue & Grey</button>
+                        <button onClick="Theme(2);" id="btnExport" class="ui basic blue button">Blue & White</button>
+                        <button onClick="Theme(3);" id="btnExport" class="ui basic yellow button">Bumbleblee</button>
+                    </div>
+                </div> <br />
+                <br />
+                <div class="fluid ui buttons">
+                    <div onclick="hideModals();" class="ui red button">
+                        <i class="remove icon"></i>Close </div>
+                </div>
+            </div>
+
+
+            <!--TUTORIAL-->
+            <div class="ui basic modal" id="modal-2">
+
+                <div class="ui icon header">
+                    <i class="info icon"></i>
+                    <font id="tutorial-title" class="title "></font>
+                </div>
+                <div class="centrer content">
+                    <p id="tutorial-text"></p>
+                </div>
+                <div class="actions">
+                    <div class="large three ui buttons">
+                        <button onClick="PrevTuto();" id="tuto-prev" class="ui red button">Previous</button>
+                        <button onClick="NextTuto();" id="tuto-next" class="ui red button">Next</button>
+                        <div onclick="closeTutorial();" class="ui red button">
+                            <i class="remove icon"></i>Close </div>
                     </div>
                 </div>
+            </div>
 
-                <!--TUTORIAL-->
-                <div class="ui basic modal" id="modal-2">
 
-                    <div class="ui icon header">
-                        <i class="info icon"></i>
-                        <font id="tutorial-title" class="title "></font>
-                    </div>
-                    <div class="centrer content">
-                        <p id="tutorial-text"></p>
+            <!--VENTE-->
+            <div class="ui basic modal" id="modal-4">
+                <div class="ui icon header">
+                    <i class="address book icon"></i>
+                    <font id="confirm-title" class="title ">Market confirmation</font>
+                </div>
+                <div class="centrer content">
+                    <div class="ui icon message">
+                        <div class="content">
+                            <p id="sellconfirm-text">
+                            </p>
+                        </div>
                     </div>
                     <div class="actions">
-                        <div class="large three ui buttons">
-                            <button onClick="PrevTuto();" id="tuto-prev" class="ui red button">Previous</button>
-                            <button onClick="NextTuto();" id="tuto-next" class="ui red button">Next</button>
-                            <div onclick="closeTutorial();" class="ui red button">
-                                <i class="remove icon"></i>Close </div>
-                        </div>
+                        <div id="confirmsell-btn" onclick="confirmsell();" class="ui green ok inverted button">
+                            <i class="check icon"></i>Yes </div>
+                        <div onclick="hideModals();" class="ui red basic inverted button">
+                            <i class="remove icon"></i>No </div>
+
                     </div>
                 </div>
-
-
-                <!--VENTE-->
-                <div class="ui basic modal" id="modal-4">
-                    <div class="ui icon header">
-                        <i class="address book icon"></i>
-                        <font id="confirm-title" class="title ">Market confirmation</font>
-                    </div>
-                    <div class="centrer content">
-                        <div class="ui icon message">
-                            <div class="content">
-                                <p id="sellconfirm-text">
-                                </p>
-                            </div>
-                        </div>
-                        <div class="actions">
-                            <div id="confirmsell-btn" onclick="confirmsell();" class="ui green ok inverted button">
-                                <i class="check icon"></i>Yes </div>
-                            <div onclick="hideModals();" class="ui red basic inverted button">
-                                <i class="remove icon"></i>No </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!--GAME MESSAGE-->
-                <div class="ui basic modal" id="modal-5">
-                    <div class="ui icon header">
-                        <i class="info circle icon"></i>
-                        <font id="message-title" class="title ">Message</font>
-                    </div>
-                    <div class="centrer content">
-                        <div class="ui icon message">
-                            <div class="content">
-                                <p id="message-text">
-                                </p>
-                            </div>
-                        </div>
-                        <div class="actions">
-                            <div onclick="hideModals();" class="ui red basic inverted button">
-                                <i class="remove icon"></i>Close </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!--RESET-->
-                <div class="ui basic modal" id="modal-6">
-                    <div class="ui icon header">
-                        <i class="address book icon"></i>
-                        <font id="confirm-title" class="title ">Confirm reset</font>
-                    </div>
-                    <div class="centrer content">
-                        <div class="ui icon message">
-                            <div class="content">
-                                <p id="resetconfirm-text">Do you really want to reset all your stats ?</p>
-                            </div>
-                        </div>
-                        <div class="actions">
-                            <div id="confirmsell-btn" onclick="confirmReset();" class="ui green ok inverted button">
-                                <i class="check icon"></i>Yes </div>
-                            <div onclick="hideModals();" class="ui red basic inverted button">
-                                <i class="remove icon"></i>No </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!--ATTACK-->
-                <div class="ui basic modal" id="modal-7">
-                    <div class="ui icon header">
-                        <i class="red chess rook icon"></i>
-                        <font id="PirateAttackTitle" class=""></font><br>
-                        <font id="PirateAttackTitleDesc" class=""></font>
-                    </div>
-                    <div class="centrer content">
-                        <div class="ui message fight">
-                            <div class="ui horizontal segments">
-                                <div class="ui left aligned clearing segment">
-                                    <div class="ui left icon">
-                                        <i class="big green flag outline icon"></i>
-                                        <font id="PlayerLifeTitle" class="left "></font>
-
-                                        <div id="PlayerHP" class="ui inverted indicating progress">
-                                            <div class="bar">
-                                                <div class="progress"></div>
-                                            </div>
-                                            <div class="label" id="PlayerLifeText"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui clearing segment">
-                                    <br>
-                                </div>
-                            </div>
-                            <div class="ui horizontal segments">
-                                <div class="ui clearing segment">
-                                    <br>
-                                </div>
-                                <div class="ui right aligned basic segment">
-                                    <div class="ui right icon">
-                                        <i class="big red flag outline icon"></i>
-                                        <font id="PirateLifeTitle" class="right "></font>
-                                        <div id="PirateHP" class="ui inverted indicating progress">
-                                            <div class="bar">
-                                                <div class="progress"></div>
-                                            </div>
-                                            <div class="label" id="PirateLifeText"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <font id="PirateAttackDesc" class=""></font>
-                        <div class="actions">
-                            <div id="attack-btn" onclick="PirateFightAttack();" class="ui huge red basic inverted button">
-                                <i class="crosshairs icon"></i>Fight </div>
-                            <div id="attack-btn" onclick="PirateFightProctect();" class="ui huge green basic inverted button">
-                                <i class="shield alternate icon"></i>Protect </div>
-                            <div onclick="PirateFightFlee();" class="ui blue basic inverted button">
-                                <i class="remove icon"></i>Flee </div>
-
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
+            <!--GAME MESSAGE-->
+            <div class="ui basic modal" id="modal-5">
+                <div class="ui icon header">
+                    <i class="info circle icon"></i>
+                    <font id="message-title" class="title ">Message</font>
+                </div>
+                <div class="centrer content">
+                    <div class="ui icon message">
+                        <div class="content">
+                            <p id="message-text">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div onclick="hideModals();" class="ui red basic inverted button">
+                            <i class="remove icon"></i>Close </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--RESET-->
+            <div class="ui basic modal" id="modal-6">
+                <div class="ui icon header">
+                    <i class="address book icon"></i>
+                    <font id="confirm-title" class="title ">Confirm reset</font>
+                </div>
+                <div class="centrer content">
+                    <div class="ui icon message">
+                        <div class="content">
+                            <p id="resetconfirm-text">Do you really want to reset all your stats ?</p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div id="confirmsell-btn" onclick="confirmReset();" class="ui green ok inverted button">
+                            <i class="check icon"></i>Yes </div>
+                        <div onclick="hideModals();" class="ui red basic inverted button">
+                            <i class="remove icon"></i>No </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--ATTACK-->
+            <div class="ui basic modal" id="modal-7">
+                <div class="ui icon header">
+                    <i class="red chess rook icon"></i>
+                    <font id="PirateAttackTitle" class=""></font><br>
+                    <font id="PirateAttackTitleDesc" class=""></font>
+                </div>
+                <div class="centrer content">
+                    <div class="ui message fight">
+                        <div class="ui horizontal segments">
+                            <div class="ui left aligned clearing segment">
+                                <div class="ui left icon">
+                                    <i class="big green flag outline icon"></i>
+                                    <font id="PlayerLifeTitle" class="left "></font>
+
+                                    <div id="PlayerHP" class="ui inverted indicating progress">
+                                        <div class="bar">
+                                            <div class="progress"></div>
+                                        </div>
+                                        <div class="label" id="PlayerLifeText"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui clearing segment">
+                                <br>
+                            </div>
+                        </div>
+                        <div class="ui horizontal segments">
+                            <div class="ui clearing segment">
+                                <br>
+                            </div>
+                            <div class="ui right aligned basic segment">
+                                <div class="ui right icon">
+                                    <i class="big red flag outline icon"></i>
+                                    <font id="PirateLifeTitle" class="right "></font>
+                                    <div id="PirateHP" class="ui inverted indicating progress">
+                                        <div class="bar">
+                                            <div class="progress"></div>
+                                        </div>
+                                        <div class="label" id="PirateLifeText"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <font id="PirateAttackDesc" class=""></font>
+                    <div class="actions">
+                        <div id="attack-btn" onclick="PirateFightAttack();" class="ui huge red basic inverted button">
+                            <i class="crosshairs icon"></i>Fight </div>
+                        <div id="attack-btn" onclick="PirateFightProctect();" class="ui huge green basic inverted button">
+                            <i class="shield alternate icon"></i>Protect </div>
+                        <div onclick="PirateFightFlee();" class="ui blue basic inverted button">
+                            <i class="remove icon"></i>Flee </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
 
 </body>
 

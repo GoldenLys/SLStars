@@ -111,15 +111,13 @@ var Technologies = {
     9: { name: "Alien drone II", cost: 100000000000, gain: 50, type: 0, need: 8, req: [16, 500], req2: [17, 500] },
 };
 
-var Upgrades = {
+var Hyperdrive = {
     0: { name: "Hyperdrive", price: 500, gain: 0.25, type: 1, need: -1 },
 };
 
-var Upgrades2 = {
+var Hyperspace = {
     0: { name: "Hyperspace", price: 100, gain: 10, type: 1, need: -1 },
 };
-
-var SystemMult = { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1 };
 
 var texts = {
     systemname: ["Lysen", "Zelas", "Centra", "Vecis", "Ivurd", "Sentori", "Fasis", "Luya", "Kisae", "Gaia"],
@@ -127,7 +125,7 @@ var texts = {
 };
 
 var tutorials = {
-    0: { title: "How to play ?", text: "<h4>The objective is to get materials then sell them to buy technologies to improve the render</h4>1. You can start by making money with an exploration mission,<br>2. Sell your merchandises to the space market.<br>", },
+    0: { title: "How to play ?", text: "<h4>The objective is to get materials then sell them to buy technologies to improve the render</h4>1. You can start by making money with an exploration mission,<br>2. Sell your merchandises to the space market.<br>3. Create the 'Rusty Drone I' in the technologies.", },
     1: { title: "Exploration", text: "The exploration is the main objective,<br> by exploring you will be able to discover new locations and materials.<br><br><h4>The sizes (quantity) in the exploration missions</h4>- <span class='noir'>Tiny</span> inferior to 1.<br>- <span class='jaune'>Very small</span> Equal to 1.<br>- <span class='bleu'>Small</span> Inferior to 11<br>- <span class='violet'>Large</span> Inferior to 50<br>- <span class='rose'>Big</span> Inferior to 100<br>- <span class='rouge'>Huge</span> Inferior to 1000<br>- <span class='vert'>Massive</span> Upper than 999.<br>", },
     2: { title: "Market", text: "The market is the place to sell all your merchandises and get some money,<br> the prices are differents on every system & change every days.<br><br>There is a color code to indicate the values of every material:<br>- <span class='rouge'>Low</span><br>- <span class='argent'>Normal</span><br>- <span class='vert'>High</span><br>- <span class='Gold'>Expensive</span>", },
     3: { title: "Technologies", text: "3 Technologies are unlockables<br>- A drone that gives a certain amount of the defined item, depending of your current drone level.<br> - An hyperspace module that can unlock new locations.<br>- An hyperdrive module that can reduce the cost to travel to another location.", },
