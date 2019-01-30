@@ -10,11 +10,13 @@
 <link rel="stylesheet" type="text/css" href="dropdown.min.css" />
 <link rel="stylesheet" type="text/css" href="sidebar.min.css" />
 <link rel="stylesheet" type="text/css" href="progress.min.css" />
+<link rel="stylesheet" type="text/css" href="checkbox.min.css" />
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="semantic.min.js"></script>
 <script src="dropdown.min.js"></script>
 <script src="sidebar.min.js"></script>
 <script src="progress.min.js"></script>
+<script src="checkbox.min.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132217801-1"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
@@ -23,14 +25,15 @@
 
     gtag('config', 'UA-132217801-1');
 </script>
-<link href="style.css?v=4432" rel="stylesheet" type="text/css" />
-<link href="theme1.css?v=4432" id="theme1" rel="" type="text/css" />
-<link href="theme2.css?v=4432" id="theme2" rel="" type="text/css" />
-<link href="theme3.css?v=4432" id="theme3" rel="" type="text/css" />
-<script src="js/utils.js?v=4432"></script>
-<script src="js/data.js?v=4432"></script>
-<script src="js/core.js?v=4432"></script>
-<script src="js/ui.js?v=4432"></script>
+<link href="style.css?v=45" rel="stylesheet" type="text/css" />
+<link href="theme1.css?v=45" id="theme1" rel="" type="text/css" />
+<link href="theme2.css?v=45" id="theme2" rel="" type="text/css" />
+<link href="theme3.css?v=45" id="theme3" rel="" type="text/css" />
+<link href="theme4.css?v=45" id="theme4" rel="" type="text/css" />
+<script src="js/utils.js?v=45"></script>
+<script src="js/data.js?v=45"></script>
+<script src="js/core.js?v=45"></script>
+<script src="js/ui.js?v=45"></script>
 <script src="js/numeral.min.js"></script>
 
 <script type="text/javascript"> if (screen.width <= 1280) { location.href = './mobile.html'; } </script>
@@ -81,7 +84,7 @@
             <!--STATS COLUMN-->
             <div class="column" id="colonne-m">
                 <div id="travel" class="ui black message">
-                    <h3 class="centrer ui type4 C1">Location</h3>
+                    <h3 class="centrer ui type4 ">Location</h3>
 
                     <div id="selection" class="ui fluid red floating dropdown labeled icon button">
                         <i class="world icon"></i>
@@ -91,7 +94,7 @@
                     </div>
 
                     <div class="ui divider"></div>
-                    <h3 class="centrer ui type4 C1">Stats</h3>
+                    <h3 class="centrer ui type4 ">Stats</h3>
                     <p><i class="green dollar sign icon"></i>
                         <span class="left" id="money"></span>
                         <br>
@@ -106,7 +109,7 @@
                     </p>
                     <div class="ui divider"></div>
 
-                    <h3 class="centrer ui type4 C1">Inventory</h3>
+                    <h3 id="InventoryTitle" class="centrer ui type4 ">Inventory</h3>
                     <div id="inventory" style="height: auto; text-align: left;">
                     </div>
                 </div>
@@ -119,7 +122,7 @@
                     <div class="column">
                         <div class="ui black message">
                             <img class="ui huge avatar image" src="images/exploration.png">
-                            <span class="bold ui type4 C1">Exploration</span>
+                            <span class="bold ui type4 ">Exploration</span>
 
                             <table id="system0" class="ui inverted table"></table>
                             <table id="system1" class="ui inverted table" style="display: none;"></table>
@@ -138,7 +141,7 @@
 
                         <div class="ui black message">
                             <img class="ui huge avatar image" src="images/market.png">
-                            <span class="bold ui type4 C1">Market</span>
+                            <span class="bold ui type4 ">Market</span>
 
                             <table id="system0sm" class="ui inverted table"></table>
                         </div>
@@ -150,14 +153,14 @@
                     <div class="column">
                         <div class="ui black message">
                             <img class="ui huge avatar image" src="images/hyperspace.png">
-                            <span class="bold ui type4 C1">Hyperspace</span>
+                            <span class="bold ui type4 ">Hyperspace</span>
                             <br><br>
                             <p id="HYPERSPACE-TEXT"></p>
                             <table id="HYPERSPACE-BOARD" class="ui inverted table"></table>
                         </div>
                         <div class="ui black message">
                             <img class="ui huge avatar image" src="images/mining_laser.png">
-                            <span class="bold ui type4 C1">Drone</span>
+                            <span class="bold ui type4 ">Drone</span>
                             <br><br>
                             <span>
                                 <font id="EXT-DESC"></font>
@@ -174,7 +177,7 @@
                         </div>
                         <div class="ui black message">
                             <img class="ui huge avatar image" src="images/hyperdrive.png">
-                            <span class="bold ui type4 C1">Hyperdrive</span>
+                            <span class="bold ui type4 ">Hyperdrive</span>
                             <br><br>
                             <p id="HYPERDRIVE-TEXT"></p>
                             <table id="UPG-BOARD" class="ui inverted table"></table>
@@ -187,7 +190,7 @@
                     <div class="column">
                         <div class="ui black message">
                             <img class="ui huge avatar image" src="images/galaxy.png">
-                            <span class="bold ui type4 C1">Galaxy</span>
+                            <span class="bold ui type4 ">Galaxy</span>
                             <p class="ui type2" id="galaxydesc"></p>
                             <div class="ui horizontal segments">
                                 <div class="ui segment">
@@ -216,6 +219,16 @@
                 <font id="savemenu" class="title color1"></font>
             </div>
             <div class="centrer content">
+                <h4 class="ui horizontal divider header"><i class="eye icon"></i>General</h4>
+                <p>General options</p>
+                <div class="ui buttons">>
+                    <div class="ui toggle checkbox" id="MarketConfirmationToggle">
+                        <input type="checkbox" onclick="console.log('TEST');">
+                        <label>disable market confirmations</label>
+                    </div>
+                </div>
+            </div> <br />
+            <div class="centrer content">
                 <h4 class="ui horizontal divider header"><i class="save icon"></i>Save</h4>
                 <p>Here you can export your save to another navigator or computer.
                     <br> You can also reset your save to start a new game.</p>
@@ -234,10 +247,11 @@
                 <h4 class="ui horizontal divider header"><i class="eye icon"></i>Theme</h4>
                 <p>Theme selection menu</p>
                 <div class="ui buttons">>
-                    <button onClick="Theme(0);" id="btnExport" class="ui basic purple button">Purple space</button>
-                    <button onClick="Theme(1);" id="btnExport" class="ui basic secondary button">Dark blue & Grey</button>
-                    <button onClick="Theme(2);" id="btnExport" class="ui basic blue button">Blue & White</button>
-                    <button onClick="Theme(3);" id="btnExport" class="ui basic yellow button">Bumbleblee</button>
+                        <button onClick="Theme(0);" id="btnExport" class="ui basic purple button">Purple space</button>
+                        <button onClick="Theme(1);" id="btnExport" class="ui basic secondary button">Dark blue & Grey</button>
+                        <button onClick="Theme(2);" id="btnExport" class="ui basic blue button">Blue & White</button>
+                        <button onClick="Theme(3);" id="btnExport" class="ui basic yellow button">Bumbleblee</button>
+                        <button onClick="Theme(4);" id="btnExport" class="ui basic grey button">White</button>
                 </div>
             </div> <br />
             <br />

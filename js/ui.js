@@ -13,7 +13,8 @@
 	$("#Galaxy-content").html("<span class='bold'>GALAXY NUMBER</span><br><h1 class='type4 or'>" + Game.Galaxy + "</h1>");
 	$("#Galaxy-content2").html("<span class='bold'>REQUIREMENTS<br></span>- You must reach reach <span class='rouge'>Gaia</span>.<br>- Have <i class='green dollar sign icon'></i><span class='vert'>" + fix(GetGalaxyPrice(), 2) + "</span> to travel to another galaxy.");
 	$("#EXPLO-TITLE").html("Exploration - " + texts.systemname[Game.system]);
-	$("#galaxydesc").html("There is a black hole here. It seems to be able to absorb everything, including my past, is it time to start all over again?")
+	$("#galaxydesc").html("There is a black hole here. It seems to be able to absorb everything, including my past, is it time to start all over again?");
+	$("#InventoryTitle").html("Inventory <span class='type3'>(<span class='" + SetColor(Game.CurrInv) + "'>" + Game.CurrInv + "</span>/" + Game.Maxinv + ")</span>");
 	if (Game.isInFight == 1) { $("#modal-7").modal('setting', 'closable', false).modal('show'); }
 	if (Game.cash < GetGalaxyPrice()) { $("#GalaxyBuy").addClass("disabled"); }
 	else { if (Game.system == 9) $("#GalaxyBuy").removeClass("disabled"); }
@@ -29,8 +30,6 @@
 	setTutorial(Game.tutorial);
 	UpdatePirateView();
 };
-
-
 
 function GetSystemType(value) {
 	if (value == 0) { type = "Planet"; }
@@ -57,20 +56,23 @@ function GenMissions() {
 		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * 100 ? ' disabled' : '';
 		var canExploreMax = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
 		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * offer.nbr));
+		if (10 > Game.Maxinv - Game.CurrInv) { canbuy10 = ' disabled'; }
+		if (100 > Game.Maxinv - Game.CurrInv) { canbuy100 = ' disabled'; }
+		if (maxexplore >= Game.Maxinv - Game.CurrInv) { maxexplore = Game.Maxinv - Game.CurrInv; }
+		if (offer.type == 2) { if (maxexplore > 100) { maxexplore = 100; } }
 		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; canbuy10 = "disabled"; canbuy100 = "disabled"; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
 		var rewardstext = SetColor(rewards);
-		var pricetext = Game.explored[i] < 1 ? fix(((Market[offer.type].value * offer.nbr) / 2), 1) : fix((Market[offer.type].value * offer.nbr), 1)
+		var pricetext = Game.explored[i] < 1 ? fix(((Market[offer.type].value * offer.nbr) * Game.ExplorationMult[offer.type] / 2 / 2), 1) : fix((Market[offer.type].value * Game.ExplorationMult[offer.type] / 2 * offer.nbr), 1)
 		recompense = SetColorText(rewards);
 		reward = texts.items[offer.type];
 		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
-		if (Game.SystemMult[offer.type] < 1) { pricecolor = 'vert'; }
-		if (Game.SystemMult[offer.type] > 1.25) { if (Game.SystemMult[i] <= 2) { pricecolor = 'bronze'; } }
-		if (Game.SystemMult[offer.type] > 2) { if (Game.SystemMult[i] > 2) { pricecolor = 'rouge'; } }
-		if (Game.SystemMult[offer.type] > 0.9) { if (Game.SystemMult[i] < 1.26) { pricecolor = ''; } }
-		if (Game.SystemMult[offer.type] > 0.5) { if (Game.SystemMult[i] < 0.91) { pricecolor = 'jaune'; } }
-		cost = "<i class='dollar sign icon'></i><font class='type1'>" + pricetext + "</font>";
+		if (Game.ExplorationMult[offer.type] < 1) { pricecolor = 'vert'; }
+		if (Game.ExplorationMult[offer.type] > 1.25) { if (Game.ExplorationMult[i] <= 2) { pricecolor = 'rouge'; } }
+		if (Game.ExplorationMult[offer.type] > 0.9) { if (Game.ExplorationMult[i] < 1.26) { pricecolor = ''; } }
+		if (Game.ExplorationMult[offer.type] > 0.5) { if (Game.ExplorationMult[i] < 0.91) { pricecolor = 'jaune'; } }
+		cost = "<i class='" + pricecolor + " dollar sign icon'></i><font class='" + pricecolor + " type1'>" + pricetext + "</font>";
 		description = GetSystemType(offer.desc);
 
 		var SYSTEMDIV = $(
@@ -82,7 +84,13 @@ function GenMissions() {
 			"<td class='center aligned'><div class='ui SLStars buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1, " + offer.type + ");'>" + exploretext + "</button><button class='ui " + canbuy10 + " button' onClick='explore(" + i + ", 10, " + offer.type + ");'>10</button><button class='ui " + canbuy100 + " button' onClick='explore(" + i + ", 100, " + offer.type + ");'>100</button><button class='ui " + canExploreMax + " button' onClick='explore(" + i + ", " + maxexplore + ", " + offer.type + ");'>Max</button></div></td>" +
 			"</tr>"
 		);
-		$('#system' + offer.system).append(SYSTEMDIV);
+		if (offer.type == 2) {
+			if (Game.inventory[2] < 100) {
+				$('#system' + offer.system).append(SYSTEMDIV);
+			}
+		} else {
+			$('#system' + offer.system).append(SYSTEMDIV);
+		}
 	}
 }
 //GENERATE MARKET
@@ -279,7 +287,9 @@ function GenExtractionMaterials() {
 		);
 
 		if (Missions[D].system == Game.system) {
-			$("#EXT-CONTENT").append(content);
+			if (Missions[D].type != 2) {
+				$("#EXT-CONTENT").append(content);
+			}
 		}
 	}
 }
@@ -302,8 +312,11 @@ function ClickEvents() {
 	$('.ui.dropdown').dropdown();
 
 	$("#selection-content").on("click", "div", function () { var id = $(this).data('id'); changeLocation(id); });
-	$("#EXT-CONTENT").on("click", "div", function () { var id = $(this).data('id'); Game.extId = id; });
+	$("#EXT-CONTENT").on("click", "div", function () { var id = $(this).data('id'); Game.extId = id; Game.extEnabled=1; });
 	$("#top-menu").on("click", "#sidebar", function () { $('.ui.sidebar').sidebar('toggle'); });
+	$("#MarketConfirmationToggle").on("click", function () {
+		if (Game.confirmations == 0) { Game.confirmations = 1; } else { Game.confirmations = 0; }
+	});
 }
 
 function AddTravelPoints() {
@@ -377,9 +390,9 @@ function UpdateEP() {
 }
 
 function showmessage(title, message) {
-    $("#message-title").html(title);
-    $("#message-text").html(message);
-    $('#modal-5').modal('show');
+	$("#message-title").html(title);
+	$("#message-text").html(message);
+	$('#modal-5').modal('show');
 }
 
 function UpdatePirateView() {
@@ -406,49 +419,66 @@ function StatsGeneration() {
 		"Current money : <i class='green dollar sign icon'></i>" + fix(Game.cash, 1) +
 		" (<span class='vert'>" + fix(Game.cashGained, 1) +
 		"</span>-<span class='rouge'>" + fix(Game.cashSpent, 1) +
-		"</span>)<div class='ui divider'></div>" + 
-		"Fights won : " + Game.Wins + 
+		"</span>)<div class='ui divider'></div>" +
+		"Fights won : " + Game.Wins +
 		" | Fights loses : " + Game.Loses +
 		"<br>Pirate exp : " + Game.PirateExp + "/" + Game.PirateMaxExp +
-		" | Pirate level : " + Game.PirateRank + " | Pirate life : " + Game.PirateBaseLife + "<i class='red heart icon'></i> | Pirate power : " + Game.PiratePower + " DMG" + 
-		"<br>Your life : " + Game.PlayerBaseLife + "<i class='red heart icon'></i> | Your power : " + Game.PlayerAttack + " DMG" + 
+		" | Pirate level : " + Game.PirateRank + " | Pirate life : " + Game.PirateBaseLife + "<i class='red heart icon'></i> | Pirate power : " + Game.PiratePower + " DMG" +
+		"<br>Your life : " + Game.PlayerBaseLife + "<i class='red heart icon'></i> | Your power : " + Game.PlayerAttack + " DMG" +
 		"<div class='ui divider'></div>Started " + Game.DateStarted + " on " + sitename + " " + Game.startedVersion
 	);
 	$('#modal-5').modal('show');
 }
 
 function Theme(selection) {
-    if (selection == 0) {
-        Game.theme = 0;
-        save();
-        $('#theme1').attr('rel', '');
-        $('#theme2').attr('rel', '');
-        $('#theme3').attr('rel', '');
-        $(".pusher").css("background", "rgba(0, 0, 0, 0.2)");
-        $(".pusher").css("background-image", "url(images/newbg.png)");
-    }
-    if (selection == 1) {
-        Game.theme = 1;
-        save();
-        $('#theme1').attr('rel', 'stylesheet');
-        $('#theme2').attr('rel', '');
-        $('#theme3').attr('rel', '');
-        $(".pusher").css("background", "rgb(21, 26, 29)");
-    }
-    if (selection == 2) {
-        Game.theme = 2;
-        save();
-        $('#theme1').attr('rel', '');
-        $('#theme2').attr('rel', 'stylesheet');
-        $('#theme3').attr('rel', '');
-        $(".pusher").css("background", "rgb(56, 178, 253)");
-    }
-    if (selection == 3) {
-        Game.theme = 3;
-        save();
-        $('#theme1').attr('rel', '');
-        $('#theme2').attr('rel', '');
-        $('#theme3').attr('rel', 'stylesheet');
-        $(".pusher").css("background", "rgb(218, 161, 0)");
-    }
+	if (selection == 0) {
+		Game.theme = 0;
+		save();
+		$('#theme1').attr('rel', '');
+		$('#theme2').attr('rel', '');
+		$('#theme3').attr('rel', '');
+		$('#theme4').attr('rel', '');
+		$(".pusher").css("background", "rgba(0, 0, 0, 0.2)");
+		$(".pusher").css("background-image", "url(images/newbg.png)");
+	}
+	if (selection == 1) {
+		Game.theme = 1;
+		save();
+		$('#theme1').attr('rel', 'stylesheet');
+		$('#theme2').attr('rel', '');
+		$('#theme3').attr('rel', '');
+		$('#theme4').attr('rel', '');
+		$(".pusher").css("background", "rgb(21, 26, 29)");
+	}
+	if (selection == 2) {
+		Game.theme = 2;
+		save();
+		$('#theme1').attr('rel', '');
+		$('#theme2').attr('rel', 'stylesheet');
+		$('#theme3').attr('rel', '');
+		$('#theme4').attr('rel', '');
+		$(".pusher").css("background", "rgb(56, 178, 253)");
+	}
+	if (selection == 3) {
+		Game.theme = 3;
+		save();
+		$('#theme1').attr('rel', '');
+		$('#theme2').attr('rel', '');
+		$('#theme3').attr('rel', 'stylesheet');
+		$('#theme4').attr('rel', '');
+		$(".pusher").css("background", "rgb(218, 161, 0)");
+	}
+	if (selection == 4) {
+		Game.theme = 4;
+		save();
+		$('#theme1').attr('rel', '');
+		$('#theme2').attr('rel', '');
+		$('#theme3').attr('rel', '');
+		$('#theme4').attr('rel', 'stylesheet');
+		$(".pusher").css("background", "rgb(218, 218, 218)");
+	}
+}
+
+setIMG = function () {
+	$(".pusher").css("background-image", "url(images/newbg.png)");
 }

@@ -46,7 +46,7 @@
 
 .bleu {
 	color: #027ce0;
-	text-shadow: 0px 0px 3vh #192cbb;
+	text-shadow: 0px 0px 0.2vh #192cbb;
 }
 
 .rose {
@@ -411,4 +411,16 @@ color: transparent;
 
 #PlayerLifeText, #PirateLifeText {
     color: #FFFFFF;
+}
+
+.ui.toggle.checkbox input:checked~.box, .ui.toggle.checkbox input:checked~label {
+    color: #FFFFFF!important;
+}
+
+.ui.toggle.checkbox .box, .ui.toggle.checkbox label {
+    color: #FFFFFF!important;
+}
+
+.ui.toggle.checkbox input:focus:checked~.box, .ui.toggle.checkbox input:focus:checked~label {
+    color: #FFFFFF!important;
 }

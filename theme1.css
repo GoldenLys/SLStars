@@ -24,7 +24,7 @@
 
 .bleu {
 	color: #027ce0;
-	text-shadow: 0px 0px 3vh #192cbb;
+	text-shadow: 0px 0px 0.2vh #192cbb;
 }
 
 .rose {
@@ -48,7 +48,7 @@
 }
 
 .jaune {
-	color: #FFF000;
+	color: rgb(226, 185, 4);
 }
 
 .blanc {

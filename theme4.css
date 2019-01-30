@@ -178,8 +178,8 @@ body ::-webkit-scrollbar-track {
 }
 
 .ui.red.button {
-    border: 1px black solid;
     transition: 1.5s;
+    border: 1px black solid;
     background-size: 200% auto;
     background: #ffffff;
     color: #000000;
@@ -247,11 +247,11 @@ body ::-webkit-scrollbar-track {
 }
 
 .SLStarsborder {
-    background: rgb(56, 178, 253)!important;
+    background: rgb(218, 218, 218)!important;
 }
 
 .SLStarsborder:hover {
-    background: rgb(56, 178, 253)!important;
+    background: rgb(218, 218, 218)!important;
 }
 
 
@@ -281,7 +281,7 @@ background-color: #db2828;
 }
 
 .ui.inverted.menu {
-    background: rgb(56, 178, 253);
+    background: rgb(218, 218, 218);
 }
 
 .C1 {

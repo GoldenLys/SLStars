@@ -12,7 +12,7 @@
 
 //CONFIG
 
-var version = "v4.432";
+var version = "v4.5";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -35,7 +35,7 @@ var Game = {
     extGain: 0,
     TravelCost: 25,
     Hyperdrive: 0,
-    totalinv: 100,
+    Maxinv: 100,
     CurrInv: 0,
     CurrSellID: 0,
     CurrSellQty: 0,
@@ -55,7 +55,10 @@ var Game = {
     theme: 0,
     Wins: 0,
     Loses: 0,
-    SystemMult: { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1 }
+    SystemMult: { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1 },
+    ExplorationMult: { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1 },
+    confirmations: 1,
+    extEnabled: 0,
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -72,6 +75,8 @@ $(document).ready(function () {
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
     $('#system' + Game.system).show();
+    if (Game.confirmations == 0) { $('.checkbox').checkbox('check'); }
+    else { $('.checkbox').checkbox('uncheck'); }
     if (Game.fl == 0) { $("#modal-2").modal('show'); changeLocation("fl"); }
 });
 
@@ -84,35 +89,59 @@ function UpdateGame(cashps) {
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
     Game.cash += cashps;
     Game.cashGained += cashps;
-    Game.inventory[Missions[Game.extId].type] += Game.extGain;
-    Game.totalinv += Game.extGain;
-    if (Game.CurrInv <= 0) { if (Game.cash <= 3) { rand = random(10, 100); Game.cash += rand; showmessage("Distress signal", "You found an old distress signal!<br> You have joined the signal transmission source and have found a dead body with an abandoned vessel and <i class='green dollar sign icon'></i>" + rand); } }
+    if (Game.extEnabled > 0) {
+        Game.inventory[Missions[Game.extId].type] += Game.extGain;
+    }
+    if (Game.CurrInv < 1) { if (Game.cash <= 10) { rand = random(10, 100); Game.cash += rand; showmessage("Distress signal", "You found an old distress signal!<br> You have joined the signal transmission source and have found an abandoned vessel with <i class='green dollar sign icon'></i>" + rand + " in it."); } }
     UpdateUI();
     save();
 }
 
 function explore(id, nbr, obj) {
-    if (Game.explored[id] > 0) {
-        if (Game.cash >= ((Market[obj].value * Missions[id].nbr)) * nbr) {
-            Game.cash -= ((Market[obj].value * Missions[id].nbr)) * nbr;
-            Game.cashSpent += ((Market[obj].value * Missions[id].nbr)) * nbr;
-            Game.inventory[obj] += Missions[id].nbr * nbr;
-            Game.CurrInv += Missions[id].nbr * nbr;
-            Game.totalinv += Missions[id].nbr * nbr;
-            Game.rank += nbr + (1 * Game.system);
+    if (Game.CurrInv == Game.Maxinv) {
+        console.log("LIMIT REACHED.");
+        if (nbr * Missions[id].nbr == 1) { S = "";} else { S="s"; }
+        showmessage("Too much merchandises", "You can't travel with your current inventory weight.<br> You need " + nbr * Missions[id].nbr + " place" + S + " in your inventory.");
+    } else {
+        if ((nbr * Missions[id].nbr) <= Game.Maxinv - Game.CurrInv) {
+            if (Game.explored[id] > 0) {
+                if (Game.cash >= ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2) * nbr) {
+                    Game.cash -= ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2) * nbr;
+                    Game.cashSpent += ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2) * nbr;
+                    Game.inventory[obj] += Missions[id].nbr * nbr;
+                    if (obj == 2) { } else {
+                        Game.CurrInv += Missions[id].nbr * nbr;
+                    }
+                    Game.rank += nbr + (1 * Game.system);
+                }
+            }
+        } else {
+            if (Game.explored[id] > 0) {
+                if (Game.cash >= ((Market[obj].value * (Game.Maxinv - Game.CurrInv) / Missions[id].nbr) * Game.ExplorationMult[obj] / 2)) {
+                    Game.cash -= ((Market[obj].value * (Game.Maxinv - Game.CurrInv) / Missions[id].nbr) * Game.ExplorationMult[obj] / 2);
+                    Game.cashSpent += ((Market[obj].value * (Game.Maxinv - Game.CurrInv) / Missions[id].nbr) * Game.ExplorationMult[obj] / 2);
+                    Game.inventory[obj] += (Game.Maxinv - Game.CurrInv) / Missions[id].nbr;
+                    if (obj == 2) { } else {
+                        Game.CurrInv += (Game.Maxinv - Game.CurrInv) / Missions[id].nbr;
+                    }
+                    Game.rank += (Game.Maxinv - Game.CurrInv) / Missions[id].nbr + (1 * Game.system);
+                }
+            }
         }
     }
     if (Game.explored[id] < 1) {
-        if (Game.cash >= (Market[obj].value * Missions[id].nbr) * nbr / 2) {
-            Game.cash -= (Market[obj].value * Missions[id].nbr) * nbr / 2;
-            Game.cashSpent += (Market[obj].value * Missions[id].nbr) * nbr / 2;
-            Game.inventory[obj] += Missions[id].nbr * 2;
-            Game.CurrInv += Missions[id].nbr * nbr * 2;
-            Game.totalinv += Missions[id].nbr * nbr * 2;
-            Game.explored[id] = 1;
-            Game.rank = Game.rank + 1 + (1 * Game.system);
-        }
-
+        if ((nbr * Missions[id].nbr) <= Game.Maxinv - Game.CurrInv) {
+            if (Game.cash >= (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr / 2) {
+                Game.cash -= (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr / 2;
+                Game.cashSpent += (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr / 2;
+                Game.inventory[obj] += Missions[id].nbr;
+                if (obj == 2) { } else {
+                    Game.CurrInv += Missions[id].nbr * nbr;
+                }
+                Game.explored[id] = 1;
+                Game.rank = Game.rank + 1 + (1 * Game.system);
+            }
+        } else {if (nbr * Missions[id].nbr == 1) { S = "";} else { S="s"; } showmessage("Too much merchandises", "You can't travel with your current inventory weight.<br> You need " + nbr * Missions[id].nbr + " place" + S + " in your inventory."); }
     }
     UpdateUI();
     save();
@@ -124,8 +153,10 @@ function sellitem(id, qty) {
     Game.CurrSellQty = qty;
     Game.CurrMult = mult;
     if (id == 2) { mult = 0.01; }
-    $("#sellconfirm-text").html("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + "<img class='ui avatar image' src='images/items/" + id + ".png'> for <font color='green'>" + fix(Market[id].value * mult * qty, 1) + "$</font> ?");
-    $('#modal-4').modal('show');
+    if (Game.confirmations == 1) {
+        $("#sellconfirm-text").html("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + "<img class='ui avatar image' src='images/items/" + id + ".png'> for <font color='green'>" + fix(Market[id].value * mult * qty, 1) + "$</font> ?");
+        $('#modal-4').modal('show');
+    } else { confirmsell(); }
     UpdateUI();
 }
 
@@ -142,9 +173,10 @@ function confirmsell() {
     }
     Game.cash += Market[Game.CurrSellID].value * Game.SystemMult[Game.CurrSellID] * Game.CurrSellQty;
     Game.cashGained += Market[Game.CurrSellID].value * Game.SystemMult[Game.CurrSellID] * Game.CurrSellQty;
-    Game.inventory[Game.CurrSellID] -= Game.CurrSellQty;
-    Game.CurrInv -= Game.CurrSellQty;
-    Game.totalinv -= Game.CurrSellQty;
+    if (Game.CurrSellID != 2) {
+        Game.inventory[Game.CurrSellID] -= Game.CurrSellQty;
+        Game.CurrInv -= Game.CurrSellQty;
+    }
     Game.SystemMult[Game.CurrSellID] = Game.CurrMult;
     UpdateUI();
     save();
@@ -152,7 +184,8 @@ function confirmsell() {
 
 function changeLocation(id) {
     if (id == "fl") {
-        for (var SID in Game.SystemMult) { if (SID == 2) { Game.SystemMult[SID] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID] = random(0, 2200) / 1000; } }
+        for (var SID in Game.SystemMult) { if (SID == 2) { Game.SystemMult[SID] = random(1000, 3000) / 1000; } else { Game.SystemMult[SID] = random(0, 2200) / 1000; } }
+        for (var EXM in Game.ExplorationMult) { if (EXM == 2) { Game.ExplorationMult[EXM] = random(1000, 5000) / 1000; } else { Game.ExplorationMult[EXM] = random(500, 2200) / 1000; } }
         Game.system = 0;
     } else {
         if (id == "loading") {
@@ -160,17 +193,17 @@ function changeLocation(id) {
         } else {
             if (Game.UnlockedLocations >= id) {
                 if (Game.system == id) { showmessage("System error", "Your destination is already reached !"); } else {
-
-
                     if (Game.inventory[2] >= Game.TravelCost) {
                         Game.inventory[2] -= Game.TravelCost;
                         Game.system = id;
                         Game.days++;
+                        Game.extEnabled = 0;
                         for (var SID in Game.SystemMult) { if (SID == 2) { Game.SystemMult[SID] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID] = random(0, 2200) / 1000; } }
+                        for (var EXM in Game.ExplorationMult) { if (EXM == 2) { Game.ExplorationMult[EXM] = random(1000, 5000) / 1000; } else { Game.ExplorationMult[EXM] = random(500, 2200) / 1000; } }
                     } else { showmessage("You are out of power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); }
                 }
             } else { showmessage("Upgrade the hyperspace", "Your hyperspace can't travel there for now, upgrade it!"); }
-            
+
         }
     }
     hidesystems();
