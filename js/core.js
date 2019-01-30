@@ -12,7 +12,7 @@
 
 //CONFIG
 
-var version = "v4.43";
+var version = "v4.431";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -36,7 +36,7 @@ var Game = {
     TravelCost: 25,
     Hyperdrive: 0,
     totalinv: 100,
-    CurrInv: 100,
+    CurrInv: 0,
     CurrSellID: 0,
     CurrSellQty: 0,
     CurrMult: 0,
