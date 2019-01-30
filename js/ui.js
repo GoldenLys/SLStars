@@ -439,7 +439,7 @@ function Theme(selection) {
 		$('#theme3').attr('rel', '');
 		$('#theme4').attr('rel', '');
 		$(".pusher").css("background", "rgba(0, 0, 0, 0.2)");
-		$(".pusher").css("background-image", "url(images/newbg.png)");
+		$(".pusher").css("background-image", "url(images/bg.jpg)");
 	}
 	if (selection == 1) {
 		Game.theme = 1;
@@ -480,5 +480,5 @@ function Theme(selection) {
 }
 
 setIMG = function () {
-	$(".pusher").css("background-image", "url(images/newbg.png)");
+	$(".pusher").css("background-image", "url(images/bg.jpg)");
 }
