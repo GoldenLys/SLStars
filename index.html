@@ -25,15 +25,15 @@
 
     gtag('config', 'UA-132217801-1');
 </script>
-<link href="style.css?v=45" rel="stylesheet" type="text/css" />
-<link href="theme1.css?v=45" id="theme1" rel="" type="text/css" />
-<link href="theme2.css?v=45" id="theme2" rel="" type="text/css" />
-<link href="theme3.css?v=45" id="theme3" rel="" type="text/css" />
-<link href="theme4.css?v=45" id="theme4" rel="" type="text/css" />
-<script src="js/utils.js?v=45"></script>
-<script src="js/data.js?v=45"></script>
-<script src="js/core.js?v=45"></script>
-<script src="js/ui.js?v=45"></script>
+<link href="style.css?v=451" rel="stylesheet" type="text/css" />
+<link href="theme1.css?v=451" id="theme1" rel="" type="text/css" />
+<link href="theme2.css?v=451" id="theme2" rel="" type="text/css" />
+<link href="theme3.css?v=451" id="theme3" rel="" type="text/css" />
+<link href="theme4.css?v=451" id="theme4" rel="" type="text/css" />
+<script src="js/utils.js?v=451"></script>
+<script src="js/data.js?v=451"></script>
+<script src="js/core.js?v=451"></script>
+<script src="js/ui.js?v=451"></script>
 <script src="js/numeral.min.js"></script>
 
 <script type="text/javascript"> if (screen.width <= 1280) { location.href = './mobile.html'; } </script>
@@ -222,9 +222,9 @@
                 <h4 class="ui horizontal divider header"><i class="eye icon"></i>General</h4>
                 <p>General options</p>
                 <div class="ui buttons">>
-                    <div class="ui toggle checkbox" id="MarketConfirmationToggle">
-                        <input type="checkbox" onclick="console.log('TEST');">
-                        <label>disable market confirmations</label>
+                    <div class="ui toggle checkbox" id="MarketToggle">
+                        <input type="checkbox">
+                        <label>Disable market confirmations</label>
                     </div>
                 </div>
             </div> <br />
@@ -247,14 +247,19 @@
                 <h4 class="ui horizontal divider header"><i class="eye icon"></i>Theme</h4>
                 <p>Theme selection menu</p>
                 <div class="ui buttons">>
-                        <button onClick="Theme(0);" id="btnExport" class="ui basic purple button">Purple space</button>
-                        <button onClick="Theme(1);" id="btnExport" class="ui basic secondary button">Dark blue & Grey</button>
-                        <button onClick="Theme(2);" id="btnExport" class="ui basic blue button">Blue & White</button>
-                        <button onClick="Theme(3);" id="btnExport" class="ui basic yellow button">Bumbleblee</button>
-                        <button onClick="Theme(4);" id="btnExport" class="ui basic grey button">White</button>
+                    <button onClick="Theme(0);" id="btnExport" class="ui basic purple button">Purple space</button>
+                    <button onClick="Theme(1);" id="btnExport" class="ui basic secondary button">Dark blue & Grey</button>
+                    <button onClick="Theme(2);" id="btnExport" class="ui basic blue button">Blue & White</button>
+                    <button onClick="Theme(3);" id="btnExport" class="ui basic yellow button">Bumbleblee</button>
+                    <button onClick="Theme(4);" id="btnExport" class="ui basic grey button">White</button>
+                </div><br><br>
+                <div class="ui toggle checkbox" id="BackgroundToggle">
+                    <input type="checkbox">
+                    <label>Use background</label>
                 </div>
-            </div> <br />
-            <br />
+            </div> 
+            <br>
+            <br>
             <div class="fluid ui buttons">
                 <div onclick="hideModals();" class="ui red button">
                     <i class="remove icon"></i>Close </div>

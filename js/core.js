@@ -1,18 +1,16 @@
 //////////////////////////
-//     TODO & IDEAS     //
+// SLSTARS made by  LYS //
 //////////////////////////
 //                      //
 //         W I P        //
-// PLEASE BE INDULGENT  //
-//////////////////////////
-//            
+//                      //
 //////////////////////////
 
 
 
 //CONFIG
 
-var version = "v4.5";
+var version = "v4.51";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -24,7 +22,6 @@ var Game = {
     explored: [],
     inventory: [],
     cash: 50,
-    cashps: 0,
     cashSpent: 0,
     cashGained: 50,
     technologies: [],
@@ -59,6 +56,7 @@ var Game = {
     ExplorationMult: { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1 },
     confirmations: 1,
     extEnabled: 0,
+    UseBackground: 1,
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -66,7 +64,7 @@ var Game = {
 $(document).ready(function () {
     changeLocation("loading");
     if (localStorage.getItem("SLStars2") != null) { load(); }
-    setInterval(function () { UpdateGame(Game.cashps); }, 1000);
+    setInterval(function () { UpdateGame(); }, 1000);
     setInterval(function () { LookForPirates(); }, 60000);
     Theme(Game.theme);
     GenExtractionMaterials();
@@ -75,20 +73,22 @@ $(document).ready(function () {
     $('.ui.sidebar').sidebar('hide');
     $("#system-select").val(texts.systemname[Game.system]);
     $('#system' + Game.system).show();
-    if (Game.confirmations == 0) { $('.checkbox').checkbox('check'); }
-    else { $('.checkbox').checkbox('uncheck'); }
+    if (Game.confirmations == 0) { $('#MarketToggle').checkbox('check'); }
+    else { $('#MarketToggle').checkbox('uncheck'); }
+    if (Game.UseBackground == 1) { $('#BackgroundToggle').checkbox('check'); }
+    else { $('#BackgroundToggle').checkbox('uncheck'); }
+    ToggleBackground();
     if (Game.fl == 0) { $("#modal-2").modal('show'); changeLocation("fl"); }
 });
 
 //GAME FUNCTIONS
 
-function UpdateGame(cashps) {
+function UpdateGame() {
     if (Game.inventory[2] < 0) { Game.inventory[2] = 0; }
     for (var inv in texts.items) { if (Game.inventory[inv] == null) { Game.inventory[inv] = 0; } }
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
-    Game.cash += cashps;
-    Game.cashGained += cashps;
+    Game.Maxinv = 90 + (Game.Galaxy) * 10;
     if (Game.extEnabled > 0) {
         Game.inventory[Missions[Game.extId].type] += Game.extGain;
     }
@@ -99,9 +99,8 @@ function UpdateGame(cashps) {
 
 function explore(id, nbr, obj) {
     if (Game.CurrInv == Game.Maxinv) {
-        console.log("LIMIT REACHED.");
         if (nbr * Missions[id].nbr == 1) { S = "";} else { S="s"; }
-        showmessage("Too much merchandises", "You can't travel with your current inventory weight.<br> You need " + nbr * Missions[id].nbr + " place" + S + " in your inventory.");
+        showmessage("Too much merchandises", "You can't travel with your current inventory weight.");
     } else {
         if ((nbr * Missions[id].nbr) <= Game.Maxinv - Game.CurrInv) {
             if (Game.explored[id] > 0) {
@@ -152,7 +151,6 @@ function sellitem(id, qty) {
     Game.CurrSellID = id;
     Game.CurrSellQty = qty;
     Game.CurrMult = mult;
-    if (id == 2) { mult = 0.01; }
     if (Game.confirmations == 1) {
         $("#sellconfirm-text").html("Do you want to sell " + fix(qty, 1) + " " + texts.items[id] + "<img class='ui avatar image' src='images/items/" + id + ".png'> for <font color='green'>" + fix(Market[id].value * mult * qty, 1) + "$</font> ?");
         $('#modal-4').modal('show');
@@ -161,7 +159,7 @@ function sellitem(id, qty) {
 }
 
 function confirmsell() {
-    var mult = Game.SystemMult[Game.CurrSellI];
+    var mult = Game.SystemMult[Game.CurrSellID];
     if (Game.inventory[Game.CurrSellID] >= Game.CurrSellQty) {
         if (Game.CurrSellID < 2) {
             if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 250; }
@@ -177,7 +175,7 @@ function confirmsell() {
         Game.inventory[Game.CurrSellID] -= Game.CurrSellQty;
         Game.CurrInv -= Game.CurrSellQty;
     }
-    Game.SystemMult[Game.CurrSellID] = Game.CurrMult;
+    Game.SystemMult[Game.CurrSellID] = mult;
     UpdateUI();
     save();
 }
@@ -344,7 +342,7 @@ function LosePirateFight() {
 //PRESTIGE FUNCTIONS
 
 function GetGalaxyPrice() {
-    return ((1000000000 * Game.Galaxy) * 5);
+    return ((10000000000 * (Game.Galaxy * 2.5)) * 5);
 }
 
 function changegalaxy() {
@@ -354,7 +352,7 @@ function changegalaxy() {
             for (var EP in Game.EPRequired) { Game.EPRequired[EP] = Game.EPRequired[EP] + (1.25 * Game.Galaxy); }
             Game.cashSpent += Game.cash;
             Game.cash = 50 + (1.25 * Game.Galaxy) * 10;
-            Game.cashGained += 50 + (1.25 * Game.Galaxy) * 10;
+            Game.cashGained = 50 + (1.25 * Game.Galaxy) * 10;
             Game.inventory = [];
             Game.CurrInv = 0;
             Game.system = 0;

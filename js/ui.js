@@ -51,11 +51,11 @@ function GenMissions() {
 	for (var i in Missions) {
 		var pricecolor;
 		var offer = Missions[i];
-		var canbuy = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
-		var canbuy10 = Game.cash < (Market[offer.type].value * offer.nbr) * 10 ? ' disabled' : '';
-		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * 100 ? ' disabled' : '';
-		var canExploreMax = Game.cash < Market[offer.type].value * offer.nbr ? ' disabled' : '';
-		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * offer.nbr));
+		var canbuy = Game.cash < Market[offer.type].value * offer.nbr * Game.ExplorationMult[offer.type] ? ' disabled' : '';
+		var canbuy10 = Game.cash < (Market[offer.type].value * offer.nbr) * Game.ExplorationMult[offer.type] * 10 ? ' disabled' : '';
+		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * Game.ExplorationMult[offer.type] * 100 ? ' disabled' : '';
+		var canExploreMax = Game.cash < Math.floor(Market[offer.type].value * Game.ExplorationMult[offer.type] * offer.nbr) ? ' disabled' : '';
+		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * Game.ExplorationMult[offer.type] * offer.nbr));
 		if (10 > Game.Maxinv - Game.CurrInv) { canbuy10 = ' disabled'; }
 		if (100 > Game.Maxinv - Game.CurrInv) { canbuy100 = ' disabled'; }
 		if (maxexplore >= Game.Maxinv - Game.CurrInv) { maxexplore = Game.Maxinv - Game.CurrInv; }
@@ -312,10 +312,14 @@ function ClickEvents() {
 	$('.ui.dropdown').dropdown();
 
 	$("#selection-content").on("click", "div", function () { var id = $(this).data('id'); changeLocation(id); });
-	$("#EXT-CONTENT").on("click", "div", function () { var id = $(this).data('id'); Game.extId = id; Game.extEnabled=1; });
+	$("#EXT-CONTENT").on("click", "div", function () { var id = $(this).data('id'); Game.extId = id; Game.extEnabled = 1; });
 	$("#top-menu").on("click", "#sidebar", function () { $('.ui.sidebar').sidebar('toggle'); });
-	$("#MarketConfirmationToggle").on("click", function () {
+	$("#MarketToggle").on("click", function () {
 		if (Game.confirmations == 0) { Game.confirmations = 1; } else { Game.confirmations = 0; }
+	});
+	$("#BackgroundToggle").on("click", function () {
+		if (Game.UseBackground == 0) { Game.UseBackground = 1; } else { Game.UseBackground = 0; }
+		ToggleBackground();
 	});
 }
 
@@ -438,8 +442,7 @@ function Theme(selection) {
 		$('#theme2').attr('rel', '');
 		$('#theme3').attr('rel', '');
 		$('#theme4').attr('rel', '');
-		$(".pusher").css("background", "rgba(0, 0, 0, 0.2)");
-		$(".pusher").css("background-image", "url(images/bg.jpg)");
+		$(".pusher").css("background", "#08050c");
 	}
 	if (selection == 1) {
 		Game.theme = 1;
@@ -477,8 +480,16 @@ function Theme(selection) {
 		$('#theme4').attr('rel', 'stylesheet');
 		$(".pusher").css("background", "rgb(218, 218, 218)");
 	}
+	ToggleBackground();
+	UpdateUI();
 }
 
-setIMG = function () {
-	$(".pusher").css("background-image", "url(images/bg.jpg)");
+function ToggleBackground() {
+	if (Game.UseBackground == 1) {
+		$(".pusher").css("background-image", "url(images/bg.jpg)");
+		Game.UseBackground=1;
+	} else {
+		$(".pusher").css("background-image", "");
+		Game.UseBackground=0;
+	}
 }
