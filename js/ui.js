@@ -3,7 +3,7 @@
 	$("#money").html("" + fix(Game.cash, 1));
 	$("#copyright").html(sitename + " " + version)
 	$("#rank").html("" + fix(Game.rank, 2) + " EP");
-	$("#dayscount").html("" + Game.days + " days passed.");
+	$("#dayscount").html("Day " + Game.days + "");
 	$("#fuel").html("" + fix(Game.inventory[2], 3) + "% power.");
 	$("#EXT-TITLE").html(texts.items[Missions[Game.extId].type] + "<img class='ui avatar image' src='images/items/" + Missions[Game.extId].type + ".png'>");
 	$("#EXT-DESC").html("The drone extract " + fix(Game.extGain, 1));
@@ -54,14 +54,14 @@ function GenMissions() {
 		var canbuy = Game.cash < Market[offer.type].value * offer.nbr * Game.ExplorationMult[offer.type] ? ' disabled' : '';
 		var canbuy10 = Game.cash < (Market[offer.type].value * offer.nbr) * Game.ExplorationMult[offer.type] * 10 ? ' disabled' : '';
 		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * Game.ExplorationMult[offer.type] * 100 ? ' disabled' : '';
-		var canExploreMax = Game.cash < Math.floor(Market[offer.type].value * Game.ExplorationMult[offer.type] * offer.nbr) ? ' disabled' : '';
-		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * Game.ExplorationMult[offer.type] * offer.nbr));
+		var canExploreMax = Game.cash < Market[offer.type].value / Missions[i].nbr * Game.ExplorationMult[offer.type] ? ' disabled' : '';
+		var maxexplore = Math.floor((Market[offer.type].value * (Game.Maxinv - Game.CurrInv) / Missions[i].nbr) * Game.ExplorationMult[offer.type]);
 		if (offer.type == 2) { if (maxexplore > 100) { maxexplore = 100; } }
 		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; canbuy10 = "disabled"; canbuy100 = "disabled"; }
 		if (1 > Game.Maxinv - Game.CurrInv) { canbuy = ' disabled'; }
 		if (10 > Game.Maxinv - Game.CurrInv) { canbuy10 = ' disabled'; }
 		if (100 > Game.Maxinv - Game.CurrInv) { canbuy100 = ' disabled'; }
-		if (maxexplore >= Game.Maxinv - Game.CurrInv) { maxexplore = Game.Maxinv - Game.CurrInv; canExploreMax = ' disabled'; }
+		if (Game.Maxinv == Game.CurrInv) { canExploreMax = ' disabled'; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr;
 		var rewardstext = SetColor(rewards);
@@ -69,10 +69,9 @@ function GenMissions() {
 		recompense = SetColorText(rewards);
 		reward = texts.items[offer.type];
 		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
-		if (Game.ExplorationMult[offer.type] < 1) { pricecolor = 'vert'; }
-		if (Game.ExplorationMult[offer.type] > 1.25) { if (Game.ExplorationMult[i] <= 2) { pricecolor = 'rouge'; } }
-		if (Game.ExplorationMult[offer.type] > 0.9) { if (Game.ExplorationMult[i] < 1.26) { pricecolor = ''; } }
-		if (Game.ExplorationMult[offer.type] > 0.5) { if (Game.ExplorationMult[i] < 0.91) { pricecolor = 'jaune'; } }
+		if (Game.ExplorationMult[offer.type] < 0.9) { pricecolor = 'vert'; }
+		if (Game.ExplorationMult[offer.type] > 1) { if (Game.ExplorationMult[offer.type] <= 2) { pricecolor = 'rouge'; } }
+		if (Game.ExplorationMult[offer.type] > 0.9) { if (Game.ExplorationMult[offer.type] < 1) { pricecolor = ''; } }
 		cost = "<i class='" + pricecolor + " dollar sign icon'></i><font class='" + pricecolor + " type1'>" + pricetext + "</font>";
 		description = GetSystemType(offer.desc);
 
@@ -346,7 +345,8 @@ function AddTravelPoints() {
 	for (var i in texts.systemname) {
 
 		isUnlockedColor = Game.UnlockedLocations < i ? ' rouge' : ' vert';
-		if (Game.UnlockedLocations < i) { isUnlockedText = " (Require<font class='" + isUnlockedColor + "'> " + fix(Game.EPRequired[i], 0) + " EP</font>)" } else { isUnlockedText = ""; }
+		if (Game.UnlockedLocations < i) { isUnlockedText = " (Require<font class='" + isUnlockedColor + "'> " + fix(Game.EPRequired[i], 1) + " EP</font>)" } else { isUnlockedText = " (Require<font class='" + isUnlockedColor + "'> " + fix(Game.EPRequired[i], 1) + " EP</font>)"; }
+		if (Game.rank >= Game.EPRequired[i]) { isUnlockedText = ""; }
 		isUnlockedSymbol = Game.UnlockedLocations < i ? '<i class="red circle outline icon"></i>' : '<i class="green circle outline icon"></i>';
 		if (Game.system == i) { isUnlockedSymbol = '<i class="green check circle outline icon"></i>'; }
 		var TRAVELCONTENT = $(
@@ -398,7 +398,7 @@ function PrevTuto() {
 function UpdateEP() {
 	for (var s in Game.EPRequired) {
 		if (Game.UnlockedLocations < 9) {
-			$("#percentrank").html(Game.EPRequired[Game.UnlockedLocations + 1] + " EP");
+			$("#percentrank").html(fix(Game.EPRequired[Game.UnlockedLocations + 1], 1) + " EP");
 		} else {
 			$("#percentrank").html("Unlimited EP");
 		}
