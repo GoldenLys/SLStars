@@ -68,7 +68,7 @@ var Missions = {
     57: { name: '6', desc: 5, type: 8, nbr: 200, system: 8 },
     //SYSTEM 10
     58: { name: 'Station ', desc: 0, type: 2, nbr: 1, system: 9 },
-    59: { name: '1', desc: 7, type: 10, nbr: 1000, system: 9 },
+    59: { name: '1', desc: 7, type: 10, nbr: 100, system: 9 },
     60: { name: '2', desc: 6, type: 19, nbr: 10, system: 9 },
     61: { name: '3', desc: 6, type: 18, nbr: 10, system: 9 },
     62: { name: '4', desc: 5, type: 12, nbr: 100, system: 9 },

@@ -56,13 +56,14 @@ function GenMissions() {
 		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * Game.ExplorationMult[offer.type] * 100 ? ' disabled' : '';
 		var canExploreMax = Game.cash < Math.floor(Market[offer.type].value * Game.ExplorationMult[offer.type] * offer.nbr) ? ' disabled' : '';
 		var maxexplore = Math.floor(Game.cash / (Market[offer.type].value * Game.ExplorationMult[offer.type] * offer.nbr));
-		if (10 > Game.Maxinv - Game.CurrInv) { canbuy10 = ' disabled'; }
-		if (100 > Game.Maxinv - Game.CurrInv) { canbuy100 = ' disabled'; }
-		if (maxexplore >= Game.Maxinv - Game.CurrInv) { maxexplore = Game.Maxinv - Game.CurrInv; }
 		if (offer.type == 2) { if (maxexplore > 100) { maxexplore = 100; } }
 		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; canbuy10 = "disabled"; canbuy100 = "disabled"; }
+		if (1 > Game.Maxinv - Game.CurrInv) { canbuy = ' disabled'; }
+		if (10 > Game.Maxinv - Game.CurrInv) { canbuy10 = ' disabled'; }
+		if (100 > Game.Maxinv - Game.CurrInv) { canbuy100 = ' disabled'; }
+		if (maxexplore >= Game.Maxinv - Game.CurrInv) { maxexplore = Game.Maxinv - Game.CurrInv; canExploreMax = ' disabled'; }
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
-		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr * 2;
+		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr;
 		var rewardstext = SetColor(rewards);
 		var pricetext = Game.explored[i] < 1 ? fix(((Market[offer.type].value * offer.nbr) * Game.ExplorationMult[offer.type] / 2 / 2), 1) : fix((Market[offer.type].value * Game.ExplorationMult[offer.type] / 2 * offer.nbr), 1)
 		recompense = SetColorText(rewards);
@@ -124,12 +125,24 @@ function GenMarket() {
 			"<td class='center aligned'><div class='ui SLStars buttons'><button class='ui " + canSell + " button' onClick='sellitem(" + i + ",1);'>1</button><button class='ui " + canSell10 + " button' onClick='sellitem(" + i + ",10);'>10</button><button class='ui " + canSell100 + " button' onClick='sellitem(" + i + ",100);'>100</button><button class='ui " + canSellAll + " button' onClick='sellitem(" + i + "," + Game.inventory[i] + ");'>All</button></div></td>" +
 			"</tr>"
 		);
-		if (Game.inventory[i] > 0) {
-			if (i != 2) {
-				$('#system0sm').append(SYSTEMDIV);
-			} else {
-				if (Game.inventory[i] > 100) {
-					$('#system0sm').append(SYSTEMDIV);
+		for (var t in Missions) {
+			if (Missions[t].system == Game.system) {
+				if (Missions[t].type == i) {
+					if (i != 2) {
+						$('#system0sm').append(SYSTEMDIV);
+					} else {
+						if (Game.inventory[i] > 100) {
+							$('#system0sm').append(SYSTEMDIV);
+						}
+					}
+				} else if (Game.inventory[i] > 0) {
+					if (i != 2) {
+						$('#system0sm').append(SYSTEMDIV);
+					} else {
+						if (Game.inventory[i] > 100) {
+							$('#system0sm').append(SYSTEMDIV);
+						}
+					}
 				}
 			}
 		}
@@ -293,7 +306,7 @@ function GenExtractionMaterials() {
 		}
 	}
 
-	if(Game.extEnabled == 1) {
+	if (Game.extEnabled == 1) {
 		$("#drone-title").html("Drone - <span class='vert'>Enabled</span>");
 	} else { $("#drone-title").html("Drone - <span class='rouge'>Disabled</span>"); }
 }
@@ -384,16 +397,11 @@ function PrevTuto() {
 
 function UpdateEP() {
 	for (var s in Game.EPRequired) {
-		if (Game.rank >= Game.EPRequired[0]) { $("#percentrank").html("10 EP"); }
-		if (Game.rank >= Game.EPRequired[1]) { $("#percentrank").html("50 EP"); }
-		if (Game.rank >= Game.EPRequired[2]) { $("#percentrank").html("100 EP"); }
-		if (Game.rank >= Game.EPRequired[3]) { $("#percentrank").html("350 EP"); }
-		if (Game.rank >= Game.EPRequired[4]) { $("#percentrank").html("1000 EP"); }
-		if (Game.rank >= Game.EPRequired[5]) { $("#percentrank").html("2500 EP"); }
-		if (Game.rank >= Game.EPRequired[6]) { $("#percentrank").html("5000 EP"); }
-		if (Game.rank >= Game.EPRequired[7]) { $("#percentrank").html("10000 EP"); }
-		if (Game.rank >= Game.EPRequired[8]) { $("#percentrank").html("100000 EP"); }
-		if (Game.rank >= Game.EPRequired[9]) { $("#percentrank").html("Unlimited EP"); }
+		if (Game.UnlockedLocations < 9) {
+			$("#percentrank").html(Game.EPRequired[Game.UnlockedLocations + 1] + " EP");
+		} else {
+			$("#percentrank").html("Unlimited EP");
+		}
 	}
 }
 
