@@ -487,9 +487,9 @@ function Theme(selection) {
 function ToggleBackground() {
 	if (Game.UseBackground == 1) {
 		$(".pusher").css("background-image", "url(images/bg.jpg)");
-		Game.UseBackground=1;
+		Game.UseBackground = 1;
 	} else {
 		$(".pusher").css("background-image", "");
-		Game.UseBackground=0;
+		Game.UseBackground = 0;
 	}
 }

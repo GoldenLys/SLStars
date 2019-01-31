@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v4.52";
+var version = "v4.53";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -49,7 +49,7 @@ var Game = {
     PirateExp: 0,
     PirateMaxExp: 20,
     isInFight: 0,
-    theme: 0,
+    theme: 1,
     Wins: 0,
     Loses: 0,
     SystemMult: { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1, 18: 1, 19: 1 },
@@ -93,13 +93,13 @@ function UpdateGame() {
     Game.Maxinv = 90 + (Game.Galaxy) * 10;
     if (Game.extEnabled > 0) {
         if (Game.extCurrTime >= Game.extTime) {
-        if((Game.Maxinv-Game.CurrInv) >= Game.extGain)
-        Game.inventory[Missions[Game.extId].type] += Game.extGain;
-        Game.extCurrTime=0;
-    } else { Game.extCurrTime++; }
+            if ((Game.Maxinv - Game.CurrInv) >= Game.extGain)
+                Game.inventory[Missions[Game.extId].type] += Game.extGain;
+            Game.extCurrTime = 0;
+        } else { Game.extCurrTime++; }
     }
-    Game.CurrInv=0;
-    for (var i in Game.inventory) { if(i != 2) { Game.CurrInv+=Game.inventory[i]; } }
+    Game.CurrInv = 0;
+    for (var i in Game.inventory) { if (i != 2) { Game.CurrInv += Game.inventory[i]; } if (Game.inventory[i] < 0) { Game.inventory[i] = 0; if (Game.rank < 0) { Game.rank = 0; } } }
     if (Game.CurrInv < 1) { if (Game.cash <= 10) { rand = random(10, 100); Game.cash += rand; showmessage("Distress signal", "You found an old distress signal!<br> You have joined the signal transmission source and have found an abandoned vessel with <i class='green dollar sign icon'></i>" + rand + " in it."); } }
     UpdateUI();
     save();
@@ -107,7 +107,7 @@ function UpdateGame() {
 
 function explore(id, nbr, obj) {
     if (Game.CurrInv == Game.Maxinv) {
-        if (nbr * Missions[id].nbr == 1) { S = "";} else { S="s"; }
+        if (nbr * Missions[id].nbr == 1) { S = ""; } else { S = "s"; }
         showmessage("Too much merchandises", "You can't travel with your current inventory weight.");
     } else {
         if ((nbr * Missions[id].nbr) <= Game.Maxinv - Game.CurrInv) {
@@ -139,7 +139,7 @@ function explore(id, nbr, obj) {
                 Game.explored[id] = 1;
                 Game.rank = Game.rank + 1 + (1 * Game.system);
             }
-        } else {if (nbr * Missions[id].nbr == 1) { S = "";} else { S="s"; } showmessage("Too much merchandises", "You can't travel with your current inventory weight.<br> You need " + nbr * Missions[id].nbr + " place" + S + " in your inventory."); }
+        } else { if (nbr * Missions[id].nbr == 1) { S = ""; } else { S = "s"; } showmessage("Too much merchandises", "You can't travel with your current inventory weight.<br> You need " + nbr * Missions[id].nbr + " place" + S + " in your inventory."); }
     }
     UpdateUI();
     save();
@@ -191,14 +191,14 @@ function changeLocation(id) {
             if (Game.UnlockedLocations >= id) {
                 if (Game.system == id) { showmessage("System error", "Your destination is already reached !"); } else {
                     if (Game.inventory[2] >= Game.TravelCost) {
-                       if(Game.EPRequired[id] <= Game.rank) {
-                        Game.inventory[2] -= Game.TravelCost;
-                        Game.system = id;
-                        Game.days++;
-                        Game.extEnabled = 0;
-                        for (var SID in Game.SystemMult) { if (SID == 2) { Game.SystemMult[SID] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID] = random(0, 2200) / 1000; } }
-                        for (var EXM in Game.ExplorationMult) { if (EXM == 2) { Game.ExplorationMult[EXM] = random(1000, 5000) / 1000; } else { Game.ExplorationMult[EXM] = random(500, 2200) / 1000; } }
-                    } else { showmessage("Your rank isn't high enough", fix(Game.EPRequired[id], 0) + " EP are required to travel !"); }
+                        if (Game.EPRequired[id] <= Game.rank) {
+                            Game.inventory[2] -= Game.TravelCost;
+                            Game.system = id;
+                            Game.days++;
+                            Game.extEnabled = 0;
+                            for (var SID in Game.SystemMult) { if (SID == 2) { Game.SystemMult[SID] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID] = random(0, 2200) / 1000; } }
+                            for (var EXM in Game.ExplorationMult) { if (EXM == 2) { Game.ExplorationMult[EXM] = random(1000, 5000) / 1000; } else { Game.ExplorationMult[EXM] = random(500, 2200) / 1000; } }
+                        } else { showmessage("Your rank isn't high enough", fix(Game.EPRequired[id], 0) + " EP are required to travel !"); }
                     } else { showmessage("You are out of power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); }
                 }
             } else { showmessage("Upgrade the hyperspace", "Your hyperspace can't travel there for now, upgrade it!"); }
@@ -373,8 +373,8 @@ function changegalaxy() {
             Game.PirateRank = 0;
             Game.PirateExp = 0;
             Game.extEnabled = 0,
-            changeLocation("fl");
-            if(Game.extTime > 1) { Game.extTime--; }
+                changeLocation("fl");
+            if (Game.extTime > 1) { Game.extTime--; }
         }
     }
 }
