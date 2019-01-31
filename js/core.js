@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v4.561";
+var version = "v4.562";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -177,9 +177,9 @@ function confirmsell() {
         if (Game.CurrSellID < 2) {
             if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 150; }
         } else {
-            if (Game.CurrSellID < 7) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 2000; } }
+            if (Game.CurrSellID < 7) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 150; } }
         }
-        if (Game.CurrSellID > 6) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 10000; } }
+        if (Game.CurrSellID > 6) { if (mult > 0) { mult -= mult * (1 * Game.CurrSellQty) / 150; } }
         if (mult < 0) { mult = 0.01; }
     }
     Game.cash += Market[Game.CurrSellID].value * Game.SystemMult[Game.CurrSellID] * Game.CurrSellQty;
