@@ -65,7 +65,7 @@ function GenMissions() {
 		var exploretext = Game.explored[i] > 0 ? 'Visit' : 'Explore';
 		var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr;
 		var rewardstext = SetColor(rewards);
-		var pricetext = Game.explored[i] < 1 ? fix(((Market[offer.type].value * offer.nbr) * Game.ExplorationMult[offer.type] / 2 / 2), 1) : fix((Market[offer.type].value * Game.ExplorationMult[offer.type] / 2 * offer.nbr), 1)
+		var pricetext = Game.explored[i] < 1 ? fix(((Market[offer.type].value * Game.ExplorationMult[offer.type]) * offer.nbr / 2), 1) : fix((Market[offer.type].value * Game.ExplorationMult[offer.type] * offer.nbr), 1)
 		recompense = SetColorText(rewards);
 		reward = texts.items[offer.type];
 		name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
