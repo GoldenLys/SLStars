@@ -7,7 +7,7 @@
 	$("#fuel").html("" + fix(Game.inventory[2], 3) + "% power.");
 	$("#EXT-TITLE").html(texts.items[Missions[Game.extId].type] + "<img class='ui avatar image' src='images/items/" + Missions[Game.extId].type + ".png'>");
 	$("#EXT-DESC").html("The drone extract " + fix(Game.extGain, 1));
-	$("#EXT-DESC2").html("per second ");
+	$("#EXT-DESC2").html("every " + Game.extTime + " seconds.");
 	$("#HYPERDRIVE-TEXT").html("Travel to another location actually cost " + fix(Game.TravelCost, 3) + "% of power");
 	$("#HYPERSPACE-TEXT").html("Your actual maximum destination is " + texts.systemname[Game.UnlockedLocations]);
 	$("#Galaxy-content").html("<span class='bold'>GALAXY NUMBER</span><br><h1 class='type4 or'>" + Game.Galaxy + "</h1>");
@@ -349,7 +349,7 @@ function GenInventory() {
 	for (var id in texts.items) {
 		if (Game.inventory[id] > 0) {
 			if (id != 2) {
-				$("#inventory").append("<span class='Palladium'><font class='bold " + SetColor(Game.inventory[id]) + "'>" + fix(Game.inventory[id], 5) + "</font> " + texts.items[id] + " </span><img class='ui avatar image' src='images/items/" + id + ".png'><br>");
+				$("#inventory").append("<span class='Palladium'><font class='bold " + SetColor(Game.inventory[id]) + "'>" + fix(Game.inventory[id], 1) + "</font> " + texts.items[id] + " </span><img class='ui avatar image' src='images/items/" + id + ".png'><br>");
 			}
 		}
 	}

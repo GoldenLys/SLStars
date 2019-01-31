@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v4.51";
+var version = "v4.52";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -57,6 +57,8 @@ var Game = {
     confirmations: 1,
     extEnabled: 0,
     UseBackground: 1,
+    extTime: 20,
+    extCurrTime: 0,
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -90,8 +92,14 @@ function UpdateGame() {
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
     Game.Maxinv = 90 + (Game.Galaxy) * 10;
     if (Game.extEnabled > 0) {
+        if (Game.extCurrTime >= Game.extTime) {
+        if((Game.Maxinv-Game.CurrInv) >= Game.extGain)
         Game.inventory[Missions[Game.extId].type] += Game.extGain;
+        Game.extCurrTime=0;
+    } else { Game.extCurrTime++; }
     }
+    Game.CurrInv=0;
+    for (var i in Game.inventory) { if(i != 2) { Game.CurrInv+=Game.inventory[i]; } }
     if (Game.CurrInv < 1) { if (Game.cash <= 10) { rand = random(10, 100); Game.cash += rand; showmessage("Distress signal", "You found an old distress signal!<br> You have joined the signal transmission source and have found an abandoned vessel with <i class='green dollar sign icon'></i>" + rand + " in it."); } }
     UpdateUI();
     save();
@@ -108,9 +116,6 @@ function explore(id, nbr, obj) {
                     Game.cash -= ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2) * nbr;
                     Game.cashSpent += ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2) * nbr;
                     Game.inventory[obj] += Missions[id].nbr * nbr;
-                    if (obj == 2) { } else {
-                        Game.CurrInv += Missions[id].nbr * nbr;
-                    }
                     Game.rank += nbr + (1 * Game.system);
                 }
             }
@@ -120,9 +125,6 @@ function explore(id, nbr, obj) {
                     Game.cash -= ((Market[obj].value * (Game.Maxinv - Game.CurrInv) / Missions[id].nbr) * Game.ExplorationMult[obj] / 2);
                     Game.cashSpent += ((Market[obj].value * (Game.Maxinv - Game.CurrInv) / Missions[id].nbr) * Game.ExplorationMult[obj] / 2);
                     Game.inventory[obj] += (Game.Maxinv - Game.CurrInv) / Missions[id].nbr;
-                    if (obj == 2) { } else {
-                        Game.CurrInv += (Game.Maxinv - Game.CurrInv) / Missions[id].nbr;
-                    }
                     Game.rank += (Game.Maxinv - Game.CurrInv) / Missions[id].nbr + (1 * Game.system);
                 }
             }
@@ -134,9 +136,6 @@ function explore(id, nbr, obj) {
                 Game.cash -= (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr / 2;
                 Game.cashSpent += (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr / 2;
                 Game.inventory[obj] += Missions[id].nbr;
-                if (obj == 2) { } else {
-                    Game.CurrInv += Missions[id].nbr * nbr;
-                }
                 Game.explored[id] = 1;
                 Game.rank = Game.rank + 1 + (1 * Game.system);
             }
@@ -192,12 +191,14 @@ function changeLocation(id) {
             if (Game.UnlockedLocations >= id) {
                 if (Game.system == id) { showmessage("System error", "Your destination is already reached !"); } else {
                     if (Game.inventory[2] >= Game.TravelCost) {
+                       if(Game.EPRequired[id] <= Game.rank) {
                         Game.inventory[2] -= Game.TravelCost;
                         Game.system = id;
                         Game.days++;
                         Game.extEnabled = 0;
                         for (var SID in Game.SystemMult) { if (SID == 2) { Game.SystemMult[SID] = random(1000, 5000) / 1000; } else { Game.SystemMult[SID] = random(0, 2200) / 1000; } }
                         for (var EXM in Game.ExplorationMult) { if (EXM == 2) { Game.ExplorationMult[EXM] = random(1000, 5000) / 1000; } else { Game.ExplorationMult[EXM] = random(500, 2200) / 1000; } }
+                    } else { showmessage("Your rank isn't high enough", fix(Game.EPRequired[id], 0) + " EP are required to travel !"); }
                     } else { showmessage("You are out of power cell", fix(Game.TravelCost, 3) + "% are required to travel !"); }
                 }
             } else { showmessage("Upgrade the hyperspace", "Your hyperspace can't travel there for now, upgrade it!"); }
@@ -371,7 +372,9 @@ function changegalaxy() {
             Game.rank = 0;
             Game.PirateRank = 0;
             Game.PirateExp = 0;
+            Game.extEnabled = 0,
             changeLocation("fl");
+            if(Game.extTime > 1) { Game.extTime--; }
         }
     }
 }
