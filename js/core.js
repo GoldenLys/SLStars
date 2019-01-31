@@ -144,9 +144,9 @@ function explore(id, nbr, obj) {
     }
     if (Game.explored[id] < 1) {
         if ((nbr * Missions[id].nbr) <= Game.Maxinv - Game.CurrInv) {
-            if (Game.cash >= (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr / 2) {
-                Game.cash -= (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr / 2;
-                Game.cashSpent += (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr / 2;
+            if (Game.cash >= (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr) {
+                Game.cash -= (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr;
+                Game.cashSpent += (Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2 * nbr;
                 Game.inventory[obj] += Math.floor(Missions[id].nbr);
                 Game.explored[id] = 1;
                 Game.rank = Game.rank + 1 + (1 * Game.system);
