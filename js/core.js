@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v4.54";
+var version = "v4.55";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -112,9 +112,9 @@ function explore(id, nbr, obj) {
     } else {
         if ((nbr * Missions[id].nbr) <= Game.Maxinv - Game.CurrInv) {
             if (Game.explored[id] > 0) {
-                if (Game.cash >= ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2) * nbr) {
-                    Game.cash -= ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2) * nbr;
-                    Game.cashSpent += ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj] / 2) * nbr;
+                if (Game.cash >= ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj]) * nbr) {
+                    Game.cash -= ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj]) * nbr;
+                    Game.cashSpent += ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj]) * nbr;
                     Game.inventory[obj] += Missions[id].nbr * nbr;
                     Game.rank += nbr + (1 * Game.system);
                 }
