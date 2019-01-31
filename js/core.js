@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v4.53";
+var version = "v4.54";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -28,7 +28,7 @@ var Game = {
     tutorial: 0,
     fl: 0,
     days: 0,
-    extId: 0,
+    extId: 1,
     extGain: 0,
     TravelCost: 25,
     Hyperdrive: 0,

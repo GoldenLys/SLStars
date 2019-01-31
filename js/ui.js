@@ -292,6 +292,10 @@ function GenExtractionMaterials() {
 			}
 		}
 	}
+
+	if(Game.extEnabled == 1) {
+		$("#drone-title").html("Drone - <span class='vert'>Enabled</span>");
+	} else { $("#drone-title").html("Drone - <span class='rouge'>Disabled</span>"); }
 }
 
 //UI FUNCTIONS
