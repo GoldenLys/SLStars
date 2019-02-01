@@ -110,7 +110,8 @@ function explore(id, nbr, obj) {
     } else {
         if ((nbr * Missions[id].nbr) <= Game.Maxinv - Game.CurrInv) {
             if (Game.explored[id] > 0) {
-                if (Game.CurrInv < nbr) {
+                if (Game.Maxinv-Game.CurrInv > nbr) {
+                    console.log("case 1 " + nbr);
                     if (Game.cash >= ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj]) * nbr) {
                         Game.cash -= ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj]) * nbr;
                         Game.cashSpent += ((Market[obj].value * Missions[id].nbr) * Game.ExplorationMult[obj]) * nbr;
@@ -118,6 +119,7 @@ function explore(id, nbr, obj) {
                         Game.rank += nbr * 1.25 * Game.system;
                     }
                 } else if (Game.cash >= ((Market[obj].value * (Game.Maxinv - Game.CurrInv) / Missions[id].nbr) * Game.ExplorationMult[obj])) {
+                    console.log("case 2 " + nbr);
                         Game.cash -= ((Market[obj].value * (Game.Maxinv - Game.CurrInv) / Missions[id].nbr) * Game.ExplorationMult[obj]);
                         Game.cashSpent += ((Market[obj].value * (Game.Maxinv - Game.CurrInv) / Missions[id].nbr) * Game.ExplorationMult[obj]);
                         Game.inventory[obj] += Math.floor((Game.Maxinv - Game.CurrInv) / Missions[id].nbr);
