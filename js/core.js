@@ -8,7 +8,7 @@
 // AUTO CACUL DU EXTGAIN
 
 //CONFIG
-var version = "v4.582";
+var version = "v4.583";
 var sitename = "SLStars";
 var Game = {
   isLoading: 1,
@@ -103,15 +103,15 @@ var Game = {
 
 //LOADING BASE CODE & DEBUG IF NEEDED
 
-$(document).ready(function() {
+$(document).ready(function () {
   changeLocation("loading");
   if (localStorage.getItem("SLStars2") != null) {
     load();
   }
-  setInterval(function() {
+  setInterval(function () {
     UpdateGame();
   }, 1000);
-  setInterval(function() {
+  setInterval(function () {
     LookForPirates();
   }, 60000);
   Theme(Game.theme);
@@ -170,7 +170,7 @@ function UpdateGame() {
     }
   }
   if (Game.extTime > 1) {
-    Game.extTime = 20 - Game.Galaxy;
+    Game.extTime = 20 - Game.Galaxy + 1;
   }
   if (Game.CurrInv < 1) {
     if (Game.cash <= 10) {
@@ -179,8 +179,8 @@ function UpdateGame() {
       showmessage(
         "Distress signal",
         "You found an old distress signal!<br> You have joined the signal transmission source and have found an abandoned vessel with <i class='green dollar sign icon'></i>" +
-          rand +
-          " in it."
+        rand +
+        " in it."
       );
     }
   }
@@ -188,128 +188,56 @@ function UpdateGame() {
   save();
 }
 
+function exploremax(id, obj) {
+  var Maxexplore = 0;
+  if (Game.CurrInv == Game.Maxinv) {
+    showmessage("Too much merchandises", "You can't travel with your current inventory weight.");
+  } else {
+    Maxexplore = Math.floor(Game.cash / (Market[obj].value * Game.ExplorationMult[obj]));
+    if (Maxexplore > Game.Maxinv - Game.CurrInv) { Maxexplore = Game.Maxinv - Game.CurrInv; }
+    Game.cash -= Market[obj].value * Game.ExplorationMult[obj] * Maxexplore;
+    Game.cashSpent += Market[obj].value * Game.ExplorationMult[obj] * Maxexplore;
+    Game.inventory[obj] += Maxexplore;
+    if (obj != 2) { Game.CurrInv += Maxexplore; }
+    Game.rank += Maxexplore * (Game.Galaxy * 0.25 * (Game.system + 1));
+  }
+}
+
 function explore(id, nbr, obj) {
-  console.log("Missions id: " + id + ", nbr: " + nbr + " object: " + obj);
   if (Game.CurrInv == Game.Maxinv) {
     //INVENTORY FULL
-    if (nbr * Missions[id].nbr == 1) {
-      S = "";
-    } else {
-      S = "s";
-    }
-    showmessage(
-      "Too much merchandises",
-      "You can't travel with your current inventory weight."
-    );
+    showmessage("Too much merchandises", "You can't travel with your current inventory weight.");
     //INVENTORY NOT FULL
   } else {
     if (Game.explored[id] > 0) {
       //"NBR * MISSION NBR" IS HIGHER THAN INVENTORY
-      if (nbr * Missions[id].nbr > Game.Maxinv - Game.CurrInv) {
-        if (Game.Maxinv - Game.CurrInv > nbr) {
-        } else {
-          //NBR HIGHER THAN INVENTORY
-          if (
-            Game.cash >=
-            (Market[obj].value *
-              Game.ExplorationMult[obj] *
-              (Game.Maxinv - Game.CurrInv)) /
-              Missions[id].nbr
-          ) {
-            Game.cash -=
-              (Market[obj].value *
-                Game.ExplorationMult[obj] *
-                (Game.Maxinv - Game.CurrInv)) /
-              Missions[id].nbr;
-            Game.cashSpent +=
-              (Market[obj].value *
-                Game.ExplorationMult[obj] *
-                (Game.Maxinv - Game.CurrInv)) /
-              Missions[id].nbr;
-            Game.inventory[obj] += Math.floor(
-              (Game.Maxinv - Game.CurrInv) / Missions[id].nbr
-            );
-            Game.rank +=
-              ((Game.Maxinv - Game.CurrInv) / Missions[id].nbr) *
-              (Game.Galaxy * 0.25 * (Game.system + 1));
-          } else {
-            var Maxexplore = Math.floor(
-              (Game.cash / Market[obj].value) * Game.ExplorationMult[obj]
-            );
-            Game.cash -=
-              Market[obj].value * Game.ExplorationMult[obj] * Maxexplore;
-            Game.cashSpent +=
-              Market[obj].value * Game.ExplorationMult[obj] * Maxexplore;
-            Game.inventory[obj] += Maxexplore;
-            Game.rank +=
-              ((Game.Maxinv - Game.CurrInv) / Missions[id].nbr) *
-              (Game.Galaxy * 0.25 * (Game.system + 1));
-          }
-        }
-
-        //NBR NOT HIGHER THAN INVENTORY
+      if (nbr > Game.Maxinv - Game.CurrInv) {
       } else {
-        if (
-          Game.cash >=
-          Market[obj].value * Game.ExplorationMult[obj] * nbr * Missions[id].nbr
-        ) {
-          Game.cash -=
-            Market[obj].value *
-            Game.ExplorationMult[obj] *
-            nbr *
-            Missions[id].nbr;
-          Game.cashSpent +=
-            Market[obj].value *
-            Game.ExplorationMult[obj] *
-            nbr *
-            Missions[id].nbr;
-          Game.inventory[obj] += Math.floor(nbr * Missions[id].nbr);
-          Game.rank +=
-            Math.floor(nbr * Missions[id].nbr) *
-            (Game.Galaxy * 0.25 * (Game.system + 1));
-          console.log(
-            Math.floor(nbr * Missions[id].nbr) *
-              (Game.Galaxy * 0.25 * (Game.system + 1))
-          );
+        //NBR PRICE IS HIGHER THAN INVENTORY
+        if (Game.cash < (Market[obj].value * Game.ExplorationMult[obj]) * nbr) {
+          showmessage("Too expensive", "You need more money.");
+        } else {
+          Game.cash -= Market[obj].value * Game.ExplorationMult[obj] * nbr;
+          Game.cashSpent += Market[obj].value * Game.ExplorationMult[obj] * nbr;
+          Game.inventory[obj] += nbr;
+          if (obj != 2) { Game.CurrInv += nbr; }
+          Game.rank += nbr * (Game.Galaxy * 0.25 * (Game.system + 1));
         }
-      }
-    }
-  }
-  //FIRST EXPLORATION
-  if (Game.explored[id] < 1) {
-    if (nbr * Missions[id].nbr <= Game.Maxinv - Game.CurrInv) {
-      if (
-        Game.cash >=
-        ((Market[obj].value * Missions[id].nbr * Game.ExplorationMult[obj]) /
-          2) *
-          nbr
-      ) {
-        Game.cash -=
-          ((Market[obj].value * Missions[id].nbr * Game.ExplorationMult[obj]) /
-            2) *
-          nbr;
-        Game.cashSpent +=
-          ((Market[obj].value * Missions[id].nbr * Game.ExplorationMult[obj]) /
-            2) *
-          nbr;
-        Game.inventory[obj] += Math.floor(Missions[id].nbr);
-        Game.explored[id] = 1;
-        Game.rank += 1 + 1 * Game.system;
       }
     } else {
-      if (nbr * Missions[id].nbr == 1) {
-        S = "";
+      //FIRST EXPLORATION
+      if (nbr <= Game.Maxinv - Game.CurrInv) {
+        if (Game.cash >= ((Market[obj].value * Game.ExplorationMult[obj]) / 2)) {
+          Game.cash -= ((Market[obj].value * Game.ExplorationMult[obj]) / 2);
+          Game.cashSpent += ((Market[obj].value * Game.ExplorationMult[obj]) / 2);
+          Game.inventory[obj] += Math.floor(1);
+          Game.explored[id] = 1;
+          Game.rank += 1 * Game.system;
+        }
       } else {
-        S = "s";
+        if (nbr == 1) { S = ""; } else { S = "s"; }
+        showmessage("Too much merchandises", "You can't travel with your current inventory weight.<br> You need " + nbr + " place" + S + " in your inventory.");
       }
-      showmessage(
-        "Too much merchandises",
-        "You can't travel with your current inventory weight.<br> You need " +
-          nbr * Missions[id].nbr +
-          " place" +
-          S +
-          " in your inventory."
-      );
     }
   }
   Game.CurrInv = 0;
@@ -336,14 +264,14 @@ function sellitem(id, qty) {
   if (Game.confirmations == 1) {
     $("#sellconfirm-text").html(
       "Do you want to sell " +
-        fix(qty, 1) +
-        " " +
-        texts.items[id] +
-        "<img class='ui avatar image' src='images/items/" +
-        id +
-        ".png'> for <font color='green'>" +
-        fix(Market[id].value * mult * qty, 1) +
-        "$</font> ?"
+      fix(qty, 1) +
+      " " +
+      texts.items[id] +
+      "<img class='ui avatar image' src='images/items/" +
+      id +
+      ".png'> for <font color='green'>" +
+      fix(Market[id].value * mult * qty, 1) +
+      "$</font> ?"
     );
     $("#modal-4").modal("show");
   } else {
@@ -526,8 +454,8 @@ function PirateFightProctect() {
   }
   $("#PirateAttackDesc").html(
     "The pirate ship weapon does <span class='rouge bold'>-" +
-      rPiratePower +
-      "</span><i class='red heart icon'></i> damage to the hull !<br>You repaired <span class='vert'>+5</span><i class='red heart icon'></i> of the hull"
+    rPiratePower +
+    "</span><i class='red heart icon'></i> damage to the hull !<br>You repaired <span class='vert'>+5</span><i class='red heart icon'></i> of the hull"
   );
   UpdatePirateView();
 }
@@ -546,10 +474,10 @@ function PirateFightAttack() {
   }
   $("#PirateAttackDesc").html(
     "You did <span class='rouge'>-" +
-      rPlayerPower +
-      "</span><i class='red heart icon'></i> damage to the pirate ship.<br>The pirate weapon does <span class='rouge bold'>-" +
-      rPiratePower +
-      "</span><i class='red heart icon'></i> damage to the hull !"
+    rPlayerPower +
+    "</span><i class='red heart icon'></i> damage to the pirate ship.<br>The pirate weapon does <span class='rouge bold'>-" +
+    rPiratePower +
+    "</span><i class='red heart icon'></i> damage to the hull !"
   );
   UpdatePirateView();
 }
@@ -631,7 +559,7 @@ function LosePirateFight() {
   showmessage(
     "You lose this fight !",
     "He took all your merchandises and <i class='green dollar sign icon'></i>" +
-      fix(rand, 0)
+    fix(rand, 0)
   );
 }
 
@@ -666,7 +594,8 @@ function changegalaxy() {
       Game.rank = 0;
       Game.PirateRank = 0;
       Game.PirateExp = 0;
-      (Game.extEnabled = 0), (Game.extGain = 0);
+      Game.extEnabled = 0;
+      Game.extGain = 0;
       changeLocation("fl");
       for (var EP in Game.EPRequired) {
         Game.EPRequired[EP] = Game.EPRequired[EP] * 1.25 * Game.Galaxy;

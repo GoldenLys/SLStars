@@ -101,7 +101,7 @@ function GetSystemType(value) {
 function GenMissions() {
   for (var id = 0; id < 11; id++) {
     $("#system" + id).html(
-      "<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Size</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>"
+      "<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>"
     );
   }
 
@@ -110,13 +110,12 @@ function GenMissions() {
     var offer = Missions[i];
     var canbuy =
       Game.cash <
-      Market[offer.type].value * offer.nbr * Game.ExplorationMult[offer.type]
+      Market[offer.type].value * Game.ExplorationMult[offer.type]
         ? " disabled"
         : "";
     var canbuy10 =
       Game.cash <
       Market[offer.type].value *
-        offer.nbr *
         Game.ExplorationMult[offer.type] *
         10
         ? " disabled"
@@ -124,7 +123,6 @@ function GenMissions() {
     var canbuy100 =
       Game.cash <
       Market[offer.type].value *
-        offer.nbr *
         Game.ExplorationMult[offer.type] *
         100
         ? " disabled"
@@ -163,22 +161,8 @@ function GenMissions() {
     }
     var exploretext = Game.explored[i] > 0 ? "Visit" : "Explore";
     var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr;
-    var rewardstext = SetColor(rewards);
     var pricetext =
-      Game.explored[i] < 1
-        ? fix(
-            (Market[offer.type].value *
-              Game.ExplorationMult[offer.type] *
-              offer.nbr) /
-              2,
-            1
-          )
-        : fix(
-            Market[offer.type].value *
-              Game.ExplorationMult[offer.type] *
-              offer.nbr,
-            1
-          );
+      Game.explored[i] < 1 ? fix(Market[offer.type].value * Game.ExplorationMult[offer.type] * 2, 1) : fix(Market[offer.type].value * Game.ExplorationMult[offer.type], 1 );
     recompense = SetColorText(rewards);
     reward = texts.items[offer.type];
     name =
@@ -222,13 +206,6 @@ function GenMissions() {
         "<img class='ui avatar image' src='images/items/" +
         offer.type +
         ".png'></font></td>" +
-        "<td class='center aligned'>" +
-        "<font class=' " +
-        rewardstext +
-        "'>" +
-        recompense +
-        "</font> " +
-        "</td>" +
         "<td class='center aligned'> " +
         cost +
         "</td>" +
@@ -254,10 +231,8 @@ function GenMissions() {
         offer.type +
         ");'>100</button><button class='ui " +
         canExploreMax +
-        " button' onClick='explore(" +
+        " button' onClick='exploremax(" +
         i +
-        ", " +
-        maxexplore +
         ", " +
         offer.type +
         ");'>Max</button></div></td>" +
