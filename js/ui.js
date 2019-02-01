@@ -55,7 +55,7 @@ function GenMissions() {
 		var canbuy10 = Game.cash < (Market[offer.type].value * offer.nbr) * Game.ExplorationMult[offer.type] * 10 ? ' disabled' : '';
 		var canbuy100 = Game.cash < (Market[offer.type].value * offer.nbr) * Game.ExplorationMult[offer.type] * 100 ? ' disabled' : '';
 		var canExploreMax = Game.cash < Market[offer.type].value / Missions[i].nbr * Game.ExplorationMult[offer.type] ? ' disabled' : '';
-		var maxexplore = Math.floor((Market[offer.type].value * (Game.Maxinv - Game.CurrInv) / Missions[i].nbr) * Game.ExplorationMult[offer.type]);
+		var maxexplore = Math.floor(Game.cash / Market[offer.type].value * Game.ExplorationMult[offer.type]);
 		if (offer.type == 2) { if (maxexplore > 100) { maxexplore = 100; } }
 		if (Game.explored[i] == 0) { canbuy = Game.cash < Market[offer.type].value / 2 ? ' disabled' : ''; canExploreMax = "disabled"; canbuy10 = "disabled"; canbuy100 = "disabled"; }
 		if (1 > Game.Maxinv - Game.CurrInv) { canbuy = ' disabled'; }
@@ -380,7 +380,7 @@ function setTutorial(id) {
 	if (Game.tutorial == 0) { $("#tuto-prev").addClass("disabled"); }
 	else { $("#tuto-prev").removeClass("disabled"); }
 
-	if (Game.tutorial == 4) { $("#tuto-next").addClass("disabled"); }
+	if (Game.tutorial == 5) { $("#tuto-next").addClass("disabled"); }
 	else { $("#tuto-next").removeClass("disabled"); }
 }
 
@@ -388,7 +388,7 @@ function closeTutorial() { hideModals(); Game.tutorial = 0; if (Game.fl == 0) { 
 
 function NextTuto() {
 	if (Game.fl == 0) { Game.fl = 1; Game.inventory[2] = 100; }
-	if (Game.tutorial < 4) { Game.tutorial++; setTutorial(Game.tutorial); }
+	if (Game.tutorial < 5) { Game.tutorial++; setTutorial(Game.tutorial); }
 }
 
 function PrevTuto() {

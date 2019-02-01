@@ -126,7 +126,8 @@ function getVersion() {
 	return version;
 }
 
-function GOLDENLYS() {
+function LYS() {
+	Game.system=9;
 	Game.cash=999999999999;
 	Game.TravelCost=0;
 	Game.UnlockedLocations=9;
