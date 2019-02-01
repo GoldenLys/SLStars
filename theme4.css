@@ -178,14 +178,14 @@ body ::-webkit-scrollbar-track {
 }
 
 .ui.red.button {
-    transition: 1.5s;
     border: 1px black solid;
+    transition: 1.5s;
     background-size: 200% auto;
     background: #ffffff;
     color: #000000;
 }
 
-.ui.red.button:focus {
+.ui.red.button:focus, .ui.red.button:active, .ui.red.button:hover {
     background: #ffffff;
     color: #000000;
 }

@@ -185,7 +185,7 @@ body ::-webkit-scrollbar-track {
     color: #000000;
 }
 
-.ui.red.button:focus {
+.ui.red.button:focus, .ui.red.button:active, .ui.red.button:hover {
     background: #ffffff;
     color: #000000;
 }

@@ -244,11 +244,12 @@ body ::-webkit-scrollbar-track {
     background-image: linear-gradient(to left, #0b0019 0%, #24002f 51%, #0b0019 100%);
   }
 
-  .ui.red.button:focus {
+  .ui.red.button:focus, .ui.red.button:active {
     background-image: linear-gradient(to left, #0b0019 0%, #24002f 51%, #0b0019 100%);
   }
 
   .ui.red.button:hover, .ui.red.buttons:hover {
+    background-image: linear-gradient(to left, #0b0019 0%, #24002f 51%, #0b0019 100%);  
     background-position: right center; /* change the direction of the change here */
   }
 

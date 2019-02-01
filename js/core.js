@@ -10,7 +10,7 @@
 
 //CONFIG
 
-var version = "v4.563";
+var version = "v4.57";
 var sitename = "SLStars";
 var Game = {
     isLoading: 1,
@@ -32,7 +32,7 @@ var Game = {
     extGain: 0,
     TravelCost: 25,
     Hyperdrive: 0,
-    Maxinv: 100,
+    Maxinv: 250,
     CurrInv: 0,
     CurrSellID: 0,
     CurrSellQty: 0,
@@ -90,7 +90,7 @@ function UpdateGame() {
     for (var inv in texts.items) { if (Game.inventory[inv] == null) { Game.inventory[inv] = 0; } }
     for (var m in Missions) { if (Game.explored[m] == null) { Game.explored[m] = 0; } }
     for (var t in Technologies) { if (Game.technologies[t] == null) { Game.technologies[t] = 0; } }
-    Game.Maxinv = 90 + (Game.Galaxy) * 10;
+    Game.Maxinv = 225 + (Game.Galaxy) * 25;
     if (Game.extEnabled > 0) {
         if (Game.extCurrTime >= Game.extTime) {
             if ((Game.Maxinv - Game.CurrInv) >= Game.extGain)
@@ -300,6 +300,7 @@ function explore(id, nbr, obj) {
         if (Game.PirateCurrentLife <= 0) { NewPirateStats(); }
         Game.isInFight = 0;
         hideModals();
+        $("#PirateAttackDesc").html("");
     }
 
     function GetPirateHPPercent() {
@@ -340,6 +341,7 @@ function explore(id, nbr, obj) {
         }
         rand = random(0, Game.cashGained);
         showmessage("You won the fight !", "You found <i class='green dollar sign icon'></i>" + fix(rand, 0));
+        $("#PirateAttackDesc").html("");
         Game.cash += rand;
         Game.cashGained += rand;
     }
@@ -356,6 +358,7 @@ function explore(id, nbr, obj) {
         Game.PlayerLife = Game.PlayerBaseLife;
         hideModals();
         showmessage("You lose this fight !", "He took all your merchandises and <i class='green dollar sign icon'></i>" + fix(rand, 0));
+        $("#PirateAttackDesc").html("");
     }
 
     //PRESTIGE FUNCTIONS
