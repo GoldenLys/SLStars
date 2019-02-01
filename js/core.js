@@ -47,7 +47,7 @@ var Game = {
   PirateExp: 0,
   PirateMaxExp: 20,
   isInFight: 0,
-  theme: 1,
+  theme: 0,
   Wins: 0,
   Loses: 0,
   SystemMult: {
