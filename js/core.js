@@ -8,7 +8,7 @@
 // AUTO CACUL DU EXTGAIN
 
 //CONFIG
-var version = "v4.581";
+var version = "v4.582";
 var sitename = "SLStars";
 var Game = {
   isLoading: 1,
@@ -366,11 +366,9 @@ function confirmsell() {
       Market[Game.CurrSellID].value *
       Game.SystemMult[Game.CurrSellID] *
       Game.CurrSellQty;
-    if (Game.inventory[Game.CurrSellID] >= Game.CurrSellQty) {
-      mult -= (mult * (1 * Game.CurrSellQty)) / 150;
-      if (mult < 0.02) {
-        mult = 0.01;
-      }
+    mult -= (mult * (1 * Game.CurrSellQty)) / 150;
+    if (mult < 0.02) {
+      mult = 0.01;
     }
   } else {
     //SELLING A POWER CELL
@@ -386,11 +384,9 @@ function confirmsell() {
       Market[Game.CurrSellID].value *
       Game.SystemMult[Game.CurrSellID] *
       Game.CurrSellQty;
-    if (Game.inventory[Game.CurrSellID] >= Game.CurrSellQty) {
-      mult -= (mult * (1 * Game.CurrSellQty)) / 100;
-      if (mult < 0.02) {
-        mult = 0.01;
-      }
+    mult -= (mult * (1 * Game.CurrSellQty)) / 100;
+    if (mult < 0.02) {
+      mult = 0.01;
     }
   }
   Game.SystemMult[Game.CurrSellID] = mult;
@@ -530,7 +526,7 @@ function PirateFightProctect() {
   }
   $("#PirateAttackDesc").html(
     "The pirate ship weapon does <span class='rouge bold'>-" +
-     rPiratePower +
+      rPiratePower +
       "</span><i class='red heart icon'></i> damage to the hull !<br>You repaired <span class='vert'>+5</span><i class='red heart icon'></i> of the hull"
   );
   UpdatePirateView();
