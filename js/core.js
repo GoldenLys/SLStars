@@ -8,7 +8,7 @@
 // AUTO CACUL DU EXTGAIN
 
 //CONFIG
-var version = "v4.583";
+var version = "v4.584";
 var sitename = "SLStars";
 var Game = {
   isLoading: 1,
@@ -43,7 +43,7 @@ var Game = {
   PlayerLife: 500,
   PlayerBaseLife: 500,
   PlayerAttack: 15,
-  PirateRank: 0,
+  PirateRank: 1,
   PirateExp: 0,
   PirateMaxExp: 20,
   isInFight: 0,
@@ -326,7 +326,7 @@ function changeLocation(id) {
   if (id == "fl") {
     for (var SID in Game.SystemMult) {
       if (SID == 2) {
-        Game.SystemMult[SID] = random(1000, 3000) / 1000;
+        Game.SystemMult[SID] = random(500, 1000) / 1000;
       } else {
         Game.SystemMult[SID] = random(500, 2200) / 1000;
       }
@@ -355,14 +355,14 @@ function changeLocation(id) {
               Game.extEnabled = 0;
               for (var SID in Game.SystemMult) {
                 if (SID == 2) {
-                  Game.SystemMult[SID] = random(1000, 5000) / 1000;
+                  Game.SystemMult[SID] = random(750, 1400) / 1000;
                 } else {
                   Game.SystemMult[SID] = random(0, 2200) / 1000;
                 }
               }
               for (var EXM in Game.ExplorationMult) {
                 if (EXM == 2) {
-                  Game.ExplorationMult[EXM] = random(1000, 5000) / 1000;
+                  Game.ExplorationMult[EXM] = random(750, 1400) / 1000;
                 } else {
                   Game.ExplorationMult[EXM] = random(500, 2000) / 1000;
                 }
@@ -507,17 +507,15 @@ function GetPlayerHPPercent() {
 
 function LookForPirates() {
   PirateChance = random(0, 4);
-  Game.PlayerLife = Game.PlayerBaseLife;
-
-  if ((Game.isInFight = 0)) {
+  console.log(PirateChance)
+  if (Game.isInFight == 0) {
+    Game.PlayerLife = Game.PlayerBaseLife;
     $("#PirateAttackDesc").html("");
-    if (PirateChance == 3) {
-      $("#modal-7")
-        .modal("setting", "closable", false)
-        .modal("show");
+    if (PirateChance > 3) {
+      $("#modal-7").modal("setting", "closable", false).modal("show");
       Game.isInFight = 1;
-      PirateChance = 0;
     }
+    PirateChance = 0;
   }
 }
 
@@ -532,14 +530,14 @@ function NewPirateStats() {
   Game.PirateExp++;
   if (Game.PirateExp >= Game.PirateMaxExp) {
     Game.PirateBaseLife += 10;
-    Game.PiratePower = 5 + Game.PirateAttacks * 0.5;
+    Game.PiratePower = 10 + Game.PirateRank * 2.5;
     Game.PirateExp = 0;
     Game.PirateRank++;
   }
   rand = random(0, Game.cashGained);
   showmessage(
     "You won the fight !",
-    "You found <i class='green dollar sign icon'></i>" + fix(rand, 0)
+    "You found <i class='green dollar sign icon'></i>" + fix(rand, 1)
   );
   Game.cash += rand;
   Game.cashGained += rand;
@@ -558,8 +556,8 @@ function LosePirateFight() {
   hideModals();
   showmessage(
     "You lose this fight !",
-    "He took all your merchandises and <i class='green dollar sign icon'></i>" +
-    fix(rand, 0)
+    "The ennemy took all your ressources and <i class='green dollar sign icon'></i>" +
+    fix(rand, 1)
   );
 }
 
