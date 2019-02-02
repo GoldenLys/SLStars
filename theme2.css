@@ -158,9 +158,9 @@ body ::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.7);
 }
 
-.ui.inverted.table th {
+.ui.inverted.table th{
   background-color: rgba(0, 0, 0, 0);
-  color: rgba(0, 0, 0, 1);
+  color: rgba(0, 0, 0, 1)!important;
 }
 
 .ui.inverted.table {
@@ -305,4 +305,8 @@ body ::-webkit-scrollbar-track {
 
 #selection {
   border: 1px black solid;
+}
+
+.ui.divider.inverted, .ui.horizontal.inverted.divider, .ui.vertical.inverted.divider {
+  color: #000000;
 }

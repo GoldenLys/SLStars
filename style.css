@@ -487,3 +487,7 @@ i.icon {
 .ui.toggle.checkbox input:focus:checked ~ label {
   color: #ffffff !important;
 }
+
+.ui.divider.inverted, .ui.horizontal.inverted.divider, .ui.vertical.inverted.divider {
+  color: #FFF;
+}
