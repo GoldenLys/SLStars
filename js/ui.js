@@ -1012,6 +1012,7 @@ function Theme(selection) {
     $("#theme2").attr("rel", "");
     $("#theme3").attr("rel", "");
     $("#theme4").attr("rel", "");
+    $("#theme5").attr("rel", "");
     $(".pusher").css("background", "#08050c");
   }
   if (selection == 1) {
@@ -1021,6 +1022,7 @@ function Theme(selection) {
     $("#theme2").attr("rel", "");
     $("#theme3").attr("rel", "");
     $("#theme4").attr("rel", "");
+    $("#theme5").attr("rel", "");
     $(".pusher").css("background", "rgb(21, 26, 29)");
   }
   if (selection == 2) {
@@ -1030,6 +1032,7 @@ function Theme(selection) {
     $("#theme2").attr("rel", "stylesheet");
     $("#theme3").attr("rel", "");
     $("#theme4").attr("rel", "");
+    $("#theme5").attr("rel", "");
     $(".pusher").css("background", "rgb(56, 178, 253)");
   }
   if (selection == 3) {
@@ -1039,6 +1042,7 @@ function Theme(selection) {
     $("#theme2").attr("rel", "");
     $("#theme3").attr("rel", "stylesheet");
     $("#theme4").attr("rel", "");
+    $("#theme5").attr("rel", "");
     $(".pusher").css("background", "rgb(218, 161, 0)");
   }
   if (selection == 4) {
@@ -1048,7 +1052,18 @@ function Theme(selection) {
     $("#theme2").attr("rel", "");
     $("#theme3").attr("rel", "");
     $("#theme4").attr("rel", "stylesheet");
+    $("#theme5").attr("rel", "");
     $(".pusher").css("background", "rgb(218, 218, 218)");
+  }
+  if (selection == 5) {
+    Game.theme = 5;
+    save();
+    $("#theme1").attr("rel", "");
+    $("#theme2").attr("rel", "");
+    $("#theme3").attr("rel", "");
+    $("#theme4").attr("rel", "");
+    $("#theme5").attr("rel", "stylesheet");
+    $(".pusher").css("background", "rgb(37, 0, 50)");
   }
   ToggleBackground();
   UpdateUI();

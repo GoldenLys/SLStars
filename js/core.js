@@ -8,7 +8,7 @@
 // AUTO CACUL DU EXTGAIN
 
 //CONFIG
-var version = "v4.584";
+var version = "v4.585";
 var sitename = "SLStars";
 var Game = {
   isLoading: 1,
