@@ -111,7 +111,7 @@ var Technologies = {
   1: {
     name: "Rusty drone II",
     cost: 1000,
-    gain: 0.15,
+    gain: 0.2,
     type: 0,
     need: 0,
     req: [3, 10],
@@ -120,7 +120,7 @@ var Technologies = {
   2: {
     name: "Basic drone I",
     cost: 5000,
-    gain: 0.25,
+    gain: 0.3,
     type: 0,
     need: 1,
     req: [3, 20],
@@ -138,7 +138,7 @@ var Technologies = {
   4: {
     name: "Basic drone III",
     cost: 500000,
-    gain: 0.75,
+    gain: 0.7,
     type: 0,
     need: 3,
     req: [10, 50],
@@ -156,7 +156,7 @@ var Technologies = {
   6: {
     name: "Advanced drone II",
     cost: 100000000,
-    gain: 1.25,
+    gain: 1.2,
     type: 0,
     need: 5,
     req: [10, 200],
@@ -183,7 +183,7 @@ var Technologies = {
   9: {
     name: "Alien drone II",
     cost: 100000000000,
-    gain: 2.5,
+    gain: 3,
     type: 0,
     need: 8,
     req: [16, 500],

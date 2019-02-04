@@ -8,7 +8,7 @@
 // AUTO CACUL DU EXTGAIN
 
 //CONFIG
-var version = "4.6";
+var version = "4.61";
 var sitename = "SLStars";
 var Game = {
   isLoading: 1,
@@ -38,10 +38,10 @@ var Game = {
   UnlockedLocations: 0,
   EPRequired: [0, 10, 50, 100, 350, 1000, 2500, 5000, 10000, 100000],
   PiratePower: 10,
-  PirateBaseLife: 500,
-  PirateCurrentLife: 500,
-  PlayerLife: 500,
-  PlayerBaseLife: 500,
+  PirateBaseLife: 200,
+  PirateCurrentLife: 200,
+  PlayerLife: 200,
+  PlayerBaseLife: 200,
   PlayerAttack: 10,
   PirateRank: 1,
   PirateExp: 0,
@@ -135,6 +135,14 @@ $(document).ready(function () {
 //GAME FUNCTIONS
 
 function UpdateGame() {
+  Game.PlayerAttack = 7.5 + (Game.Galaxy * 2.5);
+  Game.PlayerBaseLife = 190 + (Game.Galaxy * 10);
+  Game.PiratePower = 7.5 + (Game.PirateRank * 2.5);
+  Game.PirateBaseLife = 190 + (Game.PirateRank * 10);
+  if (Game.isInFight == 0) {
+    Game.PlayerLife = Game.PlayerBaseLife;
+    Game.PirateCurrentLife = Game.PirateBaseLife;
+  }
   Game.CurrInv = 0;
   for (var i in Game.inventory) {
     if (Game.inventory[i] !== Game.inventory[i]) { Game.inventory[i] = 0; }
@@ -172,6 +180,7 @@ function UpdateGame() {
   if (Game.extTime > 1) {
     Game.extTime = 20 - Game.Galaxy + 1;
   }
+  if (Game.extTime < 1) { Game.extTime = 1; }
   if (Game.CurrInv < 1) {
     if (Game.cash <= 10) {
       rand = random(10, 100);
@@ -190,7 +199,7 @@ function exploremax(id, obj) {
   } else {
     Maxexplore = Math.floor(Game.cash / (Market[obj].value * Game.ExplorationMult[obj]));
     if (Maxexplore > Game.Maxinv - Game.CurrInv) { Maxexplore = Game.Maxinv - Game.CurrInv; }
-    if (obj == 2) { if (Maxexplore > 100) { Maxexplore=100; } }
+    if (obj == 2) { if (Maxexplore > 100) { Maxexplore = 100; } }
     Game.cash -= Market[obj].value * Game.ExplorationMult[obj] * Maxexplore;
     Game.cashSpent += Market[obj].value * Game.ExplorationMult[obj] * Maxexplore;
     Game.inventory[obj] += Maxexplore;
@@ -511,8 +520,6 @@ function NewPirateStats() {
   Game.PlayerLife = Game.PlayerBaseLife;
   Game.PirateExp++;
   if (Game.PirateExp >= Game.PirateMaxExp) {
-    Game.PirateBaseLife += 10;
-    Game.PiratePower = 10 + Game.PirateRank * 2.5;
     Game.PirateExp = 0;
     Game.PirateRank++;
   }
@@ -564,12 +571,12 @@ function changegalaxy() {
       Game.Upgrades = 0;
       Game.TravelCost = 25;
       Game.UnlockedLocations = 0;
-      Game.PiratePower = 5;
-      Game.PirateBaseLife = 100;
+      Game.PiratePower = 10;
+      Game.PirateBaseLife = 200;
       Game.PirateAttacks = 0;
-      Game.PirateCurrentLife = 100;
-      Game.PlayerLife = 100;
-      Game.PlayerBaseLife = 100;
+      Game.PirateCurrentLife = 200;
+      Game.PlayerLife = 200;
+      Game.PlayerBaseLife = 200;
       Game.PlayerAttack = 10;
       Game.rank = 0;
       Game.PirateRank = 0;

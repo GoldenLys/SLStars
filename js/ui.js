@@ -67,7 +67,7 @@ function GetSystemType(value) {
 function GenMissions() {
   for (var id = 0; id < 11; id++) {
     $("#system" + id).html(
-      "<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>"
+      "<thead><tr class='shadow'><th class='ui center aligned'>Type</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>"
     );
   }
 
@@ -108,7 +108,7 @@ function GenMissions() {
       }
     }
     if (Game.explored[i] == 0) {
-      canbuy = Game.cash < Market[offer.type].value / 2 ? " disabled" : "";
+      canbuy = Game.cash < Market[offer.type].value * Game.ExplorationMult[offer.type] / 2 ? " disabled" : "";
       canExploreMax = "disabled";
       canbuy10 = "disabled";
       canbuy100 = "disabled";
@@ -127,7 +127,7 @@ function GenMissions() {
     }
     var exploretext = Game.explored[i] > 0 ? "Visit" : "Explore";
     var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr;
-    var pricetext = Game.explored[i] < 1 ? fix(Market[offer.type].value * Game.ExplorationMult[offer.type] * 2, 1) : fix(Market[offer.type].value * Game.ExplorationMult[offer.type], 1);
+    var pricetext = Game.explored[i] < 1 ? fix(Market[offer.type].value * Game.ExplorationMult[offer.type] / 2, 1) : fix(Market[offer.type].value * Game.ExplorationMult[offer.type], 1);
     recompense = SetColorText(rewards);
     reward = texts.items[offer.type];
     name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
@@ -139,8 +139,8 @@ function GenMissions() {
 
     var SYSTEMDIV = $(
       "<tr class=''>" +
-      "<td class='center aligned ui'>" + name + "</td>" +
-      "<td class='center aligned'>" + description + "<br> <font class='type1'>" + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></font></td>" +
+      "<td class='center aligned ui'>" + description + "</td>" +
+      "<td class='center aligned'>" + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></td>" +
       "<td class='center aligned'> " + cost + "</td>" +
       "<td class='center aligned'><div class='ui SLStars buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1, " + offer.type + ");'>" + exploretext + "</button><button class='ui " + canbuy10 + " button' onClick='explore(" + i + ", 10, " + offer.type + ");'>10</button><button class='ui " + canbuy100 + " button' onClick='explore(" + i + ", 100, " + offer.type + ");'>100</button><button class='ui " + canExploreMax + " button' onClick='exploremax(" + i + ", " + offer.type + ");'>Max</button></div></td>" +
       "</tr>"
@@ -162,6 +162,7 @@ function GenMarket() {
   );
 
   for (var i in Market) {
+    var pricecolor = "";
     var offer = Market[i];
     var canSell = Game.inventory[i] < 1 ? " disabled" : "";
     var canSell10 = Game.inventory[i] < 10 ? " disabled" : "";
@@ -181,12 +182,12 @@ function GenMarket() {
       }
     }
     if (Game.SystemMult[i] > 0.9) {
-      if (Game.SystemMult[i] < 1.26) {
+      if (Game.SystemMult[i] <= 1) {
         pricecolor = "";
       }
     }
     if (Game.SystemMult[i] > 0.5) {
-      if (Game.SystemMult[i] < 0.91) {
+      if (Game.SystemMult[i] <= 0.9) {
         pricecolor = "argent";
       }
     }
@@ -402,9 +403,6 @@ function GenStation() {
       "</button></td>" +
       "</tr>"
     );
-    if (Game.technologies[i] == 1) {
-      $("#system0ss").append(SYSTEMDIV);
-    }
     if (Game.technologies[i] == 0) {
       if (offer.need == -1) {
         $("#system0ss").append(SYSTEMDIV);
@@ -416,7 +414,9 @@ function GenStation() {
       }
     } else {
       if (Game.technologies[offer.need] == 1) {
-        $("#system0ss").append(SYSTEMDIV);
+        if (Game.technologies[i] == 0) {
+          $("#system0ss").append(SYSTEMDIV);
+        }
       }
     }
   }
