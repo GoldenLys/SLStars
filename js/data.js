@@ -250,7 +250,7 @@ var tutorials = {
   2: {
     title: "Market",
     text:
-      "The market is the place to sell all your merchandises and get some money,<br> the prices are differents on every system & change every days.<br><br>There is a color code to indicate the values of every ressource:<br>- <span class='rouge'>Low</span><br>- <span class='argent'>Normal</span><br>- <span class='vert'>High</span><br>- <span class='Gold'>Expensive</span>"
+      "The market is the place to sell all your merchandises and get some money,<br> the prices are differents on every system & change every days.<br><br>There is a color code to indicate the values of every ressource:<br>- <span class='rouge'>Very Low</span><br>- <span class='argent'>Low</span><br>- <span class=''>Normal</span><br>- <span class='vert'>High</span><br>- <span class='Gold'>Expensive</span>"
   },
   3: {
     title: "Technologies",

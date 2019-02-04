@@ -201,18 +201,6 @@ body ::-webkit-scrollbar-track {
   color: #000000;
 }
 
-.ui.green.button {
-  transition: 1.5s;
-  background-size: 200% auto;
-  background: #ffffff;
-  color: #000000;
-}
-
-.ui.green.button:focus {
-  background: #ffffff;
-  color: #000000;
-}
-
 .ui.SLStars.buttons {
   transition: 1.5s;
   border-radius: 0.1vw;
@@ -248,15 +236,6 @@ body ::-webkit-scrollbar-track {
 
 .ui.menu .item {
   color: rgb(255, 255, 255) !important;
-}
-
-.ui.green.ok.inverted.button:hover {
-  color: #fff !important;
-}
-
-.ui.green.ok.inverted.button {
-  background-image: none !important;
-  color: #2ecc40 !important;
 }
 
 .SLStarsborder {

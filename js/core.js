@@ -8,7 +8,7 @@
 // AUTO CACUL DU EXTGAIN
 
 //CONFIG
-var version = "4.586";
+var version = "4.6";
 var sitename = "SLStars";
 var Game = {
   isLoading: 1,
@@ -437,9 +437,8 @@ function PirateFightProctect() {
     Game.PlayerLife = Game.PlayerBaseLife;
   }
   $("#PirateAttackDesc").html(
-    "The pirate ship weapon does <span class='rouge bold'>-" +
-    rPiratePower +
-    "</span><i class='red heart icon'></i> damage to the hull !<br>You repaired <span class='vert'>+5</span><i class='red heart icon'></i> of the hull"
+    "The pirate ship weapon does <span class='rouge bold'>" +
+    "<a class='ui circular small label'><i class='red heart icon'></i>-" + rPiratePower + "</a></span> damage to the hull !<br>You repaired <a class='ui circular small label'><i class='red heart icon'></i>+5</a> of the hull"
   );
   UpdatePirateView();
 }
@@ -457,11 +456,11 @@ function PirateFightAttack() {
     LosePirateFight();
   }
   $("#PirateAttackDesc").html(
-    "You did <span class='rouge'>-" +
+    "You did <a class='ui circular small label'><i class='red heart icon'></i>-" +
     rPlayerPower +
-    "</span><i class='red heart icon'></i> damage to the pirate ship.<br>The pirate weapon does <span class='rouge bold'>-" +
+    "</a> damage to the pirate ship.<br>The pirate weapon does <a class='ui circular small label'><i class='red heart icon'></i>-" +
     rPiratePower +
-    "</span><i class='red heart icon'></i> damage to the hull !"
+    "</a> damage to the hull !"
   );
   UpdatePirateView();
 }

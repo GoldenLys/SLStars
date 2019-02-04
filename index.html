@@ -25,21 +25,22 @@
 
     gtag('config', 'UA-132217801-1');
 </script>
-<link href="style.css?v=4586" rel="stylesheet" type="text/css" />
-<link href="theme1.css?v=4586" id="theme1" rel="" type="text/css" />
-<link href="theme2.css?v=4586" id="theme2" rel="" type="text/css" />
-<link href="theme3.css?v=4586" id="theme3" rel="" type="text/css" />
-<link href="theme4.css?v=4586" id="theme4" rel="" type="text/css" />
-<link href="theme5.css?v=4586" id="theme5" rel="" type="text/css" />
-<script src="js/utils.js?v=4586"></script>
-<script src="js/data.js?v=4586"></script>
-<script src="js/core.js?v=4586"></script>
-<script src="js/ui.js?v=4586"></script>
+<link href="style.css?v=46" rel="stylesheet" type="text/css" />
+<link href="theme1.css?v=46" id="theme1" rel="" type="text/css" />
+<link href="theme2.css?v=46" id="theme2" rel="" type="text/css" />
+<link href="theme3.css?v=46" id="theme3" rel="" type="text/css" />
+<link href="theme4.css?v=46" id="theme4" rel="" type="text/css" />
+<link href="theme5.css?v=46" id="theme5" rel="" type="text/css" />
+<script src="js/utils.js?v=46"></script>
+<script src="js/data.js?v=46"></script>
+<script src="js/core.js?v=46"></script>
+<script src="js/ui.js?v=46"></script>
 <script src="js/numeral.min.js"></script>
 
 <script type="text/javascript"> if (screen.width <= 1280) { location.href = './mobile.html'; } </script>
 
-<body id="body" class="noselect" oncontextmenu="return false;">
+<!--<body id="body" class="noselect" oncontextmenu="return false;">-->
+        <body>
     <!--SIDE BAR-->
     <div id="sidebar" class="ui left vertical visible inverted sidebar labeled icon menu">
         <div id="modalmenu">
@@ -95,7 +96,7 @@
                     </div>
 
                     <h3 class="ui inverted horizontal divider">Stats</h3>
-                    <p><i class="green dollar sign icon"></i>
+                    <p class="centrer"><i class="green dollar sign icon"></i>
                         <span class="left" id="money"></span>
                         <br>
                         <i class="red sort amount up icon"></i>
@@ -256,7 +257,7 @@
                     <input type="checkbox">
                     <label>Use background</label>
                 </div>
-            </div> 
+            </div>
             <br>
             <br>
             <div class="fluid ui buttons">
@@ -429,12 +430,14 @@
 
                 <font id="PirateAttackDesc" class=""></font>
                 <div class="actions">
-                    <div id="attack-btn" onclick="PirateFightAttack();" class="ui huge red basic inverted button">
-                        <i class="crosshairs icon"></i>Fight </div>
-                    <div id="attack-btn" onclick="PirateFightProctect();" class="ui huge green basic inverted button">
-                        <i class="shield alternate icon"></i>Protect </div>
-                    <div onclick="PirateFightFlee();" class="ui blue basic inverted button">
-                        <i class="remove icon"></i>Flee </div>
+                    <div class="fluid ui buttons">
+                        <div id="attack-btn" onclick="PirateFightAttack();" class="green ui huge button">
+                            <i class="crosshairs icon"></i>Attack </div>
+                        <div id="attack-btn" onclick="PirateFightProctect();" class="blue ui huge button">
+                            <i class="shield alternate icon"></i>Take Cover </div>
+                    </div><br><br>
+                    <div onclick="PirateFightFlee();" class="fluid negative ui button">
+                        <i class="eye slash outline icon"></i>Run Away </div>
 
                 </div>
             </div>

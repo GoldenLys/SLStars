@@ -970,7 +970,7 @@ function Theme(selection) {
     $("#theme3").attr("rel", "");
     $("#theme4").attr("rel", "");
     $("#theme5").attr("rel", "stylesheet");
-    $(".pusher").css("background", "rgb(37, 0, 50)");
+    $(".pusher").css("background", "rgb(35, 0, 49)");
   }
   ToggleBackground();
   UpdateUI();

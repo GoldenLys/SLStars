@@ -286,32 +286,8 @@ body ::-webkit-scrollbar-track {
   background-position: right center; /* change the direction of the change here */
 }
 
-.ui.green.button {
-  transition: 1.5s;
-  background-size: 200% auto;
-  background-image: linear-gradient(
-    to left,
-    #061f46 0%,
-    #073a01 51%,
-    #061f46 100%
-  );
-}
-
-.ui.green.button:focus {
-  background-image: linear-gradient(
-    to left,
-    #0b0019 0%,
-    #24002f 51%,
-    #0b0019 100%
-  );
-}
-
-.ui.green.button:hover,
-.ui.green.buttons:hover {
-  background-position: right center; /* change the direction of the change here */
-}
-
 .ui.SLStars.buttons {
+  display: inline-block;
   transition: 1.5s;
   border-radius: 0.1vw;
   background-size: 200% auto;
@@ -341,15 +317,6 @@ body ::-webkit-scrollbar-track {
 .ui.menu .item,
 .ui.basic.button {
   color: rgba(255, 255, 255, 1) !important;
-}
-
-.ui.green.ok.inverted.button:hover {
-  color: #fff !important;
-}
-
-.ui.green.ok.inverted.button {
-  background-image: none !important;
-  color: #2ecc40 !important;
 }
 
 .SLStarsborder {
@@ -490,4 +457,8 @@ i.icon {
 
 .ui.divider.inverted, .ui.horizontal.inverted.divider, .ui.vertical.inverted.divider {
   color: #FFF;
+}
+
+.ui.modal .actions>.button {
+  margin-left: 0!important;
 }

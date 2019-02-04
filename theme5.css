@@ -7,7 +7,7 @@
 }
 
 .pusher {
-  background: #040404;
+  background: rgb(35, 0, 49);
 }
 
 .argent {
@@ -196,22 +196,10 @@ body ::-webkit-scrollbar-track {
   background-position: right center; /* change the direction of the change here */
 }
 
-.ui.green.button {
-  transition: 1.5s;
-  background-size: 200% auto;
-  background: #ffffff;
-  color: #FFFFFF;
-}
-
-.ui.green.button:focus {
-  background: #ffffff;
-  color: #FFFFFF;
-}
-
 .ui.SLStars.buttons {
   transition: 1.5s;
   border-radius: 0.2vw;
-  border: 1px black solid;
+  border: 0px black solid;
   background-size: 200% auto;
   background-image: linear-gradient(to left, #230031 0%, #500101 51%, #230031 100%);
   color: #FFFFFF;
@@ -248,15 +236,6 @@ body ::-webkit-scrollbar-track {
 
 .ui.menu .item {
   color: rgb(255, 255, 255) !important;
-}
-
-.ui.green.ok.inverted.button:hover {
-  color: rgb(255, 255, 255) !important;
-}
-
-.ui.green.ok.inverted.button {
-  background-image: none !important;
-  color: #2ecc40 !important;
 }
 
 .SLStarsborder {
@@ -313,5 +292,5 @@ body ::-webkit-scrollbar-track {
 }
 
 #selection {
-  border: 1px black solid;
+  border: 0px black solid;
 }

@@ -25,17 +25,17 @@
 
     gtag('config', 'UA-132217801-1');
 </script>
-<link href="style.css?v=4586" rel="stylesheet" type="text/css" />
-<link href="theme1.css?v=4586" id="theme1" rel="" type="text/css" />
-<link href="theme2.css?v=4586" id="theme2" rel="" type="text/css" />
-<link href="theme3.css?v=4586" id="theme3" rel="" type="text/css" />
-<link href="theme4.css?v=4586" id="theme4" rel="" type="text/css" />
-<link href="theme5.css?v=4586" id="theme5" rel="" type="text/css" />
-<link href="mobile.css?v=4586" rel="stylesheet" type="text/css" />
-<script src="js/utils.js?v=4586"></script>
-<script src="js/data.js?v=4586"></script>
-<script src="js/core.js?v=4586"></script>
-<script src="js/ui.js?v=4586"></script>
+<link href="style.css?v=46" rel="stylesheet" type="text/css" />
+<link href="theme1.css?v=46" id="theme1" rel="" type="text/css" />
+<link href="theme2.css?v=46" id="theme2" rel="" type="text/css" />
+<link href="theme3.css?v=46" id="theme3" rel="" type="text/css" />
+<link href="theme4.css?v=46" id="theme4" rel="" type="text/css" />
+<link href="theme5.css?v=46" id="theme5" rel="" type="text/css" />
+<link href="mobile.css?v=46" rel="stylesheet" type="text/css" />
+<script src="js/utils.js?v=46"></script>
+<script src="js/data.js?v=46"></script>
+<script src="js/core.js?v=46"></script>
+<script src="js/ui.js?v=46"></script>
 <script src="js/numeral.min.js"></script>
 
 <body id="body" class="noselect" oncontextmenu="return false;">
@@ -69,15 +69,15 @@
                 <i class="sidebar icon"></i>Menu</a>
 
             <a class="item SLStarsborder" id="t1" data-id="1">
-                <i class="home icon"></i></a>
+                <i class="home icon" style="margin: 0;"></i></a>
 
             <a class="item" id="t2" data-id="2">
-                <i class="dollar icon"></i></a>
+                <i class="dollar icon" style="margin: 0;"></i></a>
 
             <a class="item" id="t3" data-id="3">
-                <i class="flask icon"></i></a>
-            <a class="item" id="t4" data-id="4">
-                <i class="space shuttle icon"></i></a>
+                <i class="flask icon" style="margin: 0;"></i></a>
+            <a class="item" id="t4" data-id="4" ">
+                <i class="space shuttle icon" style="margin: 0;"></i></a>
 
         </div>
         <!--COLUMNS-->
@@ -85,9 +85,7 @@
             <!--STATS COLUMN-->
             <div class="column" id="colonne-m">
                 <div id="travel" class="ui black message">
-                    <h3 class="centrer bold ui type4 ">Location</h3>
-
-
+                        <h3 class="ui inverted horizontal divider">Location</h3>
                     <div id="selection" class="ui fluid red floating dropdown labeled icon button">
                         <i class="world icon"></i>
                         <span id="selection-text"></span>
@@ -95,9 +93,7 @@
                         </div>
                     </div>
 
-                    <div class="ui divider"></div>
-
-                    <h3 class="centrer bold ui type4 ">Stats</h3>
+                    <h3 class="ui inverted horizontal divider">Stats</h3>
                     <p><i class="green dollar sign icon"></i>
                         <span class="left" id="money"></span>
                         <br>
@@ -110,9 +106,7 @@
                         <img class='ui avatar image' src='images/items/2.png'>
                         <span class="text" id="fuel"></span>
                     </p>
-                    <div class="ui divider"></div>
-
-                    <h3 id="InventoryTitle" class="centrer ui type4">Inventory</h3>
+                    <h3 id="InventoryTitle" class="ui inverted horizontal divider">Inventory</h3>
                     <div id="inventory" style="height: auto;">
                     </div>
                 </div>
@@ -409,14 +403,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ui clearing segment">
-                                <br>
-                            </div>
                         </div>
                         <div class="ui horizontal segments">
-                            <div class="ui clearing segment">
-                                <br>
-                            </div>
                             <div class="ui right aligned basic segment">
                                 <div class="ui right icon">
                                     <i class="big red flag outline icon"></i>
@@ -433,13 +421,14 @@
                     </div>
                     <font id="PirateAttackDesc" class=""></font>
                     <div class="actions">
-                        <div id="attack-btn" onclick="PirateFightAttack();" class="ui huge red basic inverted button">
-                            <i class="crosshairs icon"></i>Fight </div>
-                        <div id="attack-btn" onclick="PirateFightProctect();" class="ui huge green basic inverted button">
-                            <i class="shield alternate icon"></i>Protect </div>
-                        <div onclick="PirateFightFlee();" class="ui blue basic inverted button">
-                            <i class="remove icon"></i>Flee </div>
-
+                        <div class="fluid ui buttons">
+                            <div id="attack-btn" onclick="PirateFightAttack();" class="green ui huge button">
+                                <i class="crosshairs icon"></i>Attack </div>
+                            <div id="attack-btn" onclick="PirateFightProctect();" class="blue ui huge button">
+                                <i class="shield alternate icon"></i>Take Cover </div>
+                        </div><br><br>
+                        <div onclick="PirateFightFlee();" class="fluid negative ui button">
+                            <i class="eye slash outline icon"></i>Run Away </div>
                     </div>
                 </div>
             </div>
