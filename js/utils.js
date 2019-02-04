@@ -14,6 +14,8 @@ function fix(x, type) {
   if (type == 4) return numeral(x).format("0");
 
   if (type == 5) return numeral(x).format("0,0");
+
+  if (type == 6) return numeral(x).format("0.0");
 }
 
 function getDate() {

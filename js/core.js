@@ -8,7 +8,7 @@
 // AUTO CACUL DU EXTGAIN
 
 //CONFIG
-var version = "v4.585";
+var version = "4.586";
 var sitename = "SLStars";
 var Game = {
   isLoading: 1,
@@ -42,7 +42,7 @@ var Game = {
   PirateCurrentLife: 500,
   PlayerLife: 500,
   PlayerBaseLife: 500,
-  PlayerAttack: 15,
+  PlayerAttack: 10,
   PirateRank: 1,
   PirateExp: 0,
   PirateMaxExp: 20,
@@ -105,15 +105,9 @@ var Game = {
 
 $(document).ready(function () {
   changeLocation("loading");
-  if (localStorage.getItem("SLStars2") != null) {
-    load();
-  }
-  setInterval(function () {
-    UpdateGame();
-  }, 1000);
-  setInterval(function () {
-    LookForPirates();
-  }, 60000);
+  if (localStorage.getItem("SLStars2") != null) { load(); }
+  setInterval(function () { UpdateGame(); }, 1000);
+  setInterval(function () { LookForPirates(); }, 60000);
   Theme(Game.theme);
   GenExtractionMaterials();
   ClickEvents();
@@ -141,8 +135,14 @@ $(document).ready(function () {
 //GAME FUNCTIONS
 
 function UpdateGame() {
-  if (Game.inventory[2] < 0) {
-    Game.inventory[2] = 0;
+  Game.CurrInv = 0;
+  for (var i in Game.inventory) {
+    if (Game.inventory[i] !== Game.inventory[i]) { Game.inventory[i] = 0; }
+    if (i != 2) { Game.CurrInv += Game.inventory[i]; }
+    if (Game.inventory[i] < 0) {
+      Game.inventory[i] = 0;
+      if (Game.rank < 0) { Game.rank = 0; }
+    }
   }
   for (var inv in texts.items) {
     if (Game.inventory[inv] == null) {
@@ -176,12 +176,7 @@ function UpdateGame() {
     if (Game.cash <= 10) {
       rand = random(10, 100);
       Game.cash += rand;
-      showmessage(
-        "Distress signal",
-        "You found an old distress signal!<br> You have joined the signal transmission source and have found an abandoned vessel with <i class='green dollar sign icon'></i>" +
-        rand +
-        " in it."
-      );
+      showmessage("Distress signal", "You found an old distress signal!<br> You have joined the signal transmission source and have found an abandoned vessel with <i class='green dollar sign icon'></i>" + rand + " in it.");
     }
   }
   UpdateUI();
@@ -195,11 +190,12 @@ function exploremax(id, obj) {
   } else {
     Maxexplore = Math.floor(Game.cash / (Market[obj].value * Game.ExplorationMult[obj]));
     if (Maxexplore > Game.Maxinv - Game.CurrInv) { Maxexplore = Game.Maxinv - Game.CurrInv; }
+    if (obj == 2) { if (Maxexplore > 100) { Maxexplore=100; } }
     Game.cash -= Market[obj].value * Game.ExplorationMult[obj] * Maxexplore;
     Game.cashSpent += Market[obj].value * Game.ExplorationMult[obj] * Maxexplore;
     Game.inventory[obj] += Maxexplore;
-    if (obj != 2) { Game.CurrInv += Maxexplore; }
     Game.rank += Maxexplore * (Game.Galaxy * 0.25 * (Game.system + 1));
+    UpdateGame();
   }
 }
 
@@ -220,7 +216,6 @@ function explore(id, nbr, obj) {
           Game.cash -= Market[obj].value * Game.ExplorationMult[obj] * nbr;
           Game.cashSpent += Market[obj].value * Game.ExplorationMult[obj] * nbr;
           Game.inventory[obj] += nbr;
-          if (obj != 2) { Game.CurrInv += nbr; }
           Game.rank += nbr * (Game.Galaxy * 0.25 * (Game.system + 1));
         }
       }
@@ -240,19 +235,8 @@ function explore(id, nbr, obj) {
       }
     }
   }
-  Game.CurrInv = 0;
-  for (var i in Game.inventory) {
-    if (i != 2) {
-      Game.CurrInv += Game.inventory[i];
-    }
-    if (Game.inventory[i] < 0) {
-      Game.inventory[i] = 0;
-      if (Game.rank < 0) {
-        Game.rank = 0;
-      }
-    }
-  }
   UpdateUI();
+  UpdateGame();
   save();
 }
 
@@ -507,7 +491,6 @@ function GetPlayerHPPercent() {
 
 function LookForPirates() {
   PirateChance = random(0, 4);
-  console.log(PirateChance)
   if (Game.isInFight == 0) {
     Game.PlayerLife = Game.PlayerBaseLife;
     $("#PirateAttackDesc").html("");

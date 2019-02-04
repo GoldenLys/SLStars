@@ -213,8 +213,12 @@ body ::-webkit-scrollbar-track {
   border-radius: 0.2vw;
   border: 1px black solid;
   background-size: 200% auto;
-  background: linear-gradient(to left, #230031 0%, #500101 71%, #230031 100%);
+  background-image: linear-gradient(to left, #230031 0%, #500101 51%, #230031 100%);
   color: #FFFFFF;
+}
+
+.ui.SLStars.buttons:hover {
+  background-position: right center; /* change the direction of the change here */
 }
 
 .ui.SLStars.buttons.disabled {
