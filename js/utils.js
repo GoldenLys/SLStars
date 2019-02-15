@@ -70,24 +70,21 @@ function toHHMMSS(id) {
 var canSave = 1;
 
 function save() {
+  console.log("Game saved.");
   var date = new Date();
   if (canSave) {
-    localStorage.setItem("SLStars2", JSON.stringify(Game));
+    localStorage.setItem("SLStars3", JSON.stringify(Game));
   }
   var tmp = new Date().getTime();
 }
 
 function load() {
-  var savegame = JSON.parse(localStorage.getItem("SLStars2"));
+  var savegame = JSON.parse(localStorage.getItem("SLStars3"));
 
   for (var property in savegame) {
     if (typeof savegame[property] !== "undefined")
       Game[property] = savegame[property];
   }
-
-  var date = new Date();
-  Theme(Game.theme);
-  UpdateUI();
 }
 
 function exportSave() {
@@ -114,7 +111,7 @@ function restoreSave(save) {
     var decoded = atob(save);
     JSON.parse(decoded);
     if (decoded) {
-      localStorage.setItem("SLStars2", decoded);
+      localStorage.setItem("SLStars3", decoded);
       canSave = 0;
       location.reload();
     } else {
@@ -145,4 +142,80 @@ function LYS() {
   Game.TravelCost = 0;
   Game.UnlockedLocations = 9;
   Game.Hyperdrive = 100;
+}
+
+function SetColor(value) {
+  var color;
+  var text;
+  if (value < 1) {
+    color = "noir";
+  }
+  if (value == 1) {
+    color = "jaune";
+  }
+  if (value > 1) {
+    if (value < 11) {
+      color = "bleu";
+    }
+  }
+  if (value > 10) {
+    if (value < 50) {
+      color = "violet";
+    }
+  }
+  if (value > 49) {
+    if (value < 100) {
+      color = "rose";
+    }
+  }
+  if (value > 99) {
+    if (value < 1000) {
+      color = "rouge";
+    }
+  }
+  if (value > 999) {
+    color = "vert";
+  }
+  return color;
+}
+
+function SetColorText(value) {
+  var color;
+  var text;
+  if (value < 1) {
+    text = "Tiny";
+  }
+  if (value == 1) {
+    text = "Very small";
+  }
+  if (value > 1) {
+    if (value < 11) {
+      text = "Small";
+    }
+  }
+  if (value > 10) {
+    if (value < 50) {
+      text = "Large";
+    }
+  }
+  if (value > 49) {
+    if (value < 100) {
+      text = "Big";
+    }
+  }
+  if (value > 99) {
+    if (value < 1000) {
+      text = "Huge";
+    }
+  }
+  if (value > 999) {
+    text = "Massive";
+  }
+  return text;
+}
+
+function showmessage(title, message) {
+  $("#message-title").html(title);
+  $("#message-text").html(message);
+  $("#modal-5").modal("show");
 }

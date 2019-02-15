@@ -5,10 +5,10 @@
 //         W I P       //
 //                     //
 /////////////////////////
-// AUTO CACUL DU EXTGAIN
+// idea : Buy a new starship with new base attack & base life
 
 //CONFIG
-var version = "4.61";
+var version = "5";
 var sitename = "SLStars";
 var Game = {
   isLoading: 1,
@@ -44,8 +44,10 @@ var Game = {
   PlayerBaseLife: 200,
   PlayerAttack: 10,
   PirateRank: 1,
-  PirateExp: 0,
-  PirateMaxExp: 20,
+  PirateLevel: 1,
+  Level: 1,
+  Exp: 0,
+  MaxExp: 100,
   isInFight: 0,
   theme: 0,
   Wins: 0,
@@ -98,22 +100,25 @@ var Game = {
   extEnabled: 0,
   UseBackground: 1,
   extTime: 20,
-  extCurrTime: 0
+  extCurrTime: 0,
+  lang: "english",
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
 
 $(document).ready(function () {
+  if (localStorage.getItem("SLStars3") != null) { load(); }
   changeLocation("loading");
-  if (localStorage.getItem("SLStars2") != null) { load(); }
-  setInterval(function () { UpdateGame(); }, 1000);
-  setInterval(function () { LookForPirates(); }, 60000);
+  // setInterval(function () { UpdateGame(); }, 1000);
+  setInterval(function () { LookForPirates(); }, 20000);
   Theme(Game.theme);
+  selectLang(Game.lang);
+  UpdateGame();
   GenExtractionMaterials();
   ClickEvents();
   hidesystems();
   $(".ui.sidebar").sidebar("hide");
-  $("#system-select").val(texts.systemname[Game.system]);
+  $("#system-select").val(lang[Game.lang].systemname[Game.system]);
   $("#system" + Game.system).show();
   if (Game.confirmations == 0) {
     $("#MarketToggle").checkbox("check");
@@ -135,10 +140,10 @@ $(document).ready(function () {
 //GAME FUNCTIONS
 
 function UpdateGame() {
-  Game.PlayerAttack = 7.5 + (Game.Galaxy * 2.5);
-  Game.PlayerBaseLife = 190 + (Game.Galaxy * 10);
-  Game.PiratePower = 7.5 + (Game.PirateRank * 2.5);
-  Game.PirateBaseLife = 190 + (Game.PirateRank * 10);
+  Game.MaxExp = 85 + (10 * Game.Level) * (1.5 * Game.Level);
+  Game.PlayerAttack = (5 + (Game.Level * 2.5)) + (Game.Galaxy * 2.5);
+  Game.PlayerBaseLife = (190 + (Game.Level * 10)) + (Game.Galaxy * 10 - 10);
+
   if (Game.isInFight == 0) {
     Game.PlayerLife = Game.PlayerBaseLife;
     Game.PirateCurrentLife = Game.PirateBaseLife;
@@ -152,7 +157,7 @@ function UpdateGame() {
       if (Game.rank < 0) { Game.rank = 0; }
     }
   }
-  for (var inv in texts.items) {
+  for (var inv in Market) {
     if (Game.inventory[inv] == null) {
       Game.inventory[inv] = 0;
     }
@@ -167,7 +172,7 @@ function UpdateGame() {
       Game.technologies[t] = 0;
     }
   }
-  Game.Maxinv = 225 + Game.Galaxy * 25;
+  Game.Maxinv = 175 + Game.Galaxy * 25;
   if (Game.extEnabled > 0) {
     if (Game.extCurrTime >= Game.extTime) {
       if (Game.Maxinv - Game.CurrInv >= Game.extGain)
@@ -244,9 +249,7 @@ function explore(id, nbr, obj) {
       }
     }
   }
-  UpdateUI();
   UpdateGame();
-  save();
 }
 
 function sellitem(id, qty) {
@@ -259,7 +262,7 @@ function sellitem(id, qty) {
       "Do you want to sell " +
       fix(qty, 1) +
       " " +
-      texts.items[id] +
+      lang[Game.lang].items[id] +
       "<img class='ui avatar image' src='images/items/" +
       id +
       ".png'> for <font color='green'>" +
@@ -270,7 +273,7 @@ function sellitem(id, qty) {
   } else {
     confirmsell();
   }
-  UpdateUI();
+  UpdateGame();
 }
 
 function confirmsell() {
@@ -311,8 +314,7 @@ function confirmsell() {
     }
   }
   Game.SystemMult[Game.CurrSellID] = mult;
-  UpdateUI();
-  save();
+  UpdateGame();
 }
 
 function changeLocation(id) {
@@ -383,6 +385,7 @@ function changeLocation(id) {
   }
   hidesystems();
   $("#system" + Game.system).show();
+  UpdateGame();
 }
 
 function buyupgrade(id, buyable, type, req1, nbr1, req2, nbr2) {
@@ -403,6 +406,7 @@ function buyupgrade(id, buyable, type, req1, nbr1, req2, nbr2) {
       }
     }
   }
+  UpdateGame();
 }
 
 function UPGPOWER(id) {
@@ -414,7 +418,7 @@ function UPGPOWER(id) {
       Game.Hyperdrive++;
     }
   }
-  UpdateUI();
+  UpdateGame();
 }
 
 function BUYHYPERSPACE(id) {
@@ -425,14 +429,15 @@ function BUYHYPERSPACE(id) {
       Game.UnlockedLocations++;
     }
   }
-  UpdateUI();
+  UpdateGame();
 }
 
 //PIRATE FIGHT ACTIONS
 
 function PirateFightProctect() {
   if (Game.PlayerLife < Game.PlayerBaseLife) {
-    Game.PlayerLife += 5;
+    var rRandPlayerHeal = random(0, Game.PlayerAttack / 2);
+    Game.PlayerLife += rRandPlayerHeal;
   }
   var rPiratePower = random(0, Game.PiratePower / 2.5);
   Game.PlayerLife -= rPiratePower;
@@ -447,9 +452,9 @@ function PirateFightProctect() {
   }
   $("#PirateAttackDesc").html(
     "The pirate ship weapon does <span class='rouge bold'>" +
-    "<a class='ui circular small label'><i class='red heart icon'></i>-" + rPiratePower + "</a></span> damage to the hull !<br>You repaired <a class='ui circular small label'><i class='red heart icon'></i>+5</a> of the hull"
+    "<a class='ui circular small label'><i class='red heart icon'></i>-" + rPiratePower + "</a></span> damage to the hull !<br>You repaired <a class='ui circular small label'><i class='red heart icon'></i>+" + rRandPlayerHeal + "</a> of the hull"
   );
-  UpdatePirateView();
+  UpdateGame();
 }
 
 function PirateFightAttack() {
@@ -471,7 +476,7 @@ function PirateFightAttack() {
     rPiratePower +
     "</a> damage to the hull !"
   );
-  UpdatePirateView();
+  UpdateGame();
 }
 
 function PirateFightFlee() {
@@ -485,6 +490,7 @@ function PirateFightFlee() {
   }
   Game.isInFight = 0;
   hideModals();
+  UpdateGame();
 }
 
 function GetPirateHPPercent() {
@@ -498,16 +504,58 @@ function GetPlayerHPPercent() {
 //CHECK IF THERE IS A CHANCE TO ENCOUNTER A PIRATE
 
 function LookForPirates() {
-  PirateChance = random(0, 4);
+  PirateChance = random(0, 15);
   if (Game.isInFight == 0) {
     Game.PlayerLife = Game.PlayerBaseLife;
     $("#PirateAttackDesc").html("");
-    if (PirateChance > 3) {
+
+    //PIRATE LOW
+    if (PirateChance == 0) {
+      PirateLevel = random(1, Game.Level);
+      Game.PirateRank = 1;
       $("#modal-7").modal("setting", "closable", false).modal("show");
       Game.isInFight = 1;
+      Game.PiratePower = 10 + (Game.PirateRank * PirateLevel);
+      Game.PirateBaseLife = 200 + ((Game.PirateRank * PirateLevel) * 5);
+      Game.PirateLevel = PirateLevel;
     }
+
+    //PIRATE MODERATE
+    if (PirateChance == 1) {
+      PirateLevel = random(1, Game.Level+1);
+      Game.PirateRank = 2;
+      $("#modal-7").modal("setting", "closable", false).modal("show");
+      Game.isInFight = 1;
+      Game.PiratePower = 10 + (Game.PirateRank * PirateLevel);
+      Game.PirateBaseLife = 200 + ((Game.PirateRank * PirateLevel) * 10);
+      Game.PirateLevel = PirateLevel;
+    }
+
+    //PIRATE SEVERE
+    if (PirateChance == 2) {
+      PirateLevel = random(1, Game.Level+2);
+      Game.PirateRank = 3;
+      $("#modal-7").modal("setting", "closable", false).modal("show");
+      Game.isInFight = 1;
+      Game.PiratePower = 10 + (Game.PirateRank * PirateLevel);
+      Game.PirateBaseLife = 200 + ((Game.PirateRank * PirateLevel) * 15);
+      Game.PirateLevel = PirateLevel;
+    }
+
+    //PIRATE CRITICAL
+    if (PirateChance == 3) {
+      PirateLevel = random(1, Game.Level+3);
+      Game.PirateRank = 4;
+      $("#modal-7").modal("setting", "closable", false).modal("show");
+      Game.isInFight = 1;
+      Game.PiratePower = 10 + (Game.PirateRank * PirateLevel);
+      Game.PirateBaseLife = 200 + ((Game.PirateRank * PirateLevel) * 20);
+      Game.PirateLevel = PirateLevel;
+    }
+    Game.PirateCurrentLife = Game.PirateBaseLife;
     PirateChance = 0;
   }
+  UpdateGame();
 }
 
 //WIN OR LOSE PIRATE FIGHT
@@ -518,10 +566,10 @@ function NewPirateStats() {
   Game.Wins++;
   Game.PirateCurrentLife = Game.PirateBaseLife;
   Game.PlayerLife = Game.PlayerBaseLife;
-  Game.PirateExp++;
-  if (Game.PirateExp >= Game.PirateMaxExp) {
-    Game.PirateExp = 0;
-    Game.PirateRank++;
+  Game.Exp += Game.PirateBaseLife/8;
+  if (Game.Exp >= Game.MaxExp) {
+    Game.Exp -= Game.MaxExp;
+    Game.Level++;
   }
   rand = random(0, Game.cashGained);
   showmessage(
@@ -530,6 +578,7 @@ function NewPirateStats() {
   );
   Game.cash += rand;
   Game.cashGained += rand;
+  UpdateGame();
 }
 
 function LosePirateFight() {
@@ -548,6 +597,7 @@ function LosePirateFight() {
     "The ennemy took all your ressources and <i class='green dollar sign icon'></i>" +
     fix(rand, 1)
   );
+  UpdateGame();
 }
 
 //PRESTIGE FUNCTIONS
@@ -580,7 +630,7 @@ function changegalaxy() {
       Game.PlayerAttack = 10;
       Game.rank = 0;
       Game.PirateRank = 0;
-      Game.PirateExp = 0;
+      Game.Exp = 0;
       Game.extEnabled = 0;
       Game.extGain = 0;
       changeLocation("fl");
@@ -589,4 +639,5 @@ function changegalaxy() {
       }
     }
   }
+  UpdateGame();
 }

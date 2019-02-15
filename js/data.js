@@ -76,26 +76,26 @@ var Missions = {
 };
 
 var Market = {
-  0: { desc: "uncommon isotope element", value: 5 }, //THAMIUM9
-  1: { desc: "uncommon neutral element", value: 10 }, //COPPER
-  2: { desc: "common neutral element", value: 15 }, //POWER CELL
-  3: { desc: "uncommon oxide element", value: 20 }, //ZINC
-  4: { desc: "common neutral element", value: 50 }, //NICKEL
-  5: { desc: "common oxide element", value: 50 }, //IRON
-  6: { desc: "rare neutral element", value: 100 }, //ALUMINIUM
-  7: { desc: "uncommon neutral element", value: 500 }, //IRIDIUM
-  8: { desc: "rare neutral element", value: 750 }, //GOLD
-  9: { desc: "uncommon silicate element", value: 1500 }, //PLATINUM
-  10: { desc: "common isotope element", value: 1000 }, //CARBON
-  11: { desc: "rare isotope element", value: 5000 }, //PLUTONIUM
-  12: { desc: "common silicate element", value: 7500 }, //HERIDIUM
-  13: { desc: "rare neutral element", value: 12500 }, //EMERIL
-  14: { desc: "rare oxide element", value: 15000 }, //TITANIUM
-  15: { desc: "very rare exotic element", value: 50000 }, //ANTIMATTER
-  16: { desc: "very rare exotic element", value: 100000 }, //RADNOX
-  17: { desc: "very rare exotic element", value: 125000 }, //OMEGON
-  18: { desc: "very rare exotic element", value: 1000000 }, //RUBEUM
-  19: { desc: "very rare exotic element", value: 10000000 } //CYMATYGEN
+  0: { desc: "isotope", value: 5 }, //THAMIUM9
+  1: { desc: "neutral", value: 10 }, //COPPER
+  2: { desc: "neutral", value: 15 }, //POWER CELL
+  3: { desc: "oxide ", value: 20 }, //ZINC
+  4: { desc: "neutral", value: 50 }, //NICKEL
+  5: { desc: "oxide", value: 50 }, //IRON
+  6: { desc: "neutral", value: 100 }, //ALUMINIUM
+  7: { desc: "neutral", value: 500 }, //IRIDIUM
+  8: { desc: "neutral", value: 750 }, //GOLD
+  9: { desc: "silicate", value: 1500 }, //PLATINUM
+  10: { desc: "isotope", value: 1000 }, //CARBON
+  11: { desc: "isotope", value: 5000 }, //PLUTONIUM
+  12: { desc: "silicate", value: 7500 }, //HERIDIUM
+  13: { desc: "neutral", value: 12500 }, //EMERIL
+  14: { desc: "oxide", value: 15000 }, //TITANIUM
+  15: { desc: "exotic", value: 50000 }, //ANTIMATTER
+  16: { desc: "exotic", value: 100000 }, //RADNOX
+  17: { desc: "exotic", value: 125000 }, //OMEGON
+  18: { desc: "exotic", value: 1000000 }, //RUBEUM
+  19: { desc: "exotic", value: 10000000 } //CYMATYGEN
 };
 
 var Technologies = {
@@ -199,144 +199,7 @@ var Hyperspace = {
   0: { name: "Hyperspace", price: 100, gain: 10, type: 1, need: -1 }
 };
 
-var texts = {
-  systemname: [
-    "Lysen",
-    "Zelas",
-    "Centra",
-    "Vecis",
-    "Ivurd",
-    "Sentori",
-    "Fasis",
-    "Luya",
-    "Kisae",
-    "Gaia"
-  ],
-  items: [
-    "Thamium9",
-    "Copper",
-    "Power Cell",
-    "Zinc",
-    "Nickel",
-    "Iron",
-    "Aluminium",
-    "Iridium",
-    "Gold",
-    "Platinum",
-    "Carbon",
-    "Plutonium",
-    "Heridium",
-    "Emeril",
-    "Titanium",
-    "Antimatter",
-    "Radnox",
-    "Omegon",
-    "Rubeum",
-    "Cymatygen"
-  ]
+var Starship = {
+  0: { name: "Shield", price: 100, gain: 1.25, type: 0 },
+  1: { name: "Weapons", price: 100, gain: 1.25, type: 1 },
 };
-
-var tutorials = {
-  0: {
-    title: "How to play ?",
-    text:
-      "<h4>The objective is to get ressouces then sell them to buy technologies to improve the render</h4><br><br>1. You can start with an exploration mission, you will gain ressources and <i class='red sort amount up icon'></i>Exploration Points(EP)<br><br>2. Sell your merchandises to the space market to gain money.<br><br>3. Create a Drone in the technologies to automate the collection of resources.<br><br>4. If your have the required amount of money and you are in Gaia, you can travel to another galaxy."
-  },
-  1: {
-    title: "Exploration",
-    text:
-      "The exploration is the main objective,<br> you will discover new locations by gaining <i class='red sort amount up icon'></i> EP and ressources."
-  },
-  2: {
-    title: "Market",
-    text:
-      "The market is the place to sell all your merchandises and get some money,<br> the prices are differents on every system & change every days.<br><br>There is a color code to indicate the values of every ressource:<br>- <span class='rouge'>Very Low</span><br>- <span class='argent'>Low</span><br>- <span class=''>Normal</span><br>- <span class='vert'>High</span><br>- <span class='Gold'>Expensive</span>"
-  },
-  3: {
-    title: "Technologies",
-    text:
-      "3 Technologies are unlockables<br>- A drone that gives a certain amount of the defined item, depending of your current drone level.<br> - An hyperspace module that can unlock new locations.<br>- An hyperdrive module that can reduce the cost to travel to another location."
-  },
-  4: {
-    title: "Galaxy",
-    text:
-      "<h4>The prestige system of the game</h4><br>The galaxy will give you more inventory places.<br>But it will also increase the <i class='red sort amount up icon'></i> EP needed to change your location."
-  },
-  5: {
-    title: "Game menu",
-    text:
-      "There is also a menu where you can export/import or reset your savegame or re-open this guide.<br>Just click on Menu on the upper left corner of the screen."
-  }
-};
-
-function SetColor(value) {
-  var color;
-  var text;
-  if (value < 1) {
-    color = "noir";
-  }
-  if (value == 1) {
-    color = "jaune";
-  }
-  if (value > 1) {
-    if (value < 11) {
-      color = "bleu";
-    }
-  }
-  if (value > 10) {
-    if (value < 50) {
-      color = "violet";
-    }
-  }
-  if (value > 49) {
-    if (value < 100) {
-      color = "rose";
-    }
-  }
-  if (value > 99) {
-    if (value < 1000) {
-      color = "rouge";
-    }
-  }
-  if (value > 999) {
-    color = "vert";
-  }
-  return color;
-}
-
-function SetColorText(value) {
-  var color;
-  var text;
-  if (value < 1) {
-    text = "Tiny";
-  }
-  if (value == 1) {
-    text = "Very small";
-  }
-  if (value > 1) {
-    if (value < 11) {
-      text = "Small";
-    }
-  }
-  if (value > 10) {
-    if (value < 50) {
-      text = "Large";
-    }
-  }
-  if (value > 49) {
-    if (value < 100) {
-      text = "Big";
-    }
-  }
-  if (value > 99) {
-    if (value < 1000) {
-      text = "Huge";
-    }
-  }
-  if (value > 999) {
-    text = "Massive";
-  }
-  return text;
-}
-
-var fr = {};

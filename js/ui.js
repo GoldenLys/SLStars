@@ -3,18 +3,18 @@
   $("#money").html("" + fix(Game.cash, 1));
   $("#copyright").html(sitename + " v" + version + "(Alpha)");
   $("#rank").html("" + fix(Game.rank, 2) + " EP");
-  $("#dayscount").html("Day " + Game.days + "");
+  $("#dayscount").html("Day " + Game.days + "<br>   <i class='yellow flag icon'></i> " + lang[Game.lang].general[11] + " " + Game.Level + " (" + fix(Game.Exp, 0) + "/" + fix(Game.MaxExp, 0) + " )");
   $("#fuel").html("" + fix(Game.inventory[2], 3) + "% power.");
-  $("#EXT-TITLE").html(texts.items[Missions[Game.extId].type] + "<img class='ui avatar image' src='images/items/" + Missions[Game.extId].type + ".png'>");
+  $("#EXT-TITLE").html(lang[Game.lang].items[Missions[Game.extId].type] + "<img class='ui avatar image' src='images/items/" + Missions[Game.extId].type + ".png'>");
   $("#EXT-DESC").html("The drone extract " + fix(Game.extGain, 1));
   $("#EXT-DESC2").html("every " + Game.extTime + " seconds.");
   $("#HYPERDRIVE-TEXT").html("Travel to another location actually cost " + fix(Game.TravelCost, 3) + "% of power");
-  $("#HYPERSPACE-TEXT").html("Your actual maximum destination is " + texts.systemname[Game.UnlockedLocations]);
+  $("#HYPERSPACE-TEXT").html("Your actual maximum destination is " + lang[Game.lang].systemname[Game.UnlockedLocations]);
   $("#Galaxy-content").html("<span class='bold'>GALAXY NUMBER</span><br><h1 class='type4 or'>" + Game.Galaxy + "</h1>");
   $("#Galaxy-content2").html("<span class='bold'>REQUIREMENTS<br></span>- You must reach reach <span class='rouge'>Gaia</span>.<br>- Have <i class='green dollar sign icon'></i><span class='vert'>" + fix(GetGalaxyPrice(), 2) + "</span> to travel to another galaxy.");
-  $("#EXPLO-TITLE").html("Exploration - " + texts.systemname[Game.system]);
+  $("#EXPLO-TITLE").html("Exploration - " + lang[Game.lang].systemname[Game.system]);
   $("#galaxydesc").html("There is a black hole here. It seems to be able to absorb everything, including my past, is it time to start all over again?");
-  $("#InventoryTitle").html("Inventory <span class='type3'>(<span class='" + SetColor(Game.CurrInv) + "'>" + fix(Game.CurrInv, 6) + "</span>/" + fix(Game.Maxinv, 4) + ")</span>");
+  $("#InventoryTitle").html(lang[Game.lang].leftcol[2] + " <span class='type3'>(<span class='" + SetColor(Game.CurrInv) + "'>" + fix(Game.CurrInv, 6) + "</span>/" + fix(Game.Maxinv, 4) + ")</span>");
   if (Game.isInFight == 1) { $("#modal-7").modal("setting", "closable", false).modal("show"); }
   if (Game.cash < GetGalaxyPrice()) {
     $("#GalaxyBuy").addClass("disabled");
@@ -36,28 +36,28 @@
 
 function GetSystemType(value) {
   if (value == 0) {
-    type = "Planet";
+    type = lang[Game.lang].etypes[0];
   }
   if (value == 1) {
-    type = "Moon";
+    type = lang[Game.lang].etypes[1];
   }
   if (value == 2) {
-    type = "Sun";
+    type = lang[Game.lang].etypes[2];
   }
   if (value == 3) {
-    type = "Asteroid";
+    type = lang[Game.lang].etypes[3];
   }
   if (value == 4) {
-    type = "Black Hole";
+    type = lang[Game.lang].etypes[4];
   }
   if (value == 5) {
-    type = "Alien Spaceship";
+    type = lang[Game.lang].etypes[5];
   }
   if (value == 6) {
-    type = "Alien Flagship";
+    type = lang[Game.lang].etypes[6];
   }
   if (value == 7) {
-    type = "Alien Planet";
+    type = lang[Game.lang].etypes[7];
   }
   return type;
 }
@@ -67,7 +67,7 @@ function GetSystemType(value) {
 function GenMissions() {
   for (var id = 0; id < 11; id++) {
     $("#system" + id).html(
-      "<thead><tr class='shadow'><th class='ui center aligned'>Type</th><th class='ui center aligned'>Description</th><th class='ui center aligned'>Cost</th><th class='ui center aligned'>Action</th></tr></thead>"
+      "<thead><tr class='shadow'><th class='ui center aligned'>" + lang[Game.lang].general[0] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[1] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[2] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[3] + "</th></tr></thead>"
     );
   }
 
@@ -125,12 +125,12 @@ function GenMissions() {
     if (Game.Maxinv == Game.CurrInv) {
       canExploreMax = " disabled";
     }
-    var exploretext = Game.explored[i] > 0 ? "Visit" : "Explore";
+    var exploretext = Game.explored[i] > 0 ? lang[Game.lang].exploration[1] : lang[Game.lang].exploration[0];
     var rewards = Game.explored[i] > 0 ? offer.nbr : offer.nbr;
     var pricetext = Game.explored[i] < 1 ? fix(Market[offer.type].value * Game.ExplorationMult[offer.type] / 2, 1) : fix(Market[offer.type].value * Game.ExplorationMult[offer.type], 1);
     recompense = SetColorText(rewards);
-    reward = texts.items[offer.type];
-    name = "<font class='text type1'>" + texts.systemname[offer.system] + "-" + offer.name + "</font>";
+    reward = lang[Game.lang].items[offer.type];
+    name = "<font class='text type1'>" + lang[Game.lang].systemname[offer.system] + "-" + offer.name + "</font>";
     if (Game.ExplorationMult[offer.type] < 0.9) { pricecolor = "vert"; }
     if (Game.ExplorationMult[offer.type] > 1) { if (Game.ExplorationMult[offer.type] <= 2) { pricecolor = "rouge"; } }
     if (Game.ExplorationMult[offer.type] > 0.9) { if (Game.ExplorationMult[offer.type] < 1) { pricecolor = ""; } }
@@ -142,7 +142,7 @@ function GenMissions() {
       "<td class='center aligned ui'>" + description + "</td>" +
       "<td class='center aligned'>" + reward + "<img class='ui avatar image' src='images/items/" + offer.type + ".png'></td>" +
       "<td class='center aligned'> " + cost + "</td>" +
-      "<td class='center aligned'><div class='ui SLStars buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1, " + offer.type + ");'>" + exploretext + "</button><button class='ui " + canbuy10 + " button' onClick='explore(" + i + ", 10, " + offer.type + ");'>10</button><button class='ui " + canbuy100 + " button' onClick='explore(" + i + ", 100, " + offer.type + ");'>100</button><button class='ui " + canExploreMax + " button' onClick='exploremax(" + i + ", " + offer.type + ");'>Max</button></div></td>" +
+      "<td class='center aligned'><div class='ui SLStars buttons'><button class='ui " + canbuy + " button' onClick='explore(" + i + ", 1, " + offer.type + ");'>" + exploretext + "</button><button class='ui " + canbuy10 + " button' onClick='explore(" + i + ", 10, " + offer.type + ");'>10</button><button class='ui " + canbuy100 + " button' onClick='explore(" + i + ", 100, " + offer.type + ");'>100</button><button class='ui " + canExploreMax + " button' onClick='exploremax(" + i + ", " + offer.type + ");'>" + lang[Game.lang].exploration[2] + "</button></div></td>" +
       "</tr>"
     );
     if (offer.type == 2) {
@@ -158,7 +158,7 @@ function GenMissions() {
 
 function GenMarket() {
   $("#system0sm").html(
-    "<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Value</th><th class='ui center aligned'>Type</th><th class='ui center aligned'>Inventory</th><th class='ui center aligned'>Sell</th></tr></thead>"
+    "<thead><tr class='shadow'><th class='ui center aligned'>" + lang[Game.lang].general[4] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[5] + "</th><th class='ui center aligned'>Type</th><th class='ui center aligned'>" + lang[Game.lang].general[6] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[7] + "</th></tr></thead>"
   );
 
   for (var i in Market) {
@@ -196,7 +196,7 @@ function GenMarket() {
       "<img class='ui avatar image' src='images/items/" +
       i +
       ".png'><span class='Palladium'><font class='type2'>" +
-      texts.items[i] +
+      lang[Game.lang].items[i] +
       "</font></span>";
     cost =
       "<font class='type1 " +
@@ -273,7 +273,7 @@ function GenMarket() {
 
 function GenStation() {
   $("#system0ss").html(
-    "<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Require</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>"
+    "<thead><tr class='shadow'><th class='ui center aligned'>" + lang[Game.lang].general[4] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[10] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[2] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[3] + "</th></tr></thead>"
   );
 
   for (var i in Technologies) {
@@ -301,7 +301,7 @@ function GenStation() {
         "'>" +
         offer.req[1] +
         "</font> " +
-        texts.items[offer.req[0]];
+        lang[Game.lang].items[offer.req[0]];
       if (offer.req[1] <= Game.inventory[offer.req[0]]) {
         buy1 = 1;
       } else {
@@ -314,7 +314,7 @@ function GenStation() {
           "'>" +
           offer.req2[1] +
           "</font> " +
-          texts.items[offer.req2[0]];
+          lang[Game.lang].items[offer.req2[0]];
         if (offer.req2[1] <= Game.inventory[offer.req2[0]]) {
           buy2 = 1;
         } else {
@@ -425,7 +425,7 @@ function GenStation() {
 function GenHyperdrive() {
   if (Game.Hyperdrive < 100) {
     $("#UPG-BOARD").html(
-      "<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Level</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>"
+      "<thead><tr class='shadow'><th class='ui center aligned'>" + lang[Game.lang].general[4] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[11] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[2] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[3] + "</th></tr></thead>"
     );
 
     for (var i in Hyperdrive) {
@@ -486,7 +486,7 @@ function GenHyperdrive() {
 function GenHyperSpace() {
   if (Game.UnlockedLocations < 9) {
     $("#HYPERSPACE-BOARD").html(
-      "<thead><tr class='shadow'><th class='ui center aligned'>Name</th><th class='ui center aligned'>Current level</th><th class='ui center aligned'>Access</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Action</th></tr></thead>"
+      "<thead><tr class='shadow'><th class='ui center aligned'>" + lang[Game.lang].general[4] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[8] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[9] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[2] + "</th><th class='ui center aligned'>" + lang[Game.lang].general[3] + "</th></tr></thead>"
     );
 
     for (var i in Hyperspace) {
@@ -515,7 +515,7 @@ function GenHyperSpace() {
       access =
         Game.UnlockedLocations > 8
           ? " "
-          : texts.systemname[Game.UnlockedLocations + 1];
+          : lang[Game.lang].systemname[Game.UnlockedLocations + 1];
       level = Game.UnlockedLocations;
 
       var SYSTEMDIV = $(
@@ -587,11 +587,11 @@ function GenExtractionMaterials() {
       "<div class='item' data-id='" +
       D +
       "'>" +
-      texts.systemname[Game.system] +
+      lang[Game.lang].systemname[Game.system] +
       "-" +
       Missions[D].name +
       " | " +
-      texts.items[Missions[D].type] +
+      lang[Game.lang].items[Missions[D].type] +
       "<img class='ui avatar image' src='images/items/" +
       Missions[D].type +
       ".png'></div>"
@@ -605,9 +605,9 @@ function GenExtractionMaterials() {
   }
 
   if (Game.extEnabled == 1) {
-    $("#drone-title").html("Drone - <span class='vert'>Enabled</span>");
+    $("#drone-title").html(lang[Game.lang].tabnames[3] + " - <span class='vert'>" + lang[Game.lang].general[14] + "</span>");
   } else {
-    $("#drone-title").html("Drone - <span class='rouge'>Disabled</span>");
+    $("#drone-title").html(lang[Game.lang].tabnames[3] + " - <span class='rouge'>" + lang[Game.lang].general[15] + "</span>");
   }
 }
 
@@ -666,7 +666,7 @@ function ClickEvents() {
     $("#tab" + id).show();
     $("#t" + id).addClass("SLStarsborder");
   });
-  $("#sidebar").on("click", "a", function () {
+  $("#t0").on("click", function () {
     var id = $(this).data("id");
     $(".ui.sidebar").sidebar("toggle");
   });
@@ -705,7 +705,7 @@ function ClickEvents() {
 function AddTravelPoints() {
   $("#selection-content").html(""); //RESET VIEW
 
-  for (var i in texts.systemname) {
+  for (var i in lang[Game.lang].systemname) {
     isUnlockedColor = Game.UnlockedLocations < i ? " rouge" : " vert";
     if (Game.UnlockedLocations < i) {
       isUnlockedText =
@@ -739,18 +739,18 @@ function AddTravelPoints() {
       i +
       "'>" +
       isUnlockedSymbol +
-      texts.systemname[i] +
+      lang[Game.lang].systemname[i] +
       isUnlockedText +
       "</div>"
     );
     $("#selection-content").append(TRAVELCONTENT);
-    $("#selection-text").html(texts.systemname[Game.system]);
+    $("#selection-text").html(lang[Game.lang].systemname[Game.system]);
   }
 }
 
 function GenInventory() {
   $("#inventory").html("");
-  for (var id in texts.items) {
+  for (var id in lang[Game.lang].items) {
     if (Game.inventory[id] > 0) {
       if (id != 2) {
         $("#inventory").append(
@@ -759,7 +759,7 @@ function GenInventory() {
           "'>" +
           fix(Game.inventory[id], 1) +
           "</font> " +
-          texts.items[id] +
+          lang[Game.lang].items[id] +
           " </span><img class='ui avatar image' src='images/items/" +
           id +
           ".png'><br>"
@@ -771,8 +771,8 @@ function GenInventory() {
 
 function setTutorial(id) {
   Game.tutorial = id;
-  $("#tutorial-title").html("Guide - " + tutorials[id].title);
-  $("#tutorial-text").html(tutorials[id].text);
+  $("#tutorial-title").html("Guide - " + lang[Game.lang].ttitles[id]);
+  $("#tutorial-text").html(lang[Game.lang].ttexts[id]);
 
   if (Game.tutorial == 0) {
     $("#tuto-prev").addClass("disabled");
@@ -826,12 +826,6 @@ function UpdateEP() {
   }
 }
 
-function showmessage(title, message) {
-  $("#message-title").html(title);
-  $("#message-text").html(message);
-  $("#modal-5").modal("show");
-}
-
 function UpdatePirateView() {
   lifetext = Game.PlayerLife < 51 ? " rouge" : " vert";
   PirateLifeText = Game.PirateCurrentLife < 51 ? " rouge" : " ";
@@ -842,12 +836,17 @@ function UpdatePirateView() {
     NewPirateStats();
   }
 
+  if (Game.PirateRank == 1) { ThreatLevel = "<span class='argent'>" + lang[Game.lang].combat[0] + "</span>"; }
+  if (Game.PirateRank == 2) { ThreatLevel = "<span class='jaune'>" + lang[Game.lang].combat[1] + "</span>"; }
+  if (Game.PirateRank == 3) { ThreatLevel = "<span class='bronze'>" + lang[Game.lang].combat[2] + "</span>"; }
+  if (Game.PirateRank == 4) { ThreatLevel = "<span class='rouge'>" + lang[Game.lang].combat[3] + "</span>"; }
+
   $("#PirateAttackTitle").html(
-    "<span class='rouge'>ALERT ! PIRATE IN THE AREA.</span>"
+    "<span class='rouge'>" + lang[Game.lang].combat[4] + "</span>"
   );
-  $("#PirateAttackTitleDesc").html("A pirate wants to fight with you.");
-  $("#PirateLifeTitle").html("<span class='type4 bold rouge'>Pirate</span>");
-  $("#PlayerLifeTitle").html("<span class='type4 bold vert'>You</span>");
+  $("#PirateAttackTitleDesc").html(lang[Game.lang].combat[5] + " : " + ThreatLevel);
+  $("#PirateLifeTitle").html("<span class='type4 bold rouge'>" + lang[Game.lang].combat[7] + "</span><br>" + lang[Game.lang].combat[6] + " " + Game.PirateLevel);
+  $("#PlayerLifeTitle").html("<span class='type4 bold vert'>" + lang[Game.lang].combat[8] + "</span><br>" + lang[Game.lang].combat[6] + " " + Game.Level);
   $("#PirateLifeText").html(
     "<span class='bold" +
     PirateLifeText +
@@ -867,6 +866,9 @@ function UpdatePirateView() {
   $("#PirateHP").progress({
     className: { active: "", error: "", success: "", warning: "" }
   });
+  $("#attack-btn").html("<i class='crosshairs icon'></i>" + lang[Game.lang].combat[9]);
+  $("#cover-btn").html("<i class='shield alternate icon'></i>" + lang[Game.lang].combat[10]);
+  $("#run-btn").html("<i class='eye slash outline icon'></i>" + lang[Game.lang].combat[11]);
   $("#PirateHP").progress({ percent: GetPirateHPPercent() });
   $("#PlayerHP").progress({ percent: GetPlayerHPPercent() });
 }
@@ -885,15 +887,10 @@ function StatsGeneration() {
     Game.Wins +
     " | Fights loses : " +
     Game.Loses +
-    "<br>Pirate exp : " +
-    Game.PirateExp +
-    "/" +
-    Game.PirateMaxExp +
-    " | Pirate level : " +
-    Game.PirateRank +
-    " | Pirate life : " +
+    "<br>" +
+    " Pirate life : " +
     Game.PirateBaseLife +
-    "<i class='red heart icon'></i> | Pirate power : " +
+    "<i class='red heart icon'></i> | Pirate max attack : " +
     Game.PiratePower +
     " DMG" +
     "<br>Your life : " +
@@ -905,7 +902,7 @@ function StatsGeneration() {
     Game.DateStarted +
     " on " +
     sitename +
-    " " +
+    " v" +
     Game.startedVersion
   );
   $("#modal-5").modal("show");
@@ -914,7 +911,6 @@ function StatsGeneration() {
 function Theme(selection) {
   if (selection == 0) {
     Game.theme = 0;
-    save();
     $("#theme1").attr("rel", "");
     $("#theme2").attr("rel", "");
     $("#theme3").attr("rel", "");
@@ -924,7 +920,6 @@ function Theme(selection) {
   }
   if (selection == 1) {
     Game.theme = 1;
-    save();
     $("#theme1").attr("rel", "stylesheet");
     $("#theme2").attr("rel", "");
     $("#theme3").attr("rel", "");
@@ -934,7 +929,6 @@ function Theme(selection) {
   }
   if (selection == 2) {
     Game.theme = 2;
-    save();
     $("#theme1").attr("rel", "");
     $("#theme2").attr("rel", "stylesheet");
     $("#theme3").attr("rel", "");
@@ -944,7 +938,6 @@ function Theme(selection) {
   }
   if (selection == 3) {
     Game.theme = 3;
-    save();
     $("#theme1").attr("rel", "");
     $("#theme2").attr("rel", "");
     $("#theme3").attr("rel", "stylesheet");
@@ -954,7 +947,6 @@ function Theme(selection) {
   }
   if (selection == 4) {
     Game.theme = 4;
-    save();
     $("#theme1").attr("rel", "");
     $("#theme2").attr("rel", "");
     $("#theme3").attr("rel", "");
@@ -964,7 +956,6 @@ function Theme(selection) {
   }
   if (selection == 5) {
     Game.theme = 5;
-    save();
     $("#theme1").attr("rel", "");
     $("#theme2").attr("rel", "");
     $("#theme3").attr("rel", "");
@@ -973,7 +964,7 @@ function Theme(selection) {
     $(".pusher").css("background", "rgb(35, 0, 49)");
   }
   ToggleBackground();
-  UpdateUI();
+  UpdateGame();
 }
 
 function ToggleBackground() {
@@ -984,4 +975,40 @@ function ToggleBackground() {
     $(".pusher").css("background-image", "");
     Game.UseBackground = 0;
   }
+}
+
+function selectLang(language) {
+  Game.lang = language;
+  $("#exploration-title").html(lang[Game.lang].tabnames[0]);
+  $("#market-title").html(lang[Game.lang].tabnames[1]);
+  $("#hyperspace-title").html(lang[Game.lang].tabnames[2]);
+  $("#hyperdrive-title").html(lang[Game.lang].tabnames[4]);
+  $("#galaxy-title").html(lang[Game.lang].tabnames[5]);
+
+  $("#leftcol1").html(lang[Game.lang].leftcol[0]);
+  $("#leftcol2").html(lang[Game.lang].leftcol[1]);
+
+  $("#GalaxyBuy").html(lang[Game.lang].buttons[0]);
+
+  for (var drones in Technologies) { Technologies[drones].name = lang[Game.lang].drones[drones]; }
+  Hyperdrive[0].name = lang[Game.lang].general[12];
+  Hyperspace[0].name = lang[Game.lang].general[13];
+
+  $("#modal1").html("<i class='cog icon'></i>" + lang[Game.lang].buttons[1] + "</a>");
+  $("#modal2").html("<i class='info icon'></i>" + lang[Game.lang].buttons[2] + "</a>");
+  $("#modal3").html("<i class='adress book icon'></i>" + lang[Game.lang].buttons[3] + "</a>");
+  $("#modal4").html("<i class='paypal icon'></i>" + lang[Game.lang].buttons[4] + "</a>");
+  if (screen.width > 1280) {
+  $("#t0").html("<i class='sidebar icon'></i>" + lang[Game.lang].buttons[5] + "");
+  $("#t1").html("<i class='home icon'></i><span class='type3'>" + lang[Game.lang].buttons[6] + "</span>");
+  $("#t2").html("<i class='flask icon'></i><span class='type3'>" + lang[Game.lang].buttons[7] + "</span>");
+  $("#t3").html("<i class='space shuttle icon'></i><span class='type3'>" + lang[Game.lang].buttons[8] + "</span>");
+  } else {
+    $("#t0").html("<i class='sidebar icon'></i>");
+    $("#t1").html("<i class='home icon'></i>");
+    $("#t2").html("<i class='dollar icon'></i>");
+    $("#t3").html("<i class='flask icon'></i>");
+    $("#t4").html("<i class='space shuttle icon'></i>");
+  }
+  UpdateGame();
 }
