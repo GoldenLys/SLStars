@@ -35,7 +35,7 @@ var lang = {
             "L'exploration est l'objectif principal,<br> vous découvrirez de nouvelles destinations en gagnant des <i class='red sort amount up icon'></i> EP ainsi que des ressources.",
             "Le marché est l'endroit pour vendre vos marchandises et gagner de l'argent.<br> Les prix changent chaque jour et sur chaque système.<br><br>Il y a un code couleur pour indiquer la valeur de chaque ressource:<br>- <span class='rouge'>Très basse</span><br>- <span class='argent'>basse</span><br>- <span class=''>Normale</span><br>- <span class='vert'>Chère</span><br>- <span class='Gold'>Très chère</span>",
             "3 Technologies sont actuellement disponibles.<br>- Un drone qui donnera une certaine quantité de la ressource définie, cela dépend du niveau du drone.<br>- Un module d'Hyperespace qui peut débloquer de nouvelles destinations.<br>- Un module d'Hyperpropulsion qui peut réduire le coût de déplacement vers une autre destination.",
-            "<h4>Le système de prestige du jeu</h4><br>En changeant de galaxie vous obtiendrez plus d'espaces pour l'inventaire.<br>Mais ceci augmentera aussi le nombre <i class='red sort amount up icon'></i> d'EP requis pour voyager.",
+            "<h4>Le système de prestige du jeu</h4><br>En changeant de galaxie vous obtiendrez plus d'espaces pour l'inventaire.<br>Mais ceci augmentera aussi le nombre <i class='red sort amount up icon'></i> d'EP requis pour voyager.<br> Ce système permet aussi de réduire le temps de production du drone.",
             "Il y a aussi un menu qui peut vous servir à exporter/importer vôtre sauvegarde afin de pouvoir y rejouer sur un autre navigateur ou PC.",
         ],
         general: [
@@ -170,7 +170,7 @@ var lang = {
             "The exploration is the main objective,<br> you will discover new locations by gaining <i class='red sort amount up icon'></i> EP and ressources.",
             "The market is the place to sell all your merchandises and get some money,<br> the prices are differents on every system & change every days.<br><br>There is a color code to indicate the values of every ressource:<br>- <span class='rouge'>Very Low</span><br>- <span class='argent'>Low</span><br>- <span class=''>Normal</span><br>- <span class='vert'>High</span><br>- <span class='Gold'>Expensive</span>",
             "3 Technologies are unlockables<br>- A drone that gives a certain amount of the defined item, depending of your current drone level.<br> - An hyperspace module that can unlock new locations.<br>- An hyperdrive module that can reduce the cost to travel to another location.",
-            "<h4>The prestige system of the game</h4><br>The galaxy will give you more inventory places.<br>But it will also increase the <i class='red sort amount up icon'></i> EP needed to change your location.",
+            "<h4>The prestige system of the game</h4><br>The galaxy will give you more inventory places.<br>But it will also increase the <i class='red sort amount up icon'></i> EP needed to change your location.<br>This system also reduce the production time for the drone.",
             "There is also a menu where you can export/import or reset your savegame or re-open this guide.<br>Just click on Menu on the upper left corner of the screen.",
         ],
         general: [

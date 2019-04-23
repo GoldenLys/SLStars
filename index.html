@@ -3,7 +3,7 @@
     <meta charset="UTF-8" name='viewport'
         content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 </head>
-<link rel="shortcut icon" type="image/x-icon" href="../images/SLStars.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="./images/SLStars.ico" />
 <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:900" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" />
@@ -41,7 +41,7 @@
 
 <script type="text/javascript"> if (screen.width <= 1280) { location.href = './mobile.html'; } </script>
 
-<body id="body" class="noselect" oncontextmenu="return false;">
+<body id="body" class="noselect" oncontextmenu="return true;">
     <!--SIDE BAR-->
     <div id="sidebar" class="ui left vertical visible inverted sidebar labeled icon menu">
         <div id="modalmenu">
@@ -68,7 +68,8 @@
             <a class="item" id="t2" data-id="2"></a>
             <a class="item" id="t3" data-id="3"></a>
 
-        </div>
+            <div class="right menu">
+        </div></div>
         <!--COLUMNS-->
         <div class="ui equal width grid" style="height: 94%; position: relative; z-index: 99;">
 
@@ -86,7 +87,7 @@
 
                     <h3 class="ui inverted horizontal divider" id="leftcol2"></h3>
                     <p class="centrer"><i class="green dollar sign icon"></i>
-                        <span class="left" id="money"></span>
+                        <span class="text left" id="money"></span>
                         <br>
                         <i class="red sort amount up icon"></i>
                         <span class="text" id="rank"></span> / <span class="rouge" id="percentrank"></span>
@@ -97,6 +98,7 @@
                         <img class='ui avatar image' src='images/items/2.png'>
                         <span class="text" id="fuel"></span>
                     </p>
+                    
                     <h3 class="ui inverted horizontal divider"><span id="InventoryTitle"></span></h3>
                     <div id="inventory" style="height: auto; text-align: left;">
                     </div>
@@ -297,7 +299,7 @@
                             <font class='type1'>Lys - SLStars developer</font>
                         </div>
                         <p>
-                            <i class="large blue discord icon"></i>LYS®#0001<br>
+                            <i class="large blue discord icon"></i>Purple Wizard#0001<br>
                             <i class="large red reddit icon"></i>u/Aizen45<br>
                             <i class="large blue steam icon"></i>LYS®
                         </p>
@@ -428,7 +430,7 @@
                 <div class="actions">
                     <div class="fluid ui buttons">
                         <div id="attack-btn" onclick="PirateFightAttack();" class="green ui huge button"></div>
-                        <div id="cover-btn" onclick="PirateFightProctect();" class="blue ui huge button"></div>
+                        <div id="cover-btn" onclick="PirateFightProtect();" class="blue ui huge button"></div>
                     </div><br><br>
                     <div id="run-btn" onclick="PirateFightFlee();" class="fluid negative ui button"></div>
 

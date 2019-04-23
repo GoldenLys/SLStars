@@ -8,7 +8,7 @@
 // idea : Buy a new starship with new base attack & base life
 
 //CONFIG
-var version = "5";
+var version = "5.1";
 var sitename = "SLStars";
 var Game = {
   isLoading: 1,
@@ -37,13 +37,13 @@ var Game = {
   CurrMult: 0,
   UnlockedLocations: 0,
   EPRequired: [0, 10, 50, 100, 350, 1000, 2500, 5000, 10000, 100000],
-  PiratePower: 10,
+  EnnemyPower: 10,
   PirateBaseLife: 200,
   PirateCurrentLife: 200,
   PlayerLife: 200,
   PlayerBaseLife: 200,
   PlayerAttack: 10,
-  PirateRank: 1,
+  EnnemyClass: 1,
   PirateLevel: 1,
   Level: 1,
   Exp: 0,
@@ -102,6 +102,7 @@ var Game = {
   extTime: 20,
   extCurrTime: 0,
   lang: "english",
+  Starship: [200, 200, 10],
 };
 
 //LOADING BASE CODE & DEBUG IF NEEDED
@@ -141,8 +142,8 @@ $(document).ready(function () {
 
 function UpdateGame() {
   Game.MaxExp = 85 + (10 * Game.Level) * (1.5 * Game.Level);
-  Game.PlayerAttack = (5 + (Game.Level * 2.5)) + (Game.Galaxy * 2.5);
-  Game.PlayerBaseLife = (190 + (Game.Level * 10)) + (Game.Galaxy * 10 - 10);
+  Game.PlayerAttack = (Game.Starship[2] + (Game.Level * 2.5)) + (Game.Galaxy * 2.5) - 5;
+  Game.PlayerBaseLife = (Game.Starship[1] + (Game.Level * 10 - 10)) + (Game.Galaxy * 10 - 10);
 
   if (Game.isInFight == 0) {
     Game.PlayerLife = Game.PlayerBaseLife;
@@ -172,7 +173,7 @@ function UpdateGame() {
       Game.technologies[t] = 0;
     }
   }
-  Game.Maxinv = 175 + Game.Galaxy * 25;
+  Game.Maxinv = (Game.Starship[0] + Game.Galaxy * 25) - 25;
   if (Game.extEnabled > 0) {
     if (Game.extCurrTime >= Game.extTime) {
       if (Game.Maxinv - Game.CurrInv >= Game.extGain)
@@ -241,7 +242,7 @@ function explore(id, nbr, obj) {
           Game.cashSpent += ((Market[obj].value * Game.ExplorationMult[obj]) / 2);
           Game.inventory[obj] += Math.floor(1);
           Game.explored[id] = 1;
-          Game.rank += 1 * Game.system;
+          Game.rank += (1 * Game.system) * nbr;
         }
       } else {
         if (nbr == 1) { S = ""; } else { S = "s"; }
@@ -434,13 +435,13 @@ function BUYHYPERSPACE(id) {
 
 //PIRATE FIGHT ACTIONS
 
-function PirateFightProctect() {
+function PirateFightProtect() {
   if (Game.PlayerLife < Game.PlayerBaseLife) {
-    var rRandPlayerHeal = random(0, Game.PlayerAttack / 2);
+    var rRandPlayerHeal = random(1, Game.PlayerAttack / 2);
     Game.PlayerLife += rRandPlayerHeal;
   }
-  var rPiratePower = random(0, Game.PiratePower / 2.5);
-  Game.PlayerLife -= rPiratePower;
+  var rEnnemyPower = random(0, Game.EnnemyPower / 2.5);
+  Game.PlayerLife -= rEnnemyPower;
   if (Game.PlayerLife <= 0) {
     LosePirateFight();
   }
@@ -452,7 +453,7 @@ function PirateFightProctect() {
   }
   $("#PirateAttackDesc").html(
     "The pirate ship weapon does <span class='rouge bold'>" +
-    "<a class='ui circular small label'><i class='red heart icon'></i>-" + rPiratePower + "</a></span> damage to the hull !<br>You repaired <a class='ui circular small label'><i class='red heart icon'></i>+" + rRandPlayerHeal + "</a> of the hull"
+    "<a class='ui circular small label'><i class='red heart icon'></i>-" + rEnnemyPower + "</a></span> damage to the hull !<br>You repaired <a class='ui circular small label'><i class='red heart icon'></i>+" + rRandPlayerHeal + "</a> of the hull"
   );
   UpdateGame();
 }
@@ -464,8 +465,8 @@ function PirateFightAttack() {
     NewPirateStats();
   }
 
-  var rPiratePower = random(0, Game.PiratePower);
-  Game.PlayerLife -= rPiratePower;
+  var rEnnemyPower = random(0, Game.EnnemyPower);
+  Game.PlayerLife -= rEnnemyPower;
   if (Game.PlayerLife <= 0) {
     LosePirateFight();
   }
@@ -473,7 +474,7 @@ function PirateFightAttack() {
     "You did <a class='ui circular small label'><i class='red heart icon'></i>-" +
     rPlayerPower +
     "</a> damage to the pirate ship.<br>The pirate weapon does <a class='ui circular small label'><i class='red heart icon'></i>-" +
-    rPiratePower +
+    rEnnemyPower +
     "</a> damage to the hull !"
   );
   UpdateGame();
@@ -504,77 +505,89 @@ function GetPlayerHPPercent() {
 //CHECK IF THERE IS A CHANCE TO ENCOUNTER A PIRATE
 
 function LookForPirates() {
-  PirateChance = random(0, 15);
+  PirateChance = random(0, 1000);
   if (Game.isInFight == 0) {
     Game.PlayerLife = Game.PlayerBaseLife;
     $("#PirateAttackDesc").html("");
 
     //PIRATE LOW
-    if (PirateChance == 0) {
-      PirateLevel = random(1, Game.Level);
-      Game.PirateRank = 1;
-      $("#modal-7").modal("setting", "closable", false).modal("show");
-      Game.isInFight = 1;
-      Game.PiratePower = 10 + (Game.PirateRank * PirateLevel);
-      Game.PirateBaseLife = 200 + ((Game.PirateRank * PirateLevel) * 5);
-      Game.PirateLevel = PirateLevel;
+    if (PirateChance >= 0) {
+      if (PirateChance < 100) {
+        PirateLevel = random(1, Game.Level);
+        Game.EnnemyClass = 1;
+        Game.isInFight = 1;
+        Game.EnnemyPower = 9 + (Game.EnnemyClass * PirateLevel);
+        Game.PirateBaseLife = (195 + (Game.EnnemyClass * 5 - 5)) + (PirateLevel * 5 - 5);    
+        Game.PirateLevel = PirateLevel;
+      }
     }
 
     //PIRATE MODERATE
-    if (PirateChance == 1) {
-      PirateLevel = random(1, Game.Level+1);
-      Game.PirateRank = 2;
-      $("#modal-7").modal("setting", "closable", false).modal("show");
-      Game.isInFight = 1;
-      Game.PiratePower = 10 + (Game.PirateRank * PirateLevel);
-      Game.PirateBaseLife = 200 + ((Game.PirateRank * PirateLevel) * 10);
-      Game.PirateLevel = PirateLevel;
+    if (PirateChance >= 100) {
+      if (PirateChance < 175) {
+        PirateLevel = random(1, Game.Level);
+        if (Game.Level > 1) { PirateLevel = random(Game.Level - 1, Game.Level);}
+        if (Game.Level > 5) { PirateLevel = random(Game.Level - 2, Game.Level);}
+        Game.EnnemyClass = 2;
+        Game.isInFight = 1;
+        Game.EnnemyPower = 9 + (Game.EnnemyClass * PirateLevel);
+        Game.PirateBaseLife = (190 + (Game.EnnemyClass * 5 - 5)) + (PirateLevel * 10 - 10);
+        Game.PirateLevel = PirateLevel;
+      }
     }
 
     //PIRATE SEVERE
-    if (PirateChance == 2) {
-      PirateLevel = random(1, Game.Level+2);
-      Game.PirateRank = 3;
-      $("#modal-7").modal("setting", "closable", false).modal("show");
-      Game.isInFight = 1;
-      Game.PiratePower = 10 + (Game.PirateRank * PirateLevel);
-      Game.PirateBaseLife = 200 + ((Game.PirateRank * PirateLevel) * 15);
-      Game.PirateLevel = PirateLevel;
+    if (PirateChance >= 175) {
+      if (PirateChance < 225) {
+        PirateLevel = random(1, Game.Level + 2);
+        if (Game.Level > 1) { PirateLevel = random(Game.Level - 1, Game.Level + 2);}
+        if (Game.Level > 5) { PirateLevel = random(Game.Level - 2, Game.Level + 2);}
+        Game.EnnemyClass = 3;
+        Game.isInFight = 1;
+        Game.EnnemyPower = 9 + (Game.EnnemyClass * PirateLevel);
+        Game.PirateBaseLife = (185 + (Game.EnnemyClass * 5 - 5)) + (PirateLevel * 15 - 15);
+        Game.PirateLevel = PirateLevel;
+      }
     }
 
     //PIRATE CRITICAL
-    if (PirateChance == 3) {
-      PirateLevel = random(1, Game.Level+3);
-      Game.PirateRank = 4;
-      $("#modal-7").modal("setting", "closable", false).modal("show");
-      Game.isInFight = 1;
-      Game.PiratePower = 10 + (Game.PirateRank * PirateLevel);
-      Game.PirateBaseLife = 200 + ((Game.PirateRank * PirateLevel) * 20);
-      Game.PirateLevel = PirateLevel;
+    if (PirateChance >= 225) {
+      if (PirateChance < 250) {
+        PirateLevel = random(1, Game.Level + 3);
+        if (Game.Level > 1) { PirateLevel = random(Game.Level - 1, Game.Level + 5);}
+        if (Game.Level > 5) { PirateLevel = random(Game.Level - 2, Game.Level + 5);}
+        Game.EnnemyClass = 4;
+        Game.isInFight = 1;
+        Game.EnnemyPower = 9 + (Game.EnnemyClass * PirateLevel);
+        Game.PirateBaseLife = (180 + (Game.EnnemyClass * 5 - 5)) + (PirateLevel * 20 - 20);
+        Game.PirateLevel = PirateLevel;
+      }
     }
     Game.PirateCurrentLife = Game.PirateBaseLife;
-    PirateChance = 0;
+    UpdateGame();
+    if (PirateChance < 250) { hideModals(); $("#modal-7").modal("setting", "closable", false).modal("show"); }
   }
-  UpdateGame();
 }
 
 //WIN OR LOSE PIRATE FIGHT
 
 function NewPirateStats() {
   hideModals();
+  expGain = (Game.PirateBaseLife / 10) * (Game.PirateLevel + Game.EnnemyClass);
   Game.isInFight = 0;
   Game.Wins++;
   Game.PirateCurrentLife = Game.PirateBaseLife;
   Game.PlayerLife = Game.PlayerBaseLife;
-  Game.Exp += Game.PirateBaseLife/8;
+  Game.Exp += expGain;
   if (Game.Exp >= Game.MaxExp) {
     Game.Exp -= Game.MaxExp;
     Game.Level++;
   }
-  rand = random(0, Game.cashGained);
+  rand = random(50, Game.cashGained);
   showmessage(
     "You won the fight !",
-    "You found <i class='green dollar sign icon'></i>" + fix(rand, 1)
+    "You found <i class='green dollar sign icon'></i><span class='vert bold'>" + fix(rand, 1) +
+    "</span> and <span class='jaune bold'>" + expGain + " EXP</span>."
   );
   Game.cash += rand;
   Game.cashGained += rand;
@@ -621,7 +634,7 @@ function changegalaxy() {
       Game.Upgrades = 0;
       Game.TravelCost = 25;
       Game.UnlockedLocations = 0;
-      Game.PiratePower = 10;
+      Game.EnnemyPower = 10;
       Game.PirateBaseLife = 200;
       Game.PirateAttacks = 0;
       Game.PirateCurrentLife = 200;
@@ -629,7 +642,7 @@ function changegalaxy() {
       Game.PlayerBaseLife = 200;
       Game.PlayerAttack = 10;
       Game.rank = 0;
-      Game.PirateRank = 0;
+      Game.EnnemyClass = 0;
       Game.Exp = 0;
       Game.extEnabled = 0;
       Game.extGain = 0;
