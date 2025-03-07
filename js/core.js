@@ -1,14 +1,11 @@
-/////////////////////////
-// SLSTARS made by LYS //
-/////////////////////////
-//                     //
-//         W I P       //
-//                     //
-/////////////////////////
-// idea : Buy a new starship with new base attack & base life
+/////////////////////////////
+// SLSTARS made by NEBULYS //
+/////////////////////////////
+
+// NOTE : Buy a new starship with new base attack & base life
 
 //CONFIG
-var version = "5.1";
+var version = "6.0";
 var sitename = "SLStars";
 var Game = {
   isLoading: 1,
@@ -37,14 +34,6 @@ var Game = {
   CurrMult: 0,
   UnlockedLocations: 0,
   EPRequired: [0, 10, 50, 100, 350, 1000, 2500, 5000, 10000, 100000],
-  EnnemyPower: 10,
-  PirateBaseLife: 200,
-  PirateCurrentLife: 200,
-  PlayerLife: 200,
-  PlayerBaseLife: 200,
-  PlayerAttack: 10,
-  EnnemyClass: 1,
-  PirateLevel: 1,
   Level: 1,
   Exp: 0,
   MaxExp: 100,
@@ -105,13 +94,11 @@ var Game = {
   Starship: [200, 200, 10],
 };
 
-//LOADING BASE CODE & DEBUG IF NEEDED
 
 $(document).ready(function () {
   if (localStorage.getItem("SLStars3") != null) { load(); }
   changeLocation("loading");
   // setInterval(function () { UpdateGame(); }, 1000);
-  setInterval(function () { LookForPirates(); }, 20000);
   Theme(Game.theme);
   selectLang(Game.lang);
   UpdateGame();
@@ -119,6 +106,7 @@ $(document).ready(function () {
   ClickEvents();
   hidesystems();
   $(".ui.sidebar").sidebar("hide");
+  $('.ui.dropdown').dropdown();
   $("#system-select").val(lang[Game.lang].systemname[Game.system]);
   $("#system" + Game.system).show();
   if (Game.confirmations == 0) {
@@ -142,58 +130,41 @@ $(document).ready(function () {
 
 function UpdateGame() {
   Game.MaxExp = 85 + (10 * Game.Level) * (1.5 * Game.Level);
-  Game.PlayerAttack = (Game.Starship[2] + (Game.Level * 2.5)) + (Game.Galaxy * 2.5) - 5;
-  Game.PlayerBaseLife = (Game.Starship[1] + (Game.Level * 10 - 10)) + (Game.Galaxy * 10 - 10);
 
-  if (Game.isInFight == 0) {
-    Game.PlayerLife = Game.PlayerBaseLife;
-    Game.PirateCurrentLife = Game.PirateBaseLife;
+  Game.CurrInv = Object.values(Game.inventory).reduce((total, qty, i) => {
+    if (isNaN(qty) || qty < 0) Game.inventory[i] = 0;
+    return total + (i !== 2 ? Game.inventory[i] : 0);
+  }, 0);
+
+  for (const key in Market) {
+    Game.inventory[key] = Game.inventory[key] || 0;
   }
-  Game.CurrInv = 0;
-  for (var i in Game.inventory) {
-    if (Game.inventory[i] !== Game.inventory[i]) { Game.inventory[i] = 0; }
-    if (i != 2) { Game.CurrInv += Game.inventory[i]; }
-    if (Game.inventory[i] < 0) {
-      Game.inventory[i] = 0;
-      if (Game.rank < 0) { Game.rank = 0; }
-    }
+
+  for (const key in Missions) {
+    Game.explored[key] = Game.explored[key] || 0;
   }
-  for (var inv in Market) {
-    if (Game.inventory[inv] == null) {
-      Game.inventory[inv] = 0;
-    }
+
+  for (const key in Technologies) {
+    Game.technologies[key] = Game.technologies[key] || 0;
   }
-  for (var m in Missions) {
-    if (Game.explored[m] == null) {
-      Game.explored[m] = 0;
-    }
+
+  Game.Maxinv = Game.Starship[0] + (Game.Galaxy - 1) * 25;
+
+  if (Game.extEnabled && Game.extCurrTime >= Game.extTime && (Game.Maxinv - Game.CurrInv) >= Game.extGain) {
+    Game.inventory[Missions[Game.extId].type] += Game.extGain;
+    Game.extCurrTime = 0;
+  } else {
+    Game.extCurrTime++;
   }
-  for (var t in Technologies) {
-    if (Game.technologies[t] == null) {
-      Game.technologies[t] = 0;
-    }
+
+  Game.extTime = Math.max(1, 21 - Game.Galaxy);
+
+  if (Game.CurrInv < 1 && Game.cash <= 10) {
+    const rand = Math.floor(Math.random() * 91) + 10;
+    Game.cash += rand;
+    showmessage("Distress signal", `You just found a distress signal!<br> After connecting to the unknown signal source you found an abandoned vessel with <i class='green dollar sign icon'></i>${rand} in it.`);
   }
-  Game.Maxinv = (Game.Starship[0] + Game.Galaxy * 25) - 25;
-  if (Game.extEnabled > 0) {
-    if (Game.extCurrTime >= Game.extTime) {
-      if (Game.Maxinv - Game.CurrInv >= Game.extGain)
-        Game.inventory[Missions[Game.extId].type] += Game.extGain;
-      Game.extCurrTime = 0;
-    } else {
-      Game.extCurrTime++;
-    }
-  }
-  if (Game.extTime > 1) {
-    Game.extTime = 20 - Game.Galaxy + 1;
-  }
-  if (Game.extTime < 1) { Game.extTime = 1; }
-  if (Game.CurrInv < 1) {
-    if (Game.cash <= 10) {
-      rand = random(10, 100);
-      Game.cash += rand;
-      showmessage("Distress signal", "You found an old distress signal!<br> You have joined the signal transmission source and have found an abandoned vessel with <i class='green dollar sign icon'></i>" + rand + " in it.");
-    }
-  }
+
   UpdateUI();
   save();
 }
@@ -201,7 +172,7 @@ function UpdateGame() {
 function exploremax(id, obj) {
   var Maxexplore = 0;
   if (Game.CurrInv == Game.Maxinv) {
-    showmessage("Too much merchandises", "You can't travel with your current inventory weight.");
+    showmessage("Too much merchandises", "You can't travel while overweight.");
   } else {
     Maxexplore = Math.floor(Game.cash / (Market[obj].value * Game.ExplorationMult[obj]));
     if (Maxexplore > Game.Maxinv - Game.CurrInv) { Maxexplore = Game.Maxinv - Game.CurrInv; }
@@ -215,41 +186,37 @@ function exploremax(id, obj) {
 }
 
 function explore(id, nbr, obj) {
-  if (Game.CurrInv == Game.Maxinv) {
-    //INVENTORY FULL
-    showmessage("Too much merchandises", "You can't travel with your current inventory weight.");
-    //INVENTORY NOT FULL
-  } else {
-    if (Game.explored[id] > 0) {
-      //"NBR * MISSION NBR" IS HIGHER THAN INVENTORY
-      if (nbr > Game.Maxinv - Game.CurrInv) {
-      } else {
-        //NBR PRICE IS HIGHER THAN INVENTORY
-        if (Game.cash < (Market[obj].value * Game.ExplorationMult[obj]) * nbr) {
-          showmessage("Too expensive", "You need more money.");
-        } else {
-          Game.cash -= Market[obj].value * Game.ExplorationMult[obj] * nbr;
-          Game.cashSpent += Market[obj].value * Game.ExplorationMult[obj] * nbr;
-          Game.inventory[obj] += nbr;
-          Game.rank += nbr * (Game.Galaxy * 0.25 * (Game.system + 1));
-        }
-      }
-    } else {
-      //FIRST EXPLORATION
-      if (nbr <= Game.Maxinv - Game.CurrInv) {
-        if (Game.cash >= ((Market[obj].value * Game.ExplorationMult[obj]) / 2)) {
-          Game.cash -= ((Market[obj].value * Game.ExplorationMult[obj]) / 2);
-          Game.cashSpent += ((Market[obj].value * Game.ExplorationMult[obj]) / 2);
-          Game.inventory[obj] += Math.floor(1);
-          Game.explored[id] = 1;
-          Game.rank += (1 * Game.system) * nbr;
-        }
-      } else {
-        if (nbr == 1) { S = ""; } else { S = "s"; }
-        showmessage("Too much merchandises", "You can't travel with your current inventory weight.<br> You need " + nbr + " place" + S + " in your inventory.");
-      }
-    }
+  if (Game.CurrInv >= Game.Maxinv) {
+    showmessage("Too much merchandises", "You can't travel while overweight.");
+    return;
   }
+
+  const itemValue = Market[obj].value * Game.ExplorationMult[obj];
+  const availableSpace = Game.Maxinv - Game.CurrInv;
+  const isFirstExploration = Game.explored[id] === 0;
+  const requiredCash = isFirstExploration ? itemValue / 2 : itemValue * nbr;
+
+  if (isFirstExploration && nbr > availableSpace) {
+    showmessage("Too much merchandises", `You can't travel with your current inventory weight.<br> You need ${nbr} place${nbr > 1 ? 's' : ''} in your inventory.`);
+    return;
+  }
+
+  if (Game.cash < requiredCash) {
+    showmessage("Too expensive", "You need more money.");
+    return;
+  }
+
+  const quantityToAdd = isFirstExploration ? 1 : nbr;
+  Game.cash -= requiredCash;
+  Game.cashSpent += requiredCash;
+  Game.inventory[obj] += quantityToAdd;
+  Game.rank += quantityToAdd * (Game.Galaxy * 0.25 * (Game.system + 1));
+
+  if (isFirstExploration) {
+    Game.explored[id] = 1;
+    Game.rank += Game.system * nbr;
+  }
+
   UpdateGame();
 }
 
@@ -433,186 +400,6 @@ function BUYHYPERSPACE(id) {
   UpdateGame();
 }
 
-//PIRATE FIGHT ACTIONS
-
-function PirateFightProtect() {
-  if (Game.PlayerLife < Game.PlayerBaseLife) {
-    var rRandPlayerHeal = random(1, Game.PlayerAttack / 2);
-    Game.PlayerLife += rRandPlayerHeal;
-  }
-  var rEnnemyPower = random(0, Game.EnnemyPower / 2.5);
-  Game.PlayerLife -= rEnnemyPower;
-  if (Game.PlayerLife <= 0) {
-    LosePirateFight();
-  }
-  if (Game.PirateCurrentLife <= 0) {
-    NewPirateStats();
-  }
-  if (Game.PlayerLife > Game.PlayerBaseLife) {
-    Game.PlayerLife = Game.PlayerBaseLife;
-  }
-  $("#PirateAttackDesc").html(
-    "The pirate ship weapon does <span class='rouge bold'>" +
-    "<a class='ui circular small label'><i class='red heart icon'></i>-" + rEnnemyPower + "</a></span> damage to the hull !<br>You repaired <a class='ui circular small label'><i class='red heart icon'></i>+" + rRandPlayerHeal + "</a> of the hull"
-  );
-  UpdateGame();
-}
-
-function PirateFightAttack() {
-  var rPlayerPower = random(0, Game.PlayerAttack);
-  Game.PirateCurrentLife -= rPlayerPower;
-  if (Game.PirateCurrentLife <= 0) {
-    NewPirateStats();
-  }
-
-  var rEnnemyPower = random(0, Game.EnnemyPower);
-  Game.PlayerLife -= rEnnemyPower;
-  if (Game.PlayerLife <= 0) {
-    LosePirateFight();
-  }
-  $("#PirateAttackDesc").html(
-    "You did <a class='ui circular small label'><i class='red heart icon'></i>-" +
-    rPlayerPower +
-    "</a> damage to the pirate ship.<br>The pirate weapon does <a class='ui circular small label'><i class='red heart icon'></i>-" +
-    rEnnemyPower +
-    "</a> damage to the hull !"
-  );
-  UpdateGame();
-}
-
-function PirateFightFlee() {
-  Game.PirateCurrentLife = Game.PirateBaseLife;
-  Game.PlayerLife = Game.PlayerBaseLife;
-  if (Game.PlayerLife <= 0) {
-    LosePirateFight();
-  }
-  if (Game.PirateCurrentLife <= 0) {
-    NewPirateStats();
-  }
-  Game.isInFight = 0;
-  hideModals();
-  UpdateGame();
-}
-
-function GetPirateHPPercent() {
-  return (100 / Game.PirateBaseLife) * Game.PirateCurrentLife;
-}
-
-function GetPlayerHPPercent() {
-  return (100 / Game.PlayerBaseLife) * Game.PlayerLife;
-}
-
-//CHECK IF THERE IS A CHANCE TO ENCOUNTER A PIRATE
-
-function LookForPirates() {
-  PirateChance = random(0, 1000);
-  if (Game.isInFight == 0) {
-    Game.PlayerLife = Game.PlayerBaseLife;
-    $("#PirateAttackDesc").html("");
-
-    //PIRATE LOW
-    if (PirateChance >= 0) {
-      if (PirateChance < 100) {
-        PirateLevel = random(1, Game.Level);
-        Game.EnnemyClass = 1;
-        Game.isInFight = 1;
-        Game.EnnemyPower = 9 + (Game.EnnemyClass * PirateLevel);
-        Game.PirateBaseLife = (195 + (Game.EnnemyClass * 5 - 5)) + (PirateLevel * 5 - 5);    
-        Game.PirateLevel = PirateLevel;
-      }
-    }
-
-    //PIRATE MODERATE
-    if (PirateChance >= 100) {
-      if (PirateChance < 175) {
-        PirateLevel = random(1, Game.Level);
-        if (Game.Level > 1) { PirateLevel = random(Game.Level - 1, Game.Level);}
-        if (Game.Level > 5) { PirateLevel = random(Game.Level - 2, Game.Level);}
-        Game.EnnemyClass = 2;
-        Game.isInFight = 1;
-        Game.EnnemyPower = 9 + (Game.EnnemyClass * PirateLevel);
-        Game.PirateBaseLife = (190 + (Game.EnnemyClass * 5 - 5)) + (PirateLevel * 10 - 10);
-        Game.PirateLevel = PirateLevel;
-      }
-    }
-
-    //PIRATE SEVERE
-    if (PirateChance >= 175) {
-      if (PirateChance < 225) {
-        PirateLevel = random(1, Game.Level + 2);
-        if (Game.Level > 1) { PirateLevel = random(Game.Level - 1, Game.Level + 2);}
-        if (Game.Level > 5) { PirateLevel = random(Game.Level - 2, Game.Level + 2);}
-        Game.EnnemyClass = 3;
-        Game.isInFight = 1;
-        Game.EnnemyPower = 9 + (Game.EnnemyClass * PirateLevel);
-        Game.PirateBaseLife = (185 + (Game.EnnemyClass * 5 - 5)) + (PirateLevel * 15 - 15);
-        Game.PirateLevel = PirateLevel;
-      }
-    }
-
-    //PIRATE CRITICAL
-    if (PirateChance >= 225) {
-      if (PirateChance < 250) {
-        PirateLevel = random(1, Game.Level + 3);
-        if (Game.Level > 1) { PirateLevel = random(Game.Level - 1, Game.Level + 5);}
-        if (Game.Level > 5) { PirateLevel = random(Game.Level - 2, Game.Level + 5);}
-        Game.EnnemyClass = 4;
-        Game.isInFight = 1;
-        Game.EnnemyPower = 9 + (Game.EnnemyClass * PirateLevel);
-        Game.PirateBaseLife = (180 + (Game.EnnemyClass * 5 - 5)) + (PirateLevel * 20 - 20);
-        Game.PirateLevel = PirateLevel;
-      }
-    }
-    Game.PirateCurrentLife = Game.PirateBaseLife;
-    UpdateGame();
-    if (PirateChance < 250) { hideModals(); $("#modal-7").modal("setting", "closable", false).modal("show"); }
-  }
-}
-
-//WIN OR LOSE PIRATE FIGHT
-
-function NewPirateStats() {
-  hideModals();
-  expGain = (Game.PirateBaseLife / 10) * (Game.PirateLevel + Game.EnnemyClass);
-  Game.isInFight = 0;
-  Game.Wins++;
-  Game.PirateCurrentLife = Game.PirateBaseLife;
-  Game.PlayerLife = Game.PlayerBaseLife;
-  Game.Exp += expGain;
-  if (Game.Exp >= Game.MaxExp) {
-    Game.Exp -= Game.MaxExp;
-    Game.Level++;
-  }
-  rand = random(50, Game.cashGained);
-  showmessage(
-    "You won the fight !",
-    "You found <i class='green dollar sign icon'></i><span class='vert bold'>" + fix(rand, 1) +
-    "</span> and <span class='jaune bold'>" + expGain + " EXP</span>."
-  );
-  Game.cash += rand;
-  Game.cashGained += rand;
-  UpdateGame();
-}
-
-function LosePirateFight() {
-  Game.inventory = [];
-  rand = random(0, Game.cash - 1000);
-  if (Game.cash > 1000) {
-    Game.cash -= rand;
-    Game.cashSpent += rand;
-  }
-  Game.isInFight = 0;
-  Game.Loses++;
-  Game.PlayerLife = Game.PlayerBaseLife;
-  hideModals();
-  showmessage(
-    "You lose this fight !",
-    "The ennemy took all your ressources and <i class='green dollar sign icon'></i>" +
-    fix(rand, 1)
-  );
-  UpdateGame();
-}
-
 //PRESTIGE FUNCTIONS
 
 function GetGalaxyPrice() {
@@ -634,13 +421,6 @@ function changegalaxy() {
       Game.Upgrades = 0;
       Game.TravelCost = 25;
       Game.UnlockedLocations = 0;
-      Game.EnnemyPower = 10;
-      Game.PirateBaseLife = 200;
-      Game.PirateAttacks = 0;
-      Game.PirateCurrentLife = 200;
-      Game.PlayerLife = 200;
-      Game.PlayerBaseLife = 200;
-      Game.PlayerAttack = 10;
       Game.rank = 0;
       Game.EnnemyClass = 0;
       Game.Exp = 0;

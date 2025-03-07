@@ -1,45 +1,27 @@
 <head>
     <title>SLStars is loading..</title>
-    <meta charset="UTF-8" name='viewport'
-        content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <meta charset="UTF-8" name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 </head>
 <link rel="shortcut icon" type="image/x-icon" href="./images/SLStars.ico" />
 <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:900" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="semantic.min.css" />
-<link rel="stylesheet" type="text/css" href="dropdown.min.css" />
-<link rel="stylesheet" type="text/css" href="sidebar.min.css" />
-<link rel="stylesheet" type="text/css" href="progress.min.css" />
-<link rel="stylesheet" type="text/css" href="checkbox.min.css" />
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="semantic.min.js"></script>
-<script src="dropdown.min.js"></script>
-<script src="sidebar.min.js"></script>
-<script src="progress.min.js"></script>
-<script src="checkbox.min.js"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132217801-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'UA-132217801-1');
-</script>
-<link href="style.css?v=5" rel="stylesheet" type="text/css" />
-<link href="theme1.css?v=5" id="theme1" rel="" type="text/css" />
-<link href="theme2.css?v=5" id="theme2" rel="" type="text/css" />
-<link href="theme3.css?v=5" id="theme3" rel="" type="text/css" />
-<link href="theme4.css?v=5" id="theme4" rel="" type="text/css" />
-<link href="theme5.css?v=5" id="theme5" rel="" type="text/css" />
-<script src="js/utils.js?v=5"></script>
-<script src="js/data.js?v=5"></script>
-<script src="js/lang.js?v=5"></script>
-<script src="js/core.js?v=5"></script>
-<script src="js/ui.js?v=5"></script>
-<script src="js/numeral.min.js"></script>
-
-<script type="text/javascript"> if (screen.width <= 1280) { location.href = './mobile.html'; } </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.css" integrity="sha512-3quBdRGJyLy79hzhDDcBzANW+mVqPctrGCfIPosHQtMKb3rKsCxfyslzwlz2wj1dT8A7UX+sEvDjaUv+WExQrA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/components/dropdown.min.css" integrity="sha512-8q8UOlqPjpVoEpje4wqsvo8Ngfk9WbC2LCUxoNEE2D0oTyaqwW/Cfvhksd2jVoDZCZWzd40rPKg99dyRWlvRkg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/components/sidebar.min.css" integrity="sha512-B/LQOdMFPAvLpZr8byB/PF1gTj4h1AlfsywRDX8G++AChLrJPK7dTq5H2K0L4vTJATSr7U7D77NgO+dcCsW+AA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/components/progress.min.css" integrity="sha512-czZYOx39Mtdxm1weBuJNE5/oSKBnslN4SAxTQcNobURntAvpo9RJdVD6OlKagh0OlALYyfGhhOIwn+ud0JyHlg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/components/checkbox.min.css" integrity="sha512-Z5Fttp/z8S9ylmhmnpH1DgulXVIpgJh4gxsfe84iBYDMLoFYTUH0MM9O8qrispWeho7kpvzIZZc2Dn86uCVhww=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<link href="themes/theme1.css" id="theme1" rel="" type="text/css" />
+<link href="themes/theme2.css" id="theme2" rel="" type="text/css" />
+<link href="themes/theme3.css" id="theme3" rel="" type="text/css" />
+<link href="themes/theme4.css" id="theme4" rel="" type="text/css" />
+<link href="themes/theme5.css" id="theme5" rel="" type="text/css" />
 
 <body id="body" class="noselect" oncontextmenu="return true;">
     <!--SIDE BAR-->
@@ -53,7 +35,7 @@
         <p id="copyright"></p>
     </div>
     <div class="pusher">
-        <div id="top-menu" class="ui SLStars menu">
+        <div id="top-menu" class="ui sls menu">
             <div class="item">
                 <div class="ui logo shape">
                     <div class="sides">
@@ -64,12 +46,13 @@
                 </div>
             </div>
             <a class="item" id="t0"></a>
-            <a class="item SLStarsborder" id="t1" data-id="1"></a>
+            <a class="item sls-custom" id="t1" data-id="1"></a>
             <a class="item" id="t2" data-id="2"></a>
             <a class="item" id="t3" data-id="3"></a>
 
             <div class="right menu">
-        </div></div>
+            </div>
+        </div>
         <!--COLUMNS-->
         <div class="ui equal width grid" style="height: 94%; position: relative; z-index: 99;">
 
@@ -78,7 +61,7 @@
                 <div id="travel" class="ui black message">
                     <h3 class="ui inverted horizontal divider" id="leftcol1"></h3>
 
-                    <div id="selection" class="ui fluid red floating dropdown labeled icon button">
+                    <div id="selection" class="ui fluid sls floating dropdown labeled icon button">
                         <i class="world icon"></i>
                         <span id="selection-text"></span>
                         <div id="selection-content" class="menu">
@@ -98,9 +81,9 @@
                         <img class='ui avatar image' src='images/items/2.png'>
                         <span class="text" id="fuel"></span>
                     </p>
-                    
+
                     <h3 class="ui inverted horizontal divider"><span id="InventoryTitle"></span></h3>
-                    <div id="inventory" style="height: auto; text-align: left;">
+                    <div id="inventory" class="ui fluid vertical menu">
                     </div>
                 </div>
 
@@ -190,8 +173,7 @@
                                     <div id="Galaxy-content2"></div>
                                 </div>
                                 <div class="ui segment">
-                                    <button id='GalaxyBuy' class='fluid ui red button'
-                                        onClick='changegalaxy();'></button>
+                                    <button id='GalaxyBuy' class='fluid ui sls button' onClick='changegalaxy();'></button>
                                 </div>
                             </div>
                         </div>
@@ -220,20 +202,19 @@
                 <h4 class="ui horizontal divider header"><i class="language icon"></i>Language</h4>
                 <p>Language selection</p>
                 <div class="ui buttons">
-                    <button onClick="selectLang('english');" id="btnExport"
-                        class="ui basic blue button">English</button>
+                    <button onClick="selectLang('english');" id="btnExport" class="ui basic blue button">English</button>
                     <button onClick="selectLang('french');" id="btnImport" class="ui basic blue button">Français</button>
                 </div>
                 <br />
                 <h4 class="ui horizontal divider header"><i class="save icon"></i>Save</h4>
                 <p>Here you can export your save to another navigator or computer.
-                    <br> You can also reset your save to start a new game.</p>
+                    <br> You can also reset your save to start a new game.
+                </p>
                 <span id="exportBody"></span>
                 <span id='debugtext' class='copytext'></span>
                 <div class="actions">
                     <div class="ui buttons">
-                        <button onClick="StatsGeneration();" id="btnStats"
-                            class="ui basic green button">Statistics</button>
+                        <button onClick="StatsGeneration();" id="btnStats" class="ui basic green button">Statistics</button>
                         <button onClick="exportSave();" id="btnExport" class="ui basic blue button">Export</button>
                         <button onClick="importSave();" id="btnImport" class="ui basic blue button">Import</button>
                         <button onClick="Reset();" id="Recommencer" class="ui basic red button">Reset</button>
@@ -242,7 +223,7 @@
                 <br><br>
                 <h4 class="ui horizontal divider header"><i class="eye icon"></i>Theme</h4>
                 <p>Theme selection menu</p>
-                <div class="ui buttons">>
+                <div class="ui buttons">
                     <button onClick="Theme(0);" id="btnExport" class="ui basic purple button">Purple space</button>
                     <button onClick="Theme(1);" id="btnExport" class="ui basic secondary button">Dark blue &
                         Grey</button>
@@ -260,7 +241,8 @@
             <br>
             <div class="fluid ui buttons">
                 <div onclick="hideModals();" class="ui red button">
-                    <i class="remove icon"></i>Close </div>
+                    <i class="remove icon"></i>Close
+                </div>
             </div>
         </div>
 
@@ -277,10 +259,11 @@
             </div>
             <div class="actions">
                 <div class="large three ui buttons">
-                    <button onClick="PrevTuto();" id="tuto-prev" class="ui red button">Previous</button>
-                    <button onClick="NextTuto();" id="tuto-next" class="ui red button">Next</button>
+                    <button onClick="PrevTuto();" id="tuto-prev" class="ui sls button">Previous</button>
+                    <button onClick="NextTuto();" id="tuto-next" class="ui sls button">Next</button>
                     <div onclick="closeTutorial();" class="ui red button">
-                        <i class="remove icon"></i>Close </div>
+                        <i class="remove icon"></i>Close
+                    </div>
                 </div>
             </div>
         </div>
@@ -289,31 +272,38 @@
         <div class="ui basic modal" id="modal-3">
             <div class="ui icon header">
                 <i class="address book icon"></i>
-                <font id="contact-title" class="title">Contact</font>
+                <div id="contact-title" class="title">Contact</div>
             </div>
             <div class="centrer content">
-                <div class="ui icon message">
-                    <img class="ui tiny rounded image" src="images/lys.jpg">
-                    <div class="content">
-                        <div class="header">
-                            <font class='type1'>Lys - SLStars developer</font>
+                <div class="ui items">
+                    <div class="item">
+                        <div class="ui tiny image">
+                            <img class="" src="images/nebulys.jpg">
                         </div>
-                        <p>
-                            <i class="large blue discord icon"></i>Purple Wizard#0001<br>
-                            <i class="large red reddit icon"></i>u/Aizen45<br>
-                            <i class="large blue steam icon"></i>LYS®
-                        </p>
+
+                        <div class="content">
+                            <div class="header">Nebulys - SLStars developer</div>
+                            <div class="description">
+                                <p></p>
+                            </div>
+                            <div class="extra">
+                                <div class="ui icon horizontal label"><i class="large blue discord icon"></i>nebulys</div>
+                                <div class="ui icon horizontal label"><i class="large red reddit icon"></i>u/Aizen45</div>
+                                <div class="ui icon horizontal label"><i class="large white github icon"></i>GoldenLys</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="actions">
-                    <div class="fluid ui buttons">
-                        <div onclick="hideModals();" class="ui red button">
-                            <i class="remove icon"></i>Close </div>
+
+                    <div class="actions">
+                        <div class="fluid ui buttons">
+                            <div onclick="hideModals();" class="ui red button">
+                                <i class="remove icon"></i>Close
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <!--VENTE-->
         <div class="ui basic modal" id="modal-4">
             <div class="ui icon header">
@@ -329,9 +319,11 @@
                 </div>
                 <div class="actions">
                     <div id="confirmsell-btn" onclick="confirmsell();" class="ui green ok inverted button">
-                        <i class="check icon"></i>Yes </div>
+                        <i class="check icon"></i>Yes
+                    </div>
                     <div onclick="hideModals();" class="ui red basic inverted button">
-                        <i class="remove icon"></i>No </div>
+                        <i class="remove icon"></i>No
+                    </div>
 
                 </div>
             </div>
@@ -352,7 +344,8 @@
                 </div>
                 <div class="actions">
                     <div onclick="hideModals();" class="ui red basic inverted button">
-                        <i class="remove icon"></i>Close </div>
+                        <i class="remove icon"></i>Close
+                    </div>
 
                 </div>
             </div>
@@ -372,67 +365,11 @@
                 </div>
                 <div class="actions">
                     <div id="confirmsell-btn" onclick="confirmReset();" class="ui green ok inverted button">
-                        <i class="check icon"></i>Yes </div>
+                        <i class="check icon"></i>Yes
+                    </div>
                     <div onclick="hideModals();" class="ui red basic inverted button">
-                        <i class="remove icon"></i>No </div>
-
-                </div>
-            </div>
-        </div>
-
-        <!--ATTACK-->
-        <div class="ui basic modal" id="modal-7">
-            <div class="ui icon header">
-                <i class="red chess rook icon"></i>
-                <font id="PirateAttackTitle" class=""></font><br>
-                <font id="PirateAttackTitleDesc" class=""></font>
-            </div>
-            <div class="centrer content">
-                <div class="ui message fight">
-                    <div class="ui horizontal segments">
-                        <div class="ui left aligned clearing segment">
-                            <div class="ui left icon">
-                                <i class="big green flag outline icon"></i>
-                                <font id="PlayerLifeTitle" class="left "></font>
-
-                                <div id="PlayerHP" class="ui inverted indicating progress">
-                                    <div class="bar">
-                                        <div class="progress"></div>
-                                    </div>
-                                    <div class="label" id="PlayerLifeText"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ui clearing segment">
-                            <br>
-                        </div>
+                        <i class="remove icon"></i>No
                     </div>
-                    <div class="ui horizontal segments">
-                        <div class="ui clearing segment">
-                            <br>
-                        </div>
-                        <div class="ui right aligned basic segment">
-                            <div class="ui right icon">
-                                <i class="big red flag outline icon"></i>
-                                <font id="PirateLifeTitle" class="right"></font>
-                                <div id="PirateHP" class="ui inverted indicating progress">
-                                    <div class="bar">
-                                        <div class="progress"></div>
-                                    </div>
-                                    <div class="label" id="PirateLifeText"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <font id="PirateAttackDesc" class=""></font>
-                <div class="actions">
-                    <div class="fluid ui buttons">
-                        <div id="attack-btn" onclick="PirateFightAttack();" class="green ui huge button"></div>
-                        <div id="cover-btn" onclick="PirateFightProtect();" class="blue ui huge button"></div>
-                    </div><br><br>
-                    <div id="run-btn" onclick="PirateFightFlee();" class="fluid negative ui button"></div>
 
                 </div>
             </div>
@@ -440,7 +377,24 @@
     </div>
 
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js" integrity="sha512-USPCA7jmJHlCNRSFwUFq3lAm9SaOjwG8TaB8riqx3i/dAJqhaYilVnaf2eVUH5zjq89BU6YguUuAno+jpRvUqA==" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.js" integrity="sha512-gnoBksrDbaMnlE0rhhkcx3iwzvgBGz6mOEj4/Y5ZY09n55dYddx6+WYc72A55qEesV8VX2iMomteIwobeGK1BQ==" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/components/dropdown.min.js" integrity="sha512-3DaTb2+1dI74l7vtcaeyIsZbGauhvlHueNfQRABZLnulxVLCxD841dYG6tG7mXWOh0/PqhPuSNt7zYrhbjuvEA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/components/sidebar.min.js" integrity="sha512-rSVsjCOUkvfSagubEEVAB0QLw5iA1iUWgyb9Y5DTDwMbRli6pfiJu9KLVLlOIVbW3EnIOybl+X0QKyzb/Lm36g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/components/progress.min.js" integrity="sha512-93hAzZ9GDJa/8hW0rdjzYTUyRCoZy6JpfVopDkl2ZIgsMYZM5uYS97owDT+RmfrGZO0u9L5mX1Ng9IhZvhXAxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/components/checkbox.min.js" integrity="sha512-Xb8iHY8bk1g8B1KJ5lMQImDBYHTq0qW5NjkeoRg4A7CfXQabTBpsKEU1pn3TPmA4d5nT/IaNCwb0H6aq17YlVA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/lang.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/ui.js"></script>
 </body>
 
 </html>

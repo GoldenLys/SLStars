@@ -24,7 +24,7 @@
 
 .bleu {
   color: #027ce0;
-  text-shadow: 0px 0px 3vh #192cbb;
+  text-shadow: 0px 0px 0.2vh #192cbb;
 }
 
 .rose {
@@ -36,7 +36,7 @@
 }
 
 .vert {
-  color: #21ba45 !important;
+  color: #21ba45
 }
 
 .gris {
@@ -49,11 +49,10 @@
 
 .jaune {
   color: rgb(226, 185, 4);
-  text-shadow: 0 0 0.2vh rgb(238, 255, 7);
 }
 
 .blanc {
-  color: rgb(0, 0, 0);
+  color: #fff;
   text-shadow: 0 0 0 rgba(255, 255, 255, 0);
 }
 
@@ -71,12 +70,12 @@
 }
 
 .type3 {
-  font-family: "Titillium Web", sans-serif;
-  font-size: 100%;
+  font-family: "Orbitron", sans-serif;
+  font-size: 90%;
 }
 
 .type4 {
-  font-family: "Titillium Web", sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 120%;
 }
 
@@ -91,7 +90,7 @@
 }
 
 .Palladium {
-  color: rgb(0, 0, 0);
+  color: rgb(221, 219, 217);
 }
 
 .Platinum {
@@ -99,14 +98,18 @@
   text-shadow: 0 0 3vh rgb(13, 220, 235);
 }
 
+.ui.inverted.table {
+  background: rgba(0, 0, 0, 0);
+}
+
 .ui.black.message,
 .ui.inverted.message {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #020508;
+  color: #ffffff;
 }
 
 .text {
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 
 .ui.selection.active.dropdown {
@@ -115,7 +118,7 @@
 
 .ui.selection.dropdown {
   background: rgba(0, 0, 0, 0.3);
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 1);
 }
 
 .ui.selection.active.dropdown .menu {
@@ -158,55 +161,45 @@ body ::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.7);
 }
 
-.ui.inverted.table th{
+.ui.inverted.table th {
   background-color: rgba(0, 0, 0, 0);
-  color: rgba(0, 0, 0, 1)!important;
 }
 
-.ui.inverted.table {
-  color: rgba(0, 0, 0, 1);
+.shadow {
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
-.ui.SLStars.menu {
-  background: #ffffff;
-  color: #000000;
+.azn {
+  background-color: rgba(70, 255, 70, 0.1);
+}
+
+.azn-active {
+  background-color: rgba(70, 255, 70, 0.25);
+}
+
+.ui.sls.menu {
   transition: 1.5s;
   background-size: 200% auto;
+  background: #020508;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.ui.red.button {
-  border: 1px black solid;
+.ui.sls.buttons {
   transition: 1.5s;
+  border-radius: 0.1vw;
   background-size: 200% auto;
   background: #ffffff;
   color: #000000;
 }
 
-.ui.red.button:focus,
-.ui.red.button:active,
-.ui.red.button:hover {
-  background: #ffffff;
-  color: #000000;
-}
-
-.ui.SLStars.buttons {
-  transition: 1.5s;
-  border-radius: 0.2vw;
-  border: 1px black solid;
-  background-size: 200% auto;
-  background: #ffffff;
-  color: #000000;
-}
-
-.ui.SLStars.buttons.disabled {
+.ui.sls.buttons.disabled {
   background: #000000;
   color: #fff;
 }
 
-.ui.SLStars.button,
+.ui.sls.button,
 .button {
   background-color: transparent;
 }
@@ -221,44 +214,36 @@ body ::-webkit-scrollbar-track {
   background: none;
 }
 
-.ui.button,
-.ui.basic.button {
-  color: rgb(0, 0, 0) !important;
-}
-
 .ui.menu .item {
-  color: rgb(0, 0, 0) !important;
+  color: rgb(255, 255, 255)
 }
 
-.SLStarsborder {
-  background: rgb(56, 178, 253) !important;
+.sls-custom {
+  background: rgb(21, 26, 29)
 }
 
-.SLStarsborder:hover {
-  background: rgb(56, 178, 253) !important;
+.sls-custom:hover {
+  background: rgb(21, 26, 29)
 }
 
-#t1.item,
-#t2.item,
-#t3.item,
-#t4.item {
-  color: #000000 !important;
+.C1 {
+  background: linear-gradient(to right, #ffffff 0%, #ffffff 70%, #ffffff 100%);
+  text-shadow: 0 0 2vh rgba(255, 255, 255, 0.1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.item.SLStarsborder {
-  color: #ffffff !important;
-}
-
-.ui.button:disabled,
-.ui.buttons .disabled.button,
-.ui.disabled.active.button,
-.ui.disabled.button,
-.ui.disabled.button:hover {
-  background: rgb(0, 0, 0);
+.ui.message {
+  background: #0000ff00;
+  color: #ffffff;
+  -webkit-box-shadow: 0 0 0 0px rgba(34, 36, 38, 0.22) inset,
+    0 0 0 0 transparent;
+  box-shadow: 0 0 0 0px rgba(34, 36, 38, 0.22) inset, 0 0 0 0 transparent;
 }
 
 #copyright {
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 
 .ui.segment {
@@ -270,22 +255,7 @@ body ::-webkit-scrollbar-track {
   background-color: #db2828;
 }
 
+.ui.vertical.menu,
 .ui.inverted.menu {
-  background: rgb(56, 178, 253);
-}
-
-.C1 {
-  background: linear-gradient(to right, #000000 0%, #000000 70%, #000000 100%);
-  text-shadow: 0 0 2vh rgba(255, 255, 255, 0.1);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-#selection {
-  border: 1px black solid;
-}
-
-.ui.divider.inverted, .ui.horizontal.inverted.divider, .ui.vertical.inverted.divider {
-  color: #000000;
+  background: rgb(21, 26, 29);
 }

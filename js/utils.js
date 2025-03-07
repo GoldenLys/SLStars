@@ -70,12 +70,9 @@ function toHHMMSS(id) {
 var canSave = 1;
 
 function save() {
-  console.log("Game saved.");
-  var date = new Date();
   if (canSave) {
     localStorage.setItem("SLStars3", JSON.stringify(Game));
   }
-  var tmp = new Date().getTime();
 }
 
 function load() {

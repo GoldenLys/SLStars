@@ -37,7 +37,7 @@
 }
 
 .vert {
-  color: #21ba45 !important;
+  color: #21ba45
 }
 
 .gris {
@@ -169,7 +169,7 @@ body ::-webkit-scrollbar-track {
   color: rgb(255, 255, 255);
 }
 
-.ui.SLStars.menu {
+.ui.sls.menu {
   background: linear-gradient(to left, #230031 0%, #500101 71%, #230031 100%);
   color: #FFFFFF;
   transition: 1.5s;
@@ -196,7 +196,7 @@ body ::-webkit-scrollbar-track {
   background-position: right center; /* change the direction of the change here */
 }
 
-.ui.SLStars.buttons {
+.ui.sls.buttons {
   transition: 1.5s;
   border-radius: 0.2vw;
   border: 0px black solid;
@@ -205,16 +205,16 @@ body ::-webkit-scrollbar-track {
   color: #FFFFFF;
 }
 
-.ui.SLStars.buttons:hover {
+.ui.sls.buttons:hover {
   background-position: right center; /* change the direction of the change here */
 }
 
-.ui.SLStars.buttons.disabled {
+.ui.sls.buttons.disabled {
   background: #000000;
   color: #fff;
 }
 
-.ui.SLStars.button,
+.ui.sls.button,
 .button {
   background-color: transparent;
 }
@@ -231,31 +231,24 @@ body ::-webkit-scrollbar-track {
 
 .ui.button,
 .ui.basic.button {
-  color: rgb(255, 255, 255) !important;
+  color: rgb(255, 255, 255)
 }
 
 .ui.menu .item {
-  color: rgb(255, 255, 255) !important;
+  color: rgb(255, 255, 255)
 }
 
-.SLStarsborder {
+.sls-custom {
   background: none!important;
   border: 1px #FFFFFF solid;
 }
 
-.SLStarsborder:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
+.sls-custom:hover {
+  background: rgba(255, 255, 255, 0.1)
 }
 
-#t1.item,
-#t2.item,
-#t3.item,
-#t4.item {
-  color: #FFFFFF !important;
-}
-
-.item.SLStarsborder {
-  color: #ffffff !important;
+.item.sls-custom {
+  color: #ffffff
 }
 
 .ui.button:disabled,
@@ -291,6 +284,7 @@ body ::-webkit-scrollbar-track {
   -webkit-text-fill-color: transparent;
 }
 
-#selection {
-  border: 0px black solid;
+.ui.vertical.menu {
+  background-color: transparent;
+  box-shadow: none;
 }
